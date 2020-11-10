@@ -6,7 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
+
 
 public class Plane {
     private int plane_id;
