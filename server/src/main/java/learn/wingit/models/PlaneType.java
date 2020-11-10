@@ -1,16 +1,18 @@
 package learn.wingit.models;
 
+import javax.validation.constraints.NotBlank;
+
 public class PlaneType {
     private int type_id;
+    @NotBlank(message = "Plane needs a type")
     private String name;
 
-    public PlaneType(int type_id, String name) {
+    public PlaneType(int type_id, @NotBlank(message = "Plane needs a type") String name) {
         this.type_id = type_id;
         this.name = name;
     }
 
     public PlaneType() {
-
     }
 
     public int getType_id() {
