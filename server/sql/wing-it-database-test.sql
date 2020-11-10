@@ -40,7 +40,7 @@ create table plane (
     manufacturer_model_id int not null,
     size_id int not null,
     type_id int not null,
-    price_id int not null,
+    price int not null,
     quantity int not null,
     seating_capacity int not null,
     height int not null,
@@ -100,20 +100,46 @@ create table `order` (
         references plane(plane_id)
 );
 
-insert into manufacturer;
+insert into manufacturer(name)
+    values ('Boeing'),
+            ('Airbus');
 
-insert into model;
+insert into model(name)
+    values ('747'),
+            ('777'),
+            ('A220');
 
-insert into manufacturer_model;
+insert into manufacturer_model(manufacturer_id, model_id)
+    values (1,1),
+            (1,2),
+            (2,3);
 
-insert into size;
+insert into size(size)
+    values ('small'),
+            ('medium'),
+            ('large');
 
-insert into `type`;
+insert into `type`(name)
+    values ('commercial'),
+            ('cargo'),
+            ('private');
 
-insert into plane;
+insert into plane(manufacturer_model_id, size_id, type_id, price, quantity, seating_capacity,
+                    height, length, wingspan, `range`, `description`)
+    values (1, 1, 1, 100.00, 1, 100, 10, 10, 10, 100, 'Boeing 747 desc'),
+            (2, 2, 2, 200.00, 2, 200, 20, 20, 20, 200, 'Boeing 777 desc'),
+            (3, 3, 3, 300.00, 3, 300, 30, 30, 30, 300, 'Airbus A220 desc');
 
-insert into role;
+insert into role (role)
+    values ('user'),
+            ('admin');
 
-insert into user;
+insert into user(role_id, username, password_hash, email, phone)
+    values(1, 'customer', 'cust-pw-hash', 'cust@cust.com', '111-111-1111'),
+            (1, 'buyer', 'buyer-pw-hash', 'buy@buy.com', '222-222-2222'),
+            (2, 'admin', 'admin-pw-hash', 'admin@admin.com', '333-333-3333');
 
-insert into order;
+insert into `order`(user_id, plane_id, order_date, total_cost)
+    values (1, 1, '2020-01-01', 100),
+            (1, 2, '2020-02-02', 200),
+            (2, 3, '2020-03-03', 300);
