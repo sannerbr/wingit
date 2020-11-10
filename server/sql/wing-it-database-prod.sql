@@ -29,7 +29,7 @@ create table size (
 
 create table plane (
     plane_id int primary key auto_increment,
-    manufacturer_model_id int not null,
+    model_id int not null UNIQUE,
     size_id int not null,
     type_id int not null,
     price int not null,
@@ -40,9 +40,9 @@ create table plane (
     wingspan int not null,
     `range` int not null,
     `description` varchar(500) not null,
-    constraint fk_plane_manufacturer_model_id
-        foreign key (manufacturer_model_id)
-        references manufacturer_model(manufacturer_model_id),
+    constraint fk_plane_model_id
+        foreign key (model_id)
+        references model(model_id),
     constraint fk_plane_size_size_id
         foreign key (size_id)
         references size(size_id),
