@@ -9,19 +9,11 @@ create table manufacturer (
 
 create table model (
     model_id int primary key auto_increment,
-    name varchar(50) not null
-);
-
-create table manufacturer_model (
-    manufacturer_model_id int primary key auto_increment,
+    name varchar(50) not null,
     manufacturer_id int not null,
-    model_id int not null,
-    constraint fk_manufacturer_model_manufacturer_id
+    constraint fk_model_manufacturer_id
         foreign key (manufacturer_id)
-        references manufacturer(manufacturer_id),
-    constraint fk_manufacturer_model_model_id
-        foreign key (model_id)
-        references model(model_id)
+        references manufacturer(manufacturer_id)
 );
 
 create table `type` (
@@ -105,15 +97,10 @@ insert into manufacturer(name)
     values ('Boeing'),
             ('Airbus');
 
-insert into model(name)
-    values ('747'),
-            ('777'),
-            ('A220');
-
-insert into manufacturer_model(manufacturer_id, model_id)
-    values (1,1),
-            (1,2),
-            (2,3);
+insert into model(name, manufacturer_id)
+    values ('747', 1),
+            ('777', 1),
+            ('A220', 2);
 
 insert into size(size)
     values ('small'),

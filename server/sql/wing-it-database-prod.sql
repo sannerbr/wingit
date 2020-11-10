@@ -9,19 +9,11 @@ create table manufacturer (
 
 create table model (
     model_id int primary key auto_increment,
-    name varchar(50) not null
-);
-
-create table manufacturer_model (
-    manufacturer_model_id int primary key auto_increment,
+    name varchar(50) not null,
     manufacturer_id int not null,
-    model_id int not null,
-    constraint fk_manufacturer_model_manufacturer_id
+    constraint fk_model_manufacturer_id
         foreign key (manufacturer_id)
-        references manufacturer(manufacturer_id),
-    constraint fk_manufacturer_model_model_id
-        foreign key (model_id)
-        references model(model_id)
+        references manufacturer(manufacturer_id)
 );
 
 create table `type` (
