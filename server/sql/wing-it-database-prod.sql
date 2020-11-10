@@ -80,6 +80,7 @@ create table user (
     password_hash varchar(50) not null,
     email varchar(248) not null,
     phone varchar(20) not null,
+    address varchar(200) not null,
     company varchar(45) null,
     constraint fk_user_role_role_id
         foreign key (role_id)
