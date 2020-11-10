@@ -1,9 +1,11 @@
 package learn.wingit.models;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
     private int userId;
@@ -20,8 +22,13 @@ public class User {
     @NotBlank(message = "Phone number is required.")
     private String phone;
 
+    @NotBlank(message = "Address is required.")
+    private String address;
+
     private String company;
     private List<Order> orders = new ArrayList<>();
+    @Min(value = 0, message = "Role id must be larger than {value}")
+    private int roleId;
 
     public User() {
     }
@@ -80,5 +87,42 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return userId == user.userId &&
+                roleId == user.roleId &&
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(email, user.email) &&
+                Objects.equals(phone, user.phone) &&
+                Objects.equals(address, user.address) &&
+                Objects.equals(company, user.company) &&
+                Objects.equals(orders, user.orders);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, username, password, email, phone, address, company, orders, roleId);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -15,6 +16,7 @@ public class Order {
     @NotNull(message = "Must provide a plane ID")
     private int planeId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PastOrPresent(message = "Order Date cannot be in the future")
     private LocalDate orderDate;
     @Min(value = 0, message = "Total cost must be greater than {value}")
     private BigDecimal totalCost;

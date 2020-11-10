@@ -1,7 +1,10 @@
 package learn.wingit.models;
 
+import javax.validation.constraints.NotBlank;
+
 public class Role {
     private int roleId;
+    @NotBlank(message = "Role is required.")
     private String role;
 
     public Role() {
