@@ -1,7 +1,10 @@
 package learn.wingit.models;
 
+import javax.validation.constraints.NotBlank;
+
 public class Size {
     private int sizeId;
+    @NotBlank(message = "Size is required.")
     private String size;
 
     public Size() {
