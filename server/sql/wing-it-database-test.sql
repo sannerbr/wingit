@@ -80,6 +80,7 @@ create table user (
     password_hash varchar(50) not null,
     email varchar(248) not null,
     phone varchar(20) not null,
+    address varchar(200) not null,
     company varchar(45) null,
     constraint fk_user_role_role_id
         foreign key (role_id)
@@ -134,10 +135,10 @@ insert into role (role)
     values ('user'),
             ('admin');
 
-insert into user(role_id, username, password_hash, email, phone)
-    values(1, 'customer', 'cust-pw-hash', 'cust@cust.com', '111-111-1111'),
-            (1, 'buyer', 'buyer-pw-hash', 'buy@buy.com', '222-222-2222'),
-            (2, 'admin', 'admin-pw-hash', 'admin@admin.com', '333-333-3333');
+insert into user(role_id, username, password_hash, email, phone, address)
+    values(1, 'customer', 'cust-pw-hash', 'cust@cust.com', '111-111-1111', '111 1st St.'),
+            (1, 'buyer', 'buyer-pw-hash', 'buy@buy.com', '222-222-2222', '222 2nd St'),
+            (2, 'admin', 'admin-pw-hash', 'admin@admin.com', '333-333-3333', '333 3rd St');
 
 insert into `order`(user_id, plane_id, order_date, total_cost)
     values (1, 1, '2020-01-01', 100),
