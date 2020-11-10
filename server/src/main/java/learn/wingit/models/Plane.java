@@ -3,6 +3,7 @@ package learn.wingit.models;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Plane {
     private int plane_id;
