@@ -1,10 +1,13 @@
 package learn.wingit.models;
 
+import javax.validation.constraints.NotBlank;
+
 public class Manufacturer {
     private int manufacturer_id;
+    @NotBlank(message = "Name must be provided")
     private String name;
 
-    public Manufacturer(int manufacturer_id, String name) {
+    public Manufacturer(int manufacturer_id, @NotBlank(message = "Name must be provided") String name) {
         this.manufacturer_id = manufacturer_id;
         this.name = name;
     }

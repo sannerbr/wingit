@@ -1,14 +1,22 @@
 package learn.wingit.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Order {
     private int orderId;
+    @NotNull(message = "Must provide a user ID")
     private int userId;
+    @NotNull(message = "Must provide a plane ID")
     private int planeId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate orderDate;
+    @Min(value = 0, message = "Total cost must be greater than {value}")
     private BigDecimal totalCost;
 
     public Order() {
