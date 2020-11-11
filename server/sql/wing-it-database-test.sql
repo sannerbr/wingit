@@ -134,6 +134,7 @@ insert into user(role_id, username, password_hash, email, phone, address)
             (1, 'buyer', 'buyer-pw-hash', 'buy@buy.com', '222-222-2222', '222 2nd St'),
             (2, 'admin', 'admin-pw-hash', 'admin@admin.com', '333-333-3333', '333 3rd St');
 
+
 insert into `order`(user_id, order_date, total_cost)
     values (1, '2020-01-01', 100),
             (1, '2020-02-02', 200),
@@ -148,7 +149,6 @@ insert into order_plane (order_id, plane_id, number_ordered)
 end//
 delimiter ;
 
-
 insert into role (role)
     values ('user'),
             ('admin');
@@ -162,3 +162,9 @@ insert into `type`(name)
     values ('commercial'),
             ('cargo'),
             ('private');
+
+insert into `order`(user_id, plane_id, order_date, total_cost)
+    values (1, 1, '2020-01-01', 100),
+            (1, 2, '2020-02-02', 200),
+            (2, 3, '2020-03-03', 300);
+            
