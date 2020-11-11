@@ -9,7 +9,7 @@ public interface OrderRepository {
 
     List<Order> findAll();
 
-    Order findById();
+    Order findById(int orderId);
 
     Order add(Order order);
 
