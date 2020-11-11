@@ -86,7 +86,7 @@ create table `order` (
     total_cost decimal(12,2) not null,
     constraint fk_order_user_user_id
         foreign key (user_id)
-        references user(user_id),
+        references user(user_id)
 );
 
 create table order_plane (
@@ -94,7 +94,7 @@ create table order_plane (
     plane_id int not null,
     number_ordered int not null,
     constraint pk_order_plane
-        primary_key(order_id, plane_id),
+        primary key(order_id, plane_id),
     constraint fk_order_plane_order_id
         foreign key (order_id)
         references `order`(order_id),
