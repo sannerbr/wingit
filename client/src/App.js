@@ -16,8 +16,14 @@ function App() {
         <Route exact={true} path="/">
           <Home/>
         </Route>
-        <Route exact={true} path="/planes">
-          <p1>Plane</p1>
+        <Route exact={true} path="/commercial-planes">
+          <p1>Commercial Plane</p1>
+        </Route>
+        <Route exact={true} path="/cargo-planes">
+          <p1>Cargo plane</p1>
+        </Route>
+        <Route exact={true} path="/private-planes">
+          <p1>Private plane</p1>
         </Route>
         <Route exact={true} path="/add-plane">
           <p1>Add Plane</p1>
