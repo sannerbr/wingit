@@ -163,6 +163,7 @@ public class Plane {
         this.description = description;
     }
 
+<<<<<<< HEAD
     public BigDecimal getTotalPrice() {
         return price.multiply(BigDecimal.valueOf(quantity));
     }
@@ -174,4 +175,6 @@ public class Plane {
     public void setHidden(boolean hidden) {
         isHidden = hidden;
     }
+=======
+>>>>>>> b2998b29f0fb63b0484f0f0e8cdfde3c070c95e5
 }

@@ -49,6 +49,6 @@ class PlaneJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddPlane() {
-        
+
     }
 }
