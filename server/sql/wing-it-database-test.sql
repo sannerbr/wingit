@@ -108,14 +108,14 @@ create table order_plane (
 delimiter //
 create procedure set_known_good_state()
 begin
-SET FOREIGN_KEY_CHECKS = 0; 
+SET FOREIGN_KEY_CHECKS = 0;
     truncate table order_plane;
     truncate table `order`;
     truncate table user;
     truncate table plane;
     truncate table model;
     truncate table manufacturer;
-SET FOREIGN_KEY_CHECKS = 1; 
+SET FOREIGN_KEY_CHECKS = 1;
 insert into manufacturer(name)
     values ('Boeing'),
             ('Airbus');
@@ -124,7 +124,9 @@ insert into model(name, manufacturer_id)
     values ('747', 1),
             ('777', 1),
             ('A220', 2),
-            ('C-150', 1);
+            ('C-150', 1),
+            ('Learjet 23', 2),
+            ('Douglas DC-3', 2);
 
 insert into plane(model_id, size_id, type_id, price, quantity, seating_capacity,
                     height, length, wingspan, hidden, `range`, `description`)

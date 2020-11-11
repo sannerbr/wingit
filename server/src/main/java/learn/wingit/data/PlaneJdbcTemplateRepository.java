@@ -41,7 +41,7 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
                 "price, quantity, seating_capacity, " +
                 "height, length, wingspan, hidden, " +
                 "`range`, `description` " +
-                "from plane" +
+                "from plane " +
                 "where hidden = 0;";
 
 
@@ -128,7 +128,6 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
                 plane.getModel_id(), plane.getSize_id(),
                 plane.getType_id(), plane.getPrice(),
                 plane.getQuantity(), plane.getSeating_capacity(),
-                plane.getQuantity(), plane.getSeating_capacity(),
                 plane.getHeight(), plane.getLength(),
                 plane.getWingspan(), plane.isHidden(), plane.getRange(),
                 plane.getDescription(), plane.getPlane_id()
@@ -137,6 +136,6 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
 
     @Override
     public boolean delete(int planeId) {
-        return jdbcTemplate.update("update plane set hidden = ?;", planeId) > 0;
+        return jdbcTemplate.update("update plane set hidden = 1 where plane_id = ?;", planeId) > 0;
     }
 }
