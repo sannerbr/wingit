@@ -1,6 +1,7 @@
 package learn.wingit.models;
 
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,13 +13,13 @@ import java.util.Objects;
 
 public class Plane {
     private int plane_id;
-    @NotNull(message = "Manufacturer ID is required")
-    private int manufacturer_model_id;
+    @NotNull(message = "Model ID is required")
+    private int model_id;
     @NotNull(message = "Size ID required")
     private int size_id;
     @NotNull(message = "Type ID is required")
     private int type_id;
-    @Min(value = 0, message = "Price is required and must be greater than {value}")
+    @DecimalMin(value = "0.0", message = "Price is required and must be greater than {value}")
     BigDecimal price;
     @Min(value = 0, message = "Quantity must be greater than {value}")
     private int quantity;
@@ -34,21 +35,24 @@ public class Plane {
     private int range;
     @NotBlank(message = "Description is required.")
     private String description;
-    List<Order> orders = new ArrayList<>();
+    @NotNull(message = "Order ID is required")
+    private int orderId;
+
+    //HAS MANY IMAGES (List<Image>)
 
     public Plane() {
 
     }
 
-    public Plane(int plane_id, @NotNull(message = "Manufacturer ID is required") int manufacturer_model_id,
+    public Plane(int plane_id, @NotNull(message = "Manufacturer ID is required") int model_id,
                  @NotNull(message = "Size ID required") int size_id, @NotNull(message = "Type ID is required") int type_id,
                  @Min(value = 0, message = "Price is required and must be greater than {value}") BigDecimal price,
                  @Min(value = 0, message = "Quantity must be greater than {value}") int quantity, @Min(value = 0, message = "Seating capacity must be more than {value}") int seating_capacity,
                  @Min(value = 0, message = "Height must be greater than {value}") int height, @Min(value = 0, message = "Length must be greater than {value}") int length,
                  @Min(value = 0, message = "Wingspan must be greater than {value}") int wingspan, @Min(value = 0, message = "Range must be larger than {value}") int range,
-                 @NotBlank(message = "Description is required.") String description, List<Order> orders) {
+                 @NotBlank(message = "Description is required.") String description, @NotNull(message = "Order ID is required") int orderId) {
         this.plane_id = plane_id;
-        this.manufacturer_model_id = manufacturer_model_id;
+        this.model_id = model_id;
         this.size_id = size_id;
         this.type_id = type_id;
         this.price = price;
@@ -59,7 +63,7 @@ public class Plane {
         this.wingspan = wingspan;
         this.range = range;
         this.description = description;
-        this.orders = orders;
+        this.orderId = orderId;
     }
 
     public int getPlane_id() {
@@ -70,12 +74,20 @@ public class Plane {
         this.plane_id = plane_id;
     }
 
-    public int getManufacturer_model_id() {
-        return manufacturer_model_id;
+    public int getModel_id() {
+        return model_id;
     }
 
-    public void setManufacturer_model_id(int manufacturer_model_id) {
-        this.manufacturer_model_id = manufacturer_model_id;
+    public void setModel_id(int model_id) {
+        this.model_id = model_id;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getSize_id() {
@@ -158,36 +170,8 @@ public class Plane {
         this.description = description;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public BigDecimal getTotalPrice() {
+            return price.multiply(BigDecimal.valueOf(quantity));
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Plane plane = (Plane) o;
-        return plane_id == plane.plane_id &&
-                manufacturer_model_id == plane.manufacturer_model_id &&
-                size_id == plane.size_id &&
-                type_id == plane.type_id &&
-                quantity == plane.quantity &&
-                seating_capacity == plane.seating_capacity &&
-                height == plane.height &&
-                length == plane.length &&
-                wingspan == plane.wingspan &&
-                range == plane.range &&
-                price.equals(plane.price) &&
-                description.equals(plane.description) &&
-                orders.equals(plane.orders);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(plane_id, manufacturer_model_id, size_id, type_id, price, quantity, seating_capacity, height, length, wingspan, range, description, orders);
-    }
 }
