@@ -26,7 +26,8 @@ export default function Home() {
           <div className="col-sm-4">
             <div className="card">
               <div className="card-body">
-                <p className="card-text">The private jets we offer are the best on the market. Click here if you're rich</p>
+                <p className="card-text">The private jets we offer are the best on the market.
+                 Click here if you're rich</p>
                 <Link to="/private-planes" className="btn btn-primary">Private Planes</Link>
               </div>
             </div>
