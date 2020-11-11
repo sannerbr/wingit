@@ -131,3 +131,11 @@ insert into `order`(user_id, plane_id, order_date, total_cost)
     values (1, 1, '2020-01-01', 100),
             (1, 2, '2020-02-02', 200),
             (2, 3, '2020-03-03', 300);
+            
+            
+-- select 
+-- model_id,size_id, type_id, 
+-- price, quantity, seating_capacity, 
+-- height, length, wingspan, 
+-- `range`, `description`
+--  from plane;
