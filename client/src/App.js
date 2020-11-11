@@ -1,9 +1,9 @@
 import MenuBar from './MenuBar';
 import Home from './Home';
+import CommercialPlane from './CommercialPlane'
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom';
 import './App.css';
 
@@ -12,12 +12,12 @@ function App() {
     <div className="App">
 
       <Router>
-        <MenuBar/>
+        <MenuBar />
         <Route exact={true} path="/">
-          <Home/>
+          <Home />
         </Route>
         <Route exact={true} path="/commercial-planes">
-          <p1>Commercial Plane</p1>
+          <CommercialPlane />
         </Route>
         <Route exact={true} path="/cargo-planes">
           <p1>Cargo plane</p1>
@@ -35,11 +35,6 @@ function App() {
           <p1>order</p1>
         </Route>
       </Router>
-
-      <header className="App-header">
-        <p>placeholder</p>
-
-      </header>
     </div>
   );
 }
