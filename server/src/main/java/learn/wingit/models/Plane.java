@@ -6,9 +6,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 
 public class Plane {
@@ -29,14 +26,14 @@ public class Plane {
     private int height;
     @Min(value = 0, message = "Length must be greater than {value}")
     private int length;
-    @Min(value = 0,message = "Wingspan must be greater than {value}")
+    @Min(value = 0, message = "Wingspan must be greater than {value}")
     private int wingspan;
+    private boolean isHidden;
     @Min(value = 0, message = "Range must be larger than {value}")
     private int range;
     @NotBlank(message = "Description is required.")
     private String description;
-    @NotNull(message = "Order ID is required")
-    private int orderId;
+
 
     //HAS MANY IMAGES (List<Image>)
 
@@ -44,13 +41,17 @@ public class Plane {
 
     }
 
-    public Plane(int plane_id, @NotNull(message = "Manufacturer ID is required") int model_id,
-                 @NotNull(message = "Size ID required") int size_id, @NotNull(message = "Type ID is required") int type_id,
-                 @Min(value = 0, message = "Price is required and must be greater than {value}") BigDecimal price,
-                 @Min(value = 0, message = "Quantity must be greater than {value}") int quantity, @Min(value = 0, message = "Seating capacity must be more than {value}") int seating_capacity,
-                 @Min(value = 0, message = "Height must be greater than {value}") int height, @Min(value = 0, message = "Length must be greater than {value}") int length,
-                 @Min(value = 0, message = "Wingspan must be greater than {value}") int wingspan, @Min(value = 0, message = "Range must be larger than {value}") int range,
-                 @NotBlank(message = "Description is required.") String description, @NotNull(message = "Order ID is required") int orderId) {
+    public Plane(int plane_id, @NotNull(message = "Model ID is required") int model_id,
+                 @NotNull(message = "Size ID required") int size_id,
+                 @NotNull(message = "Type ID is required") int type_id,
+                 @DecimalMin(value = "0.0", message = "Price is required and must be greater than {value}") BigDecimal price,
+                 @Min(value = 0, message = "Quantity must be greater than {value}") int quantity,
+                 @Min(value = 0, message = "Seating capacity must be more than {value}") int seating_capacity,
+                 @Min(value = 0, message = "Height must be greater than {value}") int height,
+                 @Min(value = 0, message = "Length must be greater than {value}") int length,
+                 @Min(value = 0, message = "Wingspan must be greater than {value}") int wingspan, boolean isHidden,
+                 @Min(value = 0, message = "Range must be larger than {value}") int range,
+                 @NotBlank(message = "Description is required.") String description) {
         this.plane_id = plane_id;
         this.model_id = model_id;
         this.size_id = size_id;
@@ -61,9 +62,9 @@ public class Plane {
         this.height = height;
         this.length = length;
         this.wingspan = wingspan;
+        this.isHidden = isHidden;
         this.range = range;
         this.description = description;
-        this.orderId = orderId;
     }
 
     public int getPlane_id() {
@@ -80,14 +81,6 @@ public class Plane {
 
     public void setModel_id(int model_id) {
         this.model_id = model_id;
-    }
-
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
     }
 
     public int getSize_id() {
@@ -170,4 +163,18 @@ public class Plane {
         this.description = description;
     }
 
+<<<<<<< HEAD
+    public BigDecimal getTotalPrice() {
+        return price.multiply(BigDecimal.valueOf(quantity));
+    }
+
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
+    }
+=======
+>>>>>>> b2998b29f0fb63b0484f0f0e8cdfde3c070c95e5
 }

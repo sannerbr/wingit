@@ -38,6 +38,7 @@ create table plane (
     height int not null,
     length int not null,
     wingspan int not null,
+    hidden bit(1) not null,
     `range` int not null,
     `description` varchar(500) not null,
     constraint fk_plane_model_id
@@ -107,13 +108,14 @@ create table order_plane (
 delimiter //
 create procedure set_known_good_state()
 begin
+SET FOREIGN_KEY_CHECKS = 0; 
     truncate table order_plane;
     truncate table `order`;
     truncate table user;
     truncate table plane;
     truncate table model;
     truncate table manufacturer;
-
+SET FOREIGN_KEY_CHECKS = 1; 
 insert into manufacturer(name)
     values ('Boeing'),
             ('Airbus');
@@ -121,13 +123,15 @@ insert into manufacturer(name)
 insert into model(name, manufacturer_id)
     values ('747', 1),
             ('777', 1),
-            ('A220', 2);
+            ('A220', 2),
+            ('C-150', 1);
 
 insert into plane(model_id, size_id, type_id, price, quantity, seating_capacity,
-                    height, length, wingspan, `range`, `description`)
-    values (1, 1, 1, 100.00, 1, 100, 10, 10, 10, 100, 'Boeing 747 desc'),
-            (2, 2, 2, 200.00, 2, 200, 20, 20, 20, 200, 'Boeing 777 desc'),
-            (3, 3, 3, 300.00, 3, 300, 30, 30, 30, 300, 'Airbus A220 desc');
+                    height, length, wingspan, hidden, `range`, `description`)
+    values (1, 1, 1, 100.00, 1, 100, 10, 10, 10, 0,  100, 'Boeing 747 desc'),
+            (2, 2, 2, 200.00, 2, 200, 20, 20, 20, 0, 200, 'Boeing 777 desc'),
+            (4, 3, 3, 600.00, 2, 400, 40, 40, 40, 1, 400, 'Boeing C-150 desc'),
+            (3, 3, 3, 300.00, 3, 300, 30, 30, 30, 0, 300, 'Airbus A220 desc');
 
 insert into user(role_id, username, password_hash, email, phone, address)
     values(1, 'customer', 'cust-pw-hash', 'cust@cust.com', '111-111-1111', '111 1st St.'),
@@ -162,9 +166,4 @@ insert into `type`(name)
     values ('commercial'),
             ('cargo'),
             ('private');
-
-insert into `order`(user_id, plane_id, order_date, total_cost)
-    values (1, 1, '2020-01-01', 100),
-            (1, 2, '2020-02-02', 200),
-            (2, 3, '2020-03-03', 300);
             

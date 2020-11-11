@@ -26,9 +26,23 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
         final String sql = "select " +
                 "plane_id, model_id,size_id, type_id, " +
                 "price, quantity, seating_capacity, " +
-                "height, length, wingspan, " +
+                "height, length, wingspan, hidden, " +
                 "`range`, `description` " +
                 "from plane;";
+
+
+        return jdbcTemplate.query(sql, new PlaneMapper());
+    }
+
+    @Override
+    public List<Plane> findAllForUser() {
+        final String sql = "select " +
+                "plane_id, model_id,size_id, type_id, " +
+                "price, quantity, seating_capacity, " +
+                "height, length, wingspan, hidden, " +
+                "`range`, `description` " +
+                "from plane" +
+                "where hidden = 0;";
 
 
         return jdbcTemplate.query(sql, new PlaneMapper());
@@ -39,9 +53,9 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
         final String sql = "select " +
                 "plane_id, model_id,size_id, type_id, " +
                 "price, quantity, seating_capacity, " +
-                "height, length, wingspan, " +
+                "height, length, wingspan, hidden, " +
                 "`range`, `description` " +
-                "from plane" +
+                "from plane " +
                 "where type_id = ?;";
         return jdbcTemplate.query(sql, new PlaneMapper(), type_id);
     }
@@ -51,10 +65,10 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
         final String sql = "select " +
                 "plane_id, model_id,size_id, type_id, " +
                 "price, quantity, seating_capacity, " +
-                "height, length, wingspan, " +
+                "height, length, wingspan, hidden, " +
                 "`range`, `description` " +
-                "from plane" +
-                "where type_id = ?;";
+                "from plane " +
+                "where plane_id = ?;";
         return jdbcTemplate.query(sql, new PlaneMapper(), plane_id)
                 .stream().findFirst().orElse(null);
     }
@@ -64,9 +78,9 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
         final String sql = "insert into plane(" +
                 "model_id,size_id, type_id, " +
                 "price, quantity, seating_capacity, " +
-                "height, length, wingspan, " +
+                "height, length, wingspan, hidden, " +
                 "`range`, `description`) " +
-                "values (?,?,?,?,?,?,?,?,?,?,?)";
+                "values (?,?,?,?,?,?,?,?,?,?,?,?)";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected =jdbcTemplate.update(connection -> {
@@ -80,8 +94,9 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
             ps.setInt(7, plane.getHeight());
             ps.setInt(8, plane.getLength());
             ps.setInt(9, plane.getWingspan());
-            ps.setInt(10, plane.getRange());
-            ps.setString(11, plane.getDescription());
+            ps.setBoolean(10, plane.isHidden());
+            ps.setInt(11, plane.getRange());
+            ps.setString(12, plane.getDescription());
             return ps;
         }, keyHolder);
 
@@ -95,11 +110,33 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
 
     @Override
     public boolean update(Plane plane) {
-        return false;
+        final String sql = "update plane set " +
+                "model_id = ?, " +
+                "size_id = ?, " +
+                "type_id = ?, " +
+                "price = ?, " +
+                "quantity = ?, " +
+                "seating_capacity = ?, " +
+                "height = ?, " +
+                "length = ?, " +
+                "wingspan = ?, " +
+                "hidden = ?, " +
+                "`range` = ?, " +
+                "`description` = ? " +
+                "where plane_id = ?;";
+        return jdbcTemplate.update(sql,
+                plane.getModel_id(), plane.getSize_id(),
+                plane.getType_id(), plane.getPrice(),
+                plane.getQuantity(), plane.getSeating_capacity(),
+                plane.getQuantity(), plane.getSeating_capacity(),
+                plane.getHeight(), plane.getLength(),
+                plane.getWingspan(), plane.isHidden(), plane.getRange(),
+                plane.getDescription(), plane.getPlane_id()
+                ) > 0;
     }
 
     @Override
-    public boolean delete(Plane plane) {
-        return false;
+    public boolean delete(int planeId) {
+        return jdbcTemplate.update("update plane set hidden = ?;", planeId) > 0;
     }
 }
