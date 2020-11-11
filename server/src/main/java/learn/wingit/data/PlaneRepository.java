@@ -8,6 +8,8 @@ public interface PlaneRepository {
 
     List<Plane> findAll();
 
+    List<Plane> findAllForUser();
+
     List<Plane> findByType(int type_id);
 
     Plane findById(int plane_id);
@@ -16,6 +18,6 @@ public interface PlaneRepository {
 
     boolean update(Plane plane);
 
-    boolean delete(Plane plane);
+    boolean delete(int planeId);
 
 }
