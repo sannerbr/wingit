@@ -170,8 +170,4 @@ public class Plane {
         this.description = description;
     }
 
-    public BigDecimal getTotalPrice() {
-            return price.multiply(BigDecimal.valueOf(quantity));
-    }
-
 }
