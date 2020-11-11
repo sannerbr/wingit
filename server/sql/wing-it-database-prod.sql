@@ -82,13 +82,37 @@ create table user (
 create table `order` (
     order_id int primary key auto_increment,
     user_id int not null,
-    plane_id int not null,
     order_date date not null,
     total_cost decimal(12,2) not null,
     constraint fk_order_user_user_id
         foreign key (user_id)
         references user(user_id),
+);
+
+create table order_plane (
+    order_id int not null,
+    plane_id int not null,
+    number_ordered int not null,
+    constraint pk_order_plane
+        primary_key(order_id, plane_id),
+    constraint fk_order_plane_order_id
+        foreign key (order_id)
+        references `order`(order_id),
     constraint fk_order_plane_plane_id
         foreign key (plane_id)
         references plane(plane_id)
 );
+
+insert into role (role)
+    values ('user'),
+            ('admin');
+
+insert into size(size)
+    values ('small'),
+            ('medium'),
+            ('large');
+
+insert into `type`(name)
+    values ('commercial'),
+            ('cargo'),
+            ('private');
