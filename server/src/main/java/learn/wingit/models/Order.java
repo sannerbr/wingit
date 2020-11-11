@@ -2,6 +2,7 @@ package learn.wingit.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -15,12 +16,10 @@ public class Order {
     private int orderId;
     @NotNull(message = "Must provide a user ID")
     private int userId;
-    //    @NotNull(message = "Must provide a plane ID")
-//    private int planeId;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PastOrPresent(message = "Order Date cannot be in the future")
     private LocalDate orderDate;
-    @Min(value = 0, message = "Total cost must be greater than {value}")
+    @DecimalMin(value = "0.0", message = "Total cost must be greater than {value}", inclusive = true)
     private BigDecimal totalCost;
     private List<Plane> planes = new ArrayList<>();
 
@@ -30,7 +29,6 @@ public class Order {
     public Order(int orderId, int userId, LocalDate orderDate, BigDecimal totalCost, List<Plane> planes) {
         this.orderId = orderId;
         this.userId = userId;
-//        this.planeId = planeId;
         this.orderDate = orderDate;
         this.totalCost = totalCost;
         this.planes = planes;
@@ -51,14 +49,6 @@ public class Order {
     public void setUserId(int userId) {
         this.userId = userId;
     }
-
-//    public int getPlaneId() {
-//        return planeId;
-//    }
-//
-//    public void setPlaneId(int planeId) {
-//        this.planeId = planeId;
-//    }
 
     public LocalDate getOrderDate() {
         return orderDate;
