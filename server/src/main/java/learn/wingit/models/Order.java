@@ -15,7 +15,9 @@ import java.util.Objects;
 public class Order {
     private int orderId;
     @NotNull(message = "Must provide a user ID")
+    @Min(value = 1, message = "User ID must be greater than or equal to {value}")
     private int userId;
+    @NotNull(message = "Order Date is required")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PastOrPresent(message = "Order Date cannot be in the future")
     private LocalDate orderDate;
