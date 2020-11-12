@@ -21,7 +21,7 @@ public class Plane {
     @NotNull(message = "Type ID is required")
     @Min(value = 1, message = "Type ID must be greater than or equal to {value}")
     private int type_id;
-    @DecimalMin(value = "0.0", message = "Price is required and must be greater than {value}")
+    @DecimalMin(value = "0.00", message = "Price must be greater than or equal to {value}", inclusive = true)
     @NotNull(message = "Price is required")
     BigDecimal price;
     @Min(value = 0, message = "Quantity must be greater than {value}")

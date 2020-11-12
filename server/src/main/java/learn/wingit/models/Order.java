@@ -21,7 +21,8 @@ public class Order {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @PastOrPresent(message = "Order Date cannot be in the future")
     private LocalDate orderDate;
-    @DecimalMin(value = "0.0", message = "Total cost must be greater than {value}", inclusive = true)
+    @DecimalMin(value = "0.00", message = "Total cost must be greater than or equal to {value}", inclusive = true)
+    @NotNull(message = "Total cost is required")
     private BigDecimal totalCost;
     private List<Order_Plane> planes = new ArrayList<>();
 
