@@ -15,6 +15,7 @@ public class OrderPlaneMapper implements RowMapper<Order_Plane> {
         Order_Plane op = new Order_Plane();
         op.setOrderId(resultSet.getInt("order_id"));
         op.setPlane_Id(resultSet.getInt("plane_id"));
+        op.setNumber_ordered(resultSet.getInt("number_ordered"));
 
         PlaneMapper planeMapper = new PlaneMapper();
         op.setPlane(planeMapper.mapRow(resultSet, i));
