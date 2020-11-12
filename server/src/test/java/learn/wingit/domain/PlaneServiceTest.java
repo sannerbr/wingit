@@ -34,6 +34,81 @@ class PlaneServiceTest {
         assertNotNull(result);
         assertTrue(result.isSuccess());
     }
+    @Test
+    void shouldNotAddNullPlane() {
+        Result<Plane> result = service.add(null);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotAddMissingModel() {
+        Plane plane = makePlane();
+        plane.setModel_id(0);
+        Result<Plane> result = service.add(plane);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotAddMissingSize() {
+        Plane plane = makePlane();
+        plane.setSize_id(0);
+        Result<Plane> result = service.add(plane);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotAddMissingType() {
+        Plane plane = makePlane();
+        plane.setType_id(0);
+        Result<Plane> result = service.add(plane);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotAddNullPrice() {
+        Plane plane = makePlane();
+        plane.setPrice(null);
+        Result<Plane> result = service.add(plane);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotAddNegativePrice() {
+        Plane plane = makePlane();
+        plane.setPrice(BigDecimal.valueOf(-1));
+        Result<Plane> result = service.add(plane);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldUpdatePlane() {
+        Plane plane = makePlane();
+        plane.setPlane_id(1);
+
+        when(repository.update(plane)).thenReturn(true);
+
+        Result<Plane> result = service.update(plane);
+        assertNotNull(result);
+        assertTrue(result.isSuccess());
+        assertEquals(ResultType.SUCCESS, result.getType());
+    }
+
+    @Test
+    void shouldNotUpdateMissingModel() {
+        Plane plane = makePlane();
+        plane.setModel_id(0);
+        Result<Plane> result = service.update(plane);
+        assertFalse(result.isSuccess());
+    }
+
+    @Test
+    void shouldNotUpdateBadId() {
+        Plane plane = makePlane();
+        plane.setPlane_id(0);
+        Result<Plane> result = service.update(plane);
+        assertFalse(result.isSuccess());
+    }
+
 
     private Plane makePlane(){
         Plane plane = new Plane();
