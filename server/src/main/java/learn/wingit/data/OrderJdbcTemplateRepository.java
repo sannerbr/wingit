@@ -83,7 +83,8 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
 
     private void addPlanes(Order order) {
         final String sql = "select op.order_id, op.plane_id, op.number_ordered, p.plane_id, p.model_id, p.size_id, p.type_id, p.price, p.quantity, " +
-                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description` from order_plane op" +
+                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description` from order_plane op " +
+                "inner join order o on o.user_id" +
                 "inner join plane p on p.plane_id = op.plane_id where op.plane_id = ?;";
 
         var orderPlanes = jdbcTemplate.query(sql, new OrderPlaneMapper(), order.getOrderId());
