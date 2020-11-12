@@ -30,7 +30,7 @@ class PlaneJdbcTemplateRepositoryTest {
         List<Plane> planes = repository.findAll();
         assertNotNull(planes);
         assertEquals(BigDecimal.valueOf(100), planes.get(0).getPrice());
-        assertTrue(planes.get(3).isHidden());
+        assertTrue(planes.get(2).isHidden());
         assertEquals(4, planes.size());
     }
 
@@ -47,6 +47,7 @@ class PlaneJdbcTemplateRepositoryTest {
         Plane plane = repository.findById(1);
         assertNotNull(plane);
         assertEquals(BigDecimal.valueOf(100), plane.getPrice());
+        assertEquals(1, plane.getOrders().size());
     }
 
     @Test
@@ -67,6 +68,7 @@ class PlaneJdbcTemplateRepositoryTest {
     void shouldUpdatePlane() {
         Plane plane = makePlane();
         plane.setPlane_id(1);
+        plane.setModel_id(6);
         plane.setDescription("A box");
         boolean success = repository.update(plane);
 

@@ -1,6 +1,9 @@
 import MenuBar from './MenuBar';
 import Home from './Home';
-import CommercialPlane from './CommercialPlane'
+import CommercialPlaneView from './CommercialPlaneView';
+import CargoPlaneView from './CargoPlaneView';
+import PrivatePlaneView from './PrivatePlaneView';
+import AddPlane from './AddPlane';
 import {
   BrowserRouter as Router,
   Route,
@@ -10,23 +13,31 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-
       <Router>
         <MenuBar />
         <Route exact={true} path="/">
           <Home />
         </Route>
         <Route exact={true} path="/commercial-planes">
-          <CommercialPlane />
+          <CommercialPlaneView />
+        </Route>
+        <Route path="/commercial-planes/:id">
+          {/* Commercial plane componenet*/}
         </Route>
         <Route exact={true} path="/cargo-planes">
-          <p1>Cargo plane</p1>
+          <CargoPlaneView />
+        </Route>
+        <Route path="/cargo-planes/:id">
+          {/* Cargo plane componenet*/}
         </Route>
         <Route exact={true} path="/private-planes">
-          <p1>Private plane</p1>
+          <PrivatePlaneView />
+        </Route>
+        <Route path="/private-planes/:id">
+          {/* Private plane componenet*/}  
         </Route>
         <Route exact={true} path="/add-plane">
-          <p1>Add Plane</p1>
+          <AddPlane />
         </Route>
         <Route exact={true} path="/account">
           <p1>account</p1>

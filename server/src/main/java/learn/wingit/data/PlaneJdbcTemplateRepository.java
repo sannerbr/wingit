@@ -43,7 +43,7 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
                 "height, length, wingspan, hidden, " +
                 "`range`, `description` " +
                 "from plane " +
-                "where hidden = 0;";
+                "where hidden is false;";
 
 
         return jdbcTemplate.query(sql, new PlaneMapper());
