@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
+  NavLink,
   Route,
   Link
 } from 'react-router-dom';
@@ -11,7 +12,7 @@ export default function MenuBar() {
       <div className="collapse navbar-collapse">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item mr-2">
-            <Link to="/" className="btn">Home</Link>
+            <NavLink to="/" className="btn">Home</NavLink>
           </li>
           <li className="nav-item dropdown">
             <button className="btn dropdown-toggle" type="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -24,15 +25,15 @@ export default function MenuBar() {
             </div>
           </li>
           <li className="nav-item mr-2">
-            <Link to="/add-plane" className="btn">Add</Link>
+            <NavLink to="/add-plane" className="btn">Add</NavLink>
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item mr-2">
-            <Link to="/account" className="btn">Account</Link>
+            <NavLink to="/account" className="btn">Account</NavLink>
           </li>
           <li className="nav-item mr-2">
-            <Link to="/orders" className="btn">Orders</Link>
+            <NavLink to="/orders" className="btn">Orders</NavLink>
           </li>
         </ul>
       </div>
