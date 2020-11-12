@@ -21,12 +21,12 @@ public class Order {
     private LocalDate orderDate;
     @DecimalMin(value = "0.0", message = "Total cost must be greater than {value}", inclusive = true)
     private BigDecimal totalCost;
-    private List<Plane> planes = new ArrayList<>();
+    private List<Order_Plane> planes = new ArrayList<>();
 
     public Order() {
     }
 
-    public Order(int orderId, int userId, LocalDate orderDate, BigDecimal totalCost, List<Plane> planes) {
+    public Order(int orderId, int userId, LocalDate orderDate, BigDecimal totalCost, List<Order_Plane> planes) {
         this.orderId = orderId;
         this.userId = userId;
         this.orderDate = orderDate;
@@ -66,11 +66,11 @@ public class Order {
         this.totalCost = totalCost;
     }
 
-    public List<Plane> getPlanes() {
+    public List<Order_Plane> getPlanes() {
         return planes;
     }
 
-    public void setPlanes(List<Plane> planes) {
+    public void setPlanes(List<Order_Plane> planes) {
         this.planes = planes;
     }
 
