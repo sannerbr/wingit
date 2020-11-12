@@ -13,7 +13,7 @@ import java.sql.Statement;
 import java.util.List;
 
 @Repository
-public class PlaneJdbcTemplateRepository implements PlaneRepository{
+public class PlaneJdbcTemplateRepository implements PlaneRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
