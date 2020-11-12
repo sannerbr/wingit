@@ -34,10 +34,16 @@ class OrderJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindOrdersByUsername() {
+        List<Order> result = repository.findOrdersByUsername("customer");
+        assertEquals(2, result.size());
+    }
+
+    @Test
     void shouldFindById() {
       Order order = repository.findById(2);
       assertNotNull(order);
-      assertEquals(200, order.getTotalCost());
+      assertEquals(2, order.getOrderId());
     }
 
     @Test
@@ -49,18 +55,11 @@ class OrderJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldNotAddOrderSuccessfully() {
-
-    }
-
-    @Test
     void shouldUpdateOrder() {
-
-    }
-
-    @Test
-    void shouldNotUpdateOrder() {
-
+        Order order = new Order(2, 1, LocalDate.of(2020, 2, 2), BigDecimal.valueOf(300.23), null);
+        boolean result = repository.update(order);
+        assertTrue(result);
+        assertEquals(BigDecimal.valueOf(300.23), repository.findById(2).getTotalCost());
     }
 
     @Test
@@ -74,6 +73,8 @@ class OrderJdbcTemplateRepositoryTest {
         boolean result = repository.deleteById(89009);
         assertFalse(result);
     }
+
+
 
 
     private Order makeOrder() {

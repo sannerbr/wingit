@@ -15,6 +15,8 @@ public interface OrderRepository {
 
     boolean update(Order order);
 
+    List<Order> findOrdersByUsername(String username);
+
     @Transactional
     boolean deleteById(int orderId);
 
