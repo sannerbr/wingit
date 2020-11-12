@@ -2,13 +2,15 @@ package learn.wingit.controllers;
 
 import learn.wingit.domain.PlaneService;
 import learn.wingit.models.Plane;
+import learn.wingit.models.Type;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:3000","http://127.0.0.1:8081"})
-@RequestMapping("/planes")
+@CrossOrigin(origins = {"http://localhost:3000", "http://127.0.0.1:8081"})
+@RequestMapping("/api/planes")
 public class PlaneController {
 
     private final PlaneService service;
@@ -27,8 +29,13 @@ public class PlaneController {
         return service.findById(planeId);
     }
 
-    @GetMapping("/{typeId}")
-    public List<Plane> findByType(@PathVariable int typeId) {
-        return service.findByType(typeId);
+    @GetMapping("/{planeType}")
+    public List<Plane> findByType(@PathVariable String planeType) {
+        Type type = Type.getTypeByName(planeType);
+        if (type == null){
+            return new ArrayList<>();
+        }
+
+        return service.findByType(type.getId());
     }
 }

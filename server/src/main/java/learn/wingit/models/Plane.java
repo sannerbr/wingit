@@ -37,20 +37,11 @@ public class Plane {
     @NotBlank(message = "Description is required.")
     private String description;
 
-    private List<Order_Plane> orders = new ArrayList<>();
 
     //HAS MANY IMAGES (List<Image>)
 
     public Plane() {
 
-    }
-
-    public List<Order_Plane> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order_Plane> orders) {
-        this.orders = orders;
     }
 
     public int getPlane_id() {

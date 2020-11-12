@@ -47,7 +47,6 @@ class PlaneJdbcTemplateRepositoryTest {
         Plane plane = repository.findById(1);
         assertNotNull(plane);
         assertEquals(BigDecimal.valueOf(100), plane.getPrice());
-        assertEquals(1, plane.getOrders().size());
     }
 
     @Test
