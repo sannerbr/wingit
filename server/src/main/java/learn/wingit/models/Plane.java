@@ -12,13 +12,10 @@ import java.util.List;
 
 public class Plane {
     private int plane_id;
-    @NotNull(message = "Model ID is required")
     @Min(value = 1, message = "Model ID must be greater than or equal to {value}")
     private int model_id;
-    @NotNull(message = "Size ID required")
     @Min(value = 1, message = "Size ID must be greater than or equal to {value}")
     private int size_id;
-    @NotNull(message = "Type ID is required")
     @Min(value = 1, message = "Type ID must be greater than or equal to {value}")
     private int type_id;
     @DecimalMin(value = "0.00", message = "Price must be greater than or equal to {value}", inclusive = true)
