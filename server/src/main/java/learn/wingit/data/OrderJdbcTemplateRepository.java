@@ -31,6 +31,15 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
     }
 
     @Override
+    public List<Order> findOrdersByUsername(String username) {
+        final String sql = "select o.order_id, o.user_id, o.order_date, o.total_cost from `order` o " +
+                "inner join `user` u on u.user_id = o.user_id" +
+                " where u.username = ?;";
+
+        return jdbcTemplate.query(sql, new OrderMapper(), username);
+    }
+
+    @Override
     public Order findById(int orderId) {
         final String sql = "select order_id, user_id, order_date, total_cost from `order` o where o.order_id = ?;";
 
@@ -42,6 +51,8 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
 
         return order;
     }
+
+
 
     @Override
     public Order add(Order order) {
@@ -75,16 +86,21 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
                 order.getOrderId()) > 0;
     }
 
+
+
     @Override
     @Transactional
     public boolean deleteById(int orderId) {
+        jdbcTemplate.update("delete from order_plane where order_id = ?;", orderId);
         return jdbcTemplate.update("delete from `order` where order_id = ?;", orderId) > 0;
     }
 
     private void addPlanes(Order order) {
         final String sql = "select op.order_id, op.plane_id, op.number_ordered, p.plane_id, p.model_id, p.size_id, p.type_id, p.price, p.quantity, " +
-                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description` from order_plane op " +
-                "inner join order o on o.user_id" +
+                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description`, o.order_id, o.user_id, o.order_date, o.total_cost, " +
+                "u.user_id, u.role_id, u.username, u.password_hash, u.`email`, u.`phone`, u.`address`, u.company from order_plane op " +
+                "inner join `order` o on o.order_id = op.order_id " +
+                "inner join `user` u on u.user_id = o.user_id " +
                 "inner join plane p on p.plane_id = op.plane_id where op.plane_id = ?;";
 
         var orderPlanes = jdbcTemplate.query(sql, new OrderPlaneMapper(), order.getOrderId());
