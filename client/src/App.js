@@ -4,8 +4,6 @@ import CommercialPlaneView from './CommercialPlaneView';
 import CargoPlaneView from './CargoPlaneView';
 import PrivatePlaneView from './PrivatePlaneView';
 import AddPlane from './AddPlane';
-
-import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -13,15 +11,6 @@ import {
 import './App.css';
 
 function App() {
-  const [planes, setPlanes] = useState([]);
-
-  // Get all available planes for mapping to routes
-  const getAvailablePlanes = () => {
-    fetch(`http://localhost:8080/api/planes`)
-      .then(response => response.json())
-      .then(data => setPlanes(data));
-  }
-
   return (
     <div className="App">
       <Router>
@@ -56,10 +45,6 @@ function App() {
         <Route exact={true} path="/orders">
           <p1>order</p1>
         </Route>
-        { planes.length > 0 && planes.map(plane => (
-            {/* Create Separate component to map all planes to individual routes*/}
-        ))
-        }
       </Router>
     </div>
   );
