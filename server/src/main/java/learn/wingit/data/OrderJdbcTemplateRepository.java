@@ -1,7 +1,9 @@
 package learn.wingit.data;
 
 import learn.wingit.data.mappers.OrderMapper;
+import learn.wingit.data.mappers.OrderPlaneMapper;
 import learn.wingit.models.Order;
+import learn.wingit.models.Plane;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -34,6 +36,10 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
 
         Order order = jdbcTemplate.query(sql, new OrderMapper(), orderId).stream().findFirst().orElse(null);
 
+        if(order != null) {
+            addPlanes(order);
+        }
+
         return order;
     }
 
@@ -52,6 +58,8 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
         if(rowsAffected <= 0) {
             return null;
         }
+
+        addPlanes(order);
 
         order.setOrderId(keyholder.getKey().intValue());
         return order;
@@ -72,5 +80,16 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
     public boolean deleteById(int orderId) {
         return jdbcTemplate.update("delete from `order` where order_id = ?;", orderId) > 0;
     }
+
+    private void addPlanes(Order order) {
+        final String sql = "select op.order_id, op.plane_id, op.number_ordered, p.plane_id, p.model_id, p.size_id, p.type_id, p.price, p.quantity, " +
+                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description` from order_plane op" +
+                "inner join plane p on p.plane_id = op.plane_id where op.plane_id = ?;";
+
+        var orderPlanes = jdbcTemplate.query(sql, new OrderPlaneMapper(), order.getOrderId());
+        order.setPlanes(orderPlanes);
+    }
+
+
 
 }
