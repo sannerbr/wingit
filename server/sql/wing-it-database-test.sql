@@ -38,7 +38,7 @@ create table plane (
     height int not null,
     length int not null,
     wingspan int not null,
-    hidden bit(1) not null,
+    hidden boolean not null,
     `range` int not null,
     `description` varchar(500) not null,
     constraint fk_plane_model_id

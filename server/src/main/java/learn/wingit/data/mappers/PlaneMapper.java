@@ -26,7 +26,7 @@ public class PlaneMapper implements RowMapper<Plane> {
         plane.setWingspan(resultSet.getInt("wingspan"));
         plane.setRange(resultSet.getInt("range"));
         plane.setDescription(resultSet.getString("description"));
-        plane.setHidden(resultSet.getInt("hidden") != 0);
+        plane.setHidden(resultSet.getBoolean("hidden"));
 
         return plane;
     }
