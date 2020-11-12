@@ -1,5 +1,6 @@
 package learn.wingit.models;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;

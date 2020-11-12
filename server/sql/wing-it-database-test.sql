@@ -169,3 +169,5 @@ insert into `type`(name)
             ('cargo'),
             ('private');
             
+
+            

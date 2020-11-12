@@ -25,11 +25,14 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
     @Override
     public List<Plane> findAll() {
         final String sql = "select " +
-                "plane_id, model_id,size_id, type_id, " +
-                "price, quantity, seating_capacity, " +
-                "height, length, wingspan, hidden, " +
-                "`range`, `description` " +
-                "from plane;";
+                "p.plane_id, p.model_id, mo.`name` as model_name, ma.`name` as manufacturer_name, " +
+                "ma.manufacturer_id, p.size_id, p.type_id, " +
+                "p.price, p.quantity, p.seating_capacity, " +
+                "p.height, p.length, p.wingspan, p.hidden, " +
+                "p.`range`, p.`description` " +
+                "from plane p " +
+                "inner join model mo on p.model_id = mo.model_id " +
+                "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id;";
 
 
         return jdbcTemplate.query(sql, new PlaneMapper());
@@ -38,11 +41,14 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
     @Override
     public List<Plane> findAllForUser() {
         final String sql = "select " +
-                "plane_id, model_id,size_id, type_id, " +
-                "price, quantity, seating_capacity, " +
-                "height, length, wingspan, hidden, " +
-                "`range`, `description` " +
-                "from plane " +
+                "p.plane_id, p.model_id, mo.`name` as model_name, ma.`name` as manufacturer_name, " +
+                "ma.manufacturer_id, p.size_id, p.type_id, " +
+                "p.price, p.quantity, p.seating_capacity, " +
+                "p.height, p.length, p.wingspan, p.hidden, " +
+                "p.`range`, p.`description` " +
+                "from plane p " +
+                "inner join model mo on p.model_id = mo.model_id " +
+                "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id " +
                 "where hidden is false;";
 
 
@@ -52,11 +58,14 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
     @Override
     public List<Plane> findByType(int type_id) {
         final String sql = "select " +
-                "plane_id, model_id,size_id, type_id, " +
-                "price, quantity, seating_capacity, " +
-                "height, length, wingspan, hidden, " +
-                "`range`, `description` " +
-                "from plane " +
+                "p.plane_id, p.model_id, mo.`name` as model_name, ma.`name` as manufacturer_name, " +
+                "ma.manufacturer_id, p.size_id, p.type_id, " +
+                "p.price, p.quantity, p.seating_capacity, " +
+                "p.height, p.length, p.wingspan, p.hidden, " +
+                "p.`range`, p.`description` " +
+                "from plane p " +
+                "inner join model mo on p.model_id = mo.model_id " +
+                "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id " +
                 "where type_id = ?;";
         return jdbcTemplate.query(sql, new PlaneMapper(), type_id);
     }
@@ -64,20 +73,18 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
     @Override
     public Plane findById(int plane_id) {
         final String sql = "select " +
-                "plane_id, model_id,size_id, type_id, " +
-                "price, quantity, seating_capacity, " +
-                "height, length, wingspan, hidden, " +
-                "`range`, `description` " +
-                "from plane " +
+                "p.plane_id, p.model_id, mo.`name` as model_name, ma.`name` as manufacturer_name, " +
+                "ma.manufacturer_id, p.size_id, p.type_id, " +
+                "p.price, p.quantity, p.seating_capacity, " +
+                "p.height, p.length, p.wingspan, p.hidden, " +
+                "p.`range`, p.`description` " +
+                "from plane p " +
+                "inner join model mo on p.model_id = mo.model_id " +
+                "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id " +
                 "where plane_id = ?;";
-        Plane plane = jdbcTemplate.query(sql, new PlaneMapper(), plane_id)
+
+        return jdbcTemplate.query(sql, new PlaneMapper(), plane_id)
                 .stream().findFirst().orElse(null);
-
-        if (plane != null) {
-            addOrders(plane);
-        }
-
-        return plane;
     }
 
     @Override
@@ -92,9 +99,9 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected =jdbcTemplate.update(connection -> {
             PreparedStatement ps= connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, plane.getModel_id());
-            ps.setInt(2, plane.getSize_id());
-            ps.setInt(3, plane.getType_id());
+            ps.setInt(1, plane.getModel().getModel_id());
+            ps.setInt(2, plane.getSize().getSizeId());
+            ps.setInt(3, plane.getType().getId());
             ps.setBigDecimal(4, plane.getPrice());
             ps.setInt(5, plane.getQuantity());
             ps.setInt(6, plane.getSeating_capacity());
@@ -132,8 +139,8 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
                 "`description` = ? " +
                 "where plane_id = ?;";
         return jdbcTemplate.update(sql,
-                plane.getModel_id(), plane.getSize_id(),
-                plane.getType_id(), plane.getPrice(),
+                plane.getModel().getModel_id(), plane.getSize().getSizeId(),
+                plane.getType().getId(), plane.getPrice(),
                 plane.getQuantity(), plane.getSeating_capacity(),
                 plane.getHeight(), plane.getLength(),
                 plane.getWingspan(), plane.isHidden(), plane.getRange(),
@@ -145,21 +152,5 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
     public boolean delete(int planeId) {
         return jdbcTemplate.update("update plane set hidden = 1 where plane_id = ?;", planeId) > 0;
     }
-
-    private void addOrders(Plane plane) {
-        final String sql = "select op.order_id, op.plane_id, op.number_ordered, o.order_id, o.user_id, " +
-                "o.order_date, o.total_cost, "  +
-                "p.plane_id, p.model_id,size_id, p.type_id, " +
-                "p.price, p.quantity, p.seating_capacity, " +
-                "p.height, p.length, p.wingspan, p.hidden, " +
-                "p.`range`, p.`description` " +
-                "from order_plane op " +
-                "inner join `order` o on op.order_id = o.order_id " +
-                "inner join plane p on op.plane_id = p.plane_id " +
-                "where op.plane_id = ?;";
-        var planeOrders =jdbcTemplate.query(sql, new OrderPlaneMapper(), plane.getPlane_id());
-        plane.setOrders(planeOrders);
-    }
-
 
 }

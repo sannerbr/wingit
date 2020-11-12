@@ -1,6 +1,6 @@
 package learn.wingit.data;
 
-import learn.wingit.models.Plane;
+import learn.wingit.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +68,9 @@ class PlaneJdbcTemplateRepositoryTest {
     void shouldUpdatePlane() {
         Plane plane = makePlane();
         plane.setPlane_id(1);
-        plane.setModel_id(6);
+        PlaneModel model = makeModel();
+        model.setModel_id(5);
+        plane.setModel(model);
         plane.setDescription("A box");
         boolean success = repository.update(plane);
 
@@ -88,9 +90,9 @@ class PlaneJdbcTemplateRepositoryTest {
 
     private Plane makePlane(){
         Plane plane = new Plane();
-        plane.setModel_id(5);
-        plane.setSize_id(2);
-        plane.setType_id(3);
+        plane.setModel(makeModel());
+        plane.setSize(Size.MEDIUM);
+        plane.setType(Type.PRIVATE);
         plane.setPrice(BigDecimal.valueOf(1000));
         plane.setQuantity(10);
         plane.setSeating_capacity(10);
@@ -103,7 +105,20 @@ class PlaneJdbcTemplateRepositoryTest {
         return plane;
     }
 
+    private PlaneModel makeModel() {
+        PlaneModel model = new PlaneModel();
+        model.setModel_id(6);
+        model.setName("Douglas DC-3");
+        model.setManufacturer(makeMan());
+        return model;
+    }
 
+    private Manufacturer makeMan() {
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setManufacturer_id(2);
+        manufacturer.setName("Airbus");
+        return manufacturer;
+    }
 
 
 

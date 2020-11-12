@@ -2,7 +2,7 @@ package learn.wingit.domain;
 
 
 import learn.wingit.data.PlaneRepository;
-import learn.wingit.models.Plane;
+import learn.wingit.models.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,7 +43,7 @@ class PlaneServiceTest {
     @Test
     void shouldNotAddMissingModel() {
         Plane plane = makePlane();
-        plane.setModel_id(0);
+        plane.setModel(null);
         Result<Plane> result = service.add(plane);
         assertFalse(result.isSuccess());
     }
@@ -51,7 +51,7 @@ class PlaneServiceTest {
     @Test
     void shouldNotAddMissingSize() {
         Plane plane = makePlane();
-        plane.setSize_id(0);
+        plane.setSize(null);
         Result<Plane> result = service.add(plane);
         assertFalse(result.isSuccess());
     }
@@ -59,7 +59,7 @@ class PlaneServiceTest {
     @Test
     void shouldNotAddMissingType() {
         Plane plane = makePlane();
-        plane.setType_id(0);
+        plane.setType(null);
         Result<Plane> result = service.add(plane);
         assertFalse(result.isSuccess());
     }
@@ -96,7 +96,9 @@ class PlaneServiceTest {
     @Test
     void shouldNotUpdateMissingModel() {
         Plane plane = makePlane();
-        plane.setModel_id(0);
+        PlaneModel model = makeModel();
+        model.setModel_id(0);
+        plane.setModel(model);
         Result<Plane> result = service.update(plane);
         assertFalse(result.isSuccess());
     }
@@ -112,9 +114,9 @@ class PlaneServiceTest {
 
     private Plane makePlane(){
         Plane plane = new Plane();
-        plane.setModel_id(5);
-        plane.setSize_id(2);
-        plane.setType_id(3);
+        plane.setModel(makeModel());
+        plane.setSize(Size.MEDIUM);
+        plane.setType(Type.PRIVATE);
         plane.setPrice(BigDecimal.valueOf(1000));
         plane.setQuantity(10);
         plane.setSeating_capacity(10);
@@ -125,5 +127,20 @@ class PlaneServiceTest {
         plane.setDescription("This is a box");
         plane.setHidden(false);
         return plane;
+    }
+
+    private PlaneModel makeModel() {
+        PlaneModel model = new PlaneModel();
+        model.setModel_id(6);
+        model.setName("Douglas DC-3");
+        model.setManufacturer(makeMan());
+        return model;
+    }
+
+    private Manufacturer makeMan() {
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setManufacturer_id(2);
+        manufacturer.setName("Airbus");
+        return manufacturer;
     }
 }
