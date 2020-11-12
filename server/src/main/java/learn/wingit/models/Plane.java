@@ -6,6 +6,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Plane {
@@ -34,6 +36,7 @@ public class Plane {
     @NotBlank(message = "Description is required.")
     private String description;
 
+    private List<Order_Plane> orders = new ArrayList<>();
 
     //HAS MANY IMAGES (List<Image>)
 
@@ -65,6 +68,14 @@ public class Plane {
         this.isHidden = isHidden;
         this.range = range;
         this.description = description;
+    }
+
+    public List<Order_Plane> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order_Plane> orders) {
+        this.orders = orders;
     }
 
     public int getPlane_id() {

@@ -1,5 +1,6 @@
 package learn.wingit.data;
 
+import learn.wingit.data.mappers.OrderPlaneMapper;
 import learn.wingit.data.mappers.PlaneMapper;
 import learn.wingit.models.Plane;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -69,8 +70,14 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
                 "`range`, `description` " +
                 "from plane " +
                 "where plane_id = ?;";
-        return jdbcTemplate.query(sql, new PlaneMapper(), plane_id)
+        Plane plane = jdbcTemplate.query(sql, new PlaneMapper(), plane_id)
                 .stream().findFirst().orElse(null);
+
+        if (plane != null) {
+            addOrders(plane);
+        }
+
+        return plane;
     }
 
     @Override
@@ -138,4 +145,16 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository{
     public boolean delete(int planeId) {
         return jdbcTemplate.update("update plane set hidden = 1 where plane_id = ?;", planeId) > 0;
     }
+
+    private void addOrders(Plane plane) {
+        final String sql = "select op.order_id, op.plane_id, op.number_ordered, o.order_id, o.user_id, " +
+                "o.order_date, o.total_cost " +
+                "from order_plane " +
+                "inner join order o on op.order_id = o.order_id " +
+                "where op.plane_id = ?;";
+        var planeOrders =jdbcTemplate.query(sql, new OrderPlaneMapper(), plane.getPlane_id());
+        plane.setOrders(planeOrders);
+    }
+
+
 }
