@@ -24,7 +24,7 @@ public class PlaneController {
         return service.findAll();
     }
 
-    @GetMapping("/{planeId}")
+    @GetMapping("/id/{planeId}")
     public Plane findById(@PathVariable int planeId) {
         return service.findById(planeId);
     }
