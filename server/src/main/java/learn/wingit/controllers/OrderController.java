@@ -7,7 +7,6 @@ import learn.wingit.models.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -24,9 +23,14 @@ public class OrderController {
     public List<Order> findAll() {
         return service.findAll();
     }
-    @GetMapping("/{orderId}")
+    @GetMapping("/id/{orderId}")
     public Order findById(@PathVariable int orderId) {
         return service.findById(orderId);
+    }
+
+    @GetMapping("/{username}")
+    public List<Order> findByUsername(@PathVariable String username) {
+       return service.findOrdersByUsername(username);
     }
 
     @PostMapping
