@@ -142,9 +142,9 @@ insert into user(role_id, username, password_hash, email, phone, address)
 
 
 insert into `order`(user_id, order_date, total_cost)
-    values (1, '2020-01-01', 100),
-            (1, '2020-02-02', 200),
-            (2, '2020-03-03', 300);
+    values (1, '2020-01-01', 200),
+            (1, '2020-02-02', 400),
+            (2, '2020-03-03', 1800);
 
 insert into order_plane (order_id, plane_id, number_ordered)
     values(1, 1, 1),
