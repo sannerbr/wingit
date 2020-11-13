@@ -23,9 +23,7 @@ public class OrderController {
     @GetMapping
     public List<Order> findAll() {
         return service.findAll();
-
     }
-
     @GetMapping("/{orderId}")
     public Order findById(@PathVariable int orderId) {
         return service.findById(orderId);
@@ -40,6 +38,23 @@ public class OrderController {
         return ErrorResponse.build(result);
     }
 
+    @PutMapping("/{orderId}")
+    public ResponseEntity<Object> update(@PathVariable int orderId, @RequestBody Order order) {
+        if(orderId != order.getOrderId()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        Result<Order> result = service.update(order);
+        if(result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return ErrorResponse.build(result);
+    }
 
-
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> deleteById(@PathVariable int orderId) {
+        if(service.deleteById(orderId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
