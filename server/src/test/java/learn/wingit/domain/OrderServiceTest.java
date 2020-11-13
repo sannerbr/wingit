@@ -1,9 +1,7 @@
 package learn.wingit.domain;
 
 import learn.wingit.data.OrderRepository;
-import learn.wingit.data.PlaneRepository;
 import learn.wingit.models.Order;
-import learn.wingit.models.Plane;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -72,6 +70,22 @@ class OrderServiceTest {
         Result<Order> result = service.add(order);
         assertFalse(result.isSuccess());
         assertEquals("[Order Date cannot be in the future]", result.getMessages().toString());
+    }
+
+    @Test
+    void shouldUpdateOrder() {
+        Order order = makeOrder();
+        order.setOrderId(2);
+
+        when(repository.update(order)).thenReturn(true);
+        Result<Order> result = service.update(order);
+        assertEquals(ResultType.SUCCESS, result.getType());
+    }
+
+    @Test
+    void shouldNotUpdateOrder() {
+        Order
+
     }
 
     private Order makeOrder() {

@@ -62,6 +62,7 @@ class OrderJdbcTemplateRepositoryTest {
         assertEquals(BigDecimal.valueOf(300.23), repository.findById(2).getTotalCost());
     }
 
+
     @Test
     void shouldDeleteSuccessfully() {
         boolean result = repository.deleteById(2);

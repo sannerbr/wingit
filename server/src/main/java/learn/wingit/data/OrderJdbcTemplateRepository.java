@@ -101,7 +101,7 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
                 "u.user_id, u.role_id, u.username, u.password_hash, u.`email`, u.`phone`, u.`address`, u.company from order_plane op " +
                 "inner join `order` o on o.order_id = op.order_id " +
                 "inner join `user` u on u.user_id = o.user_id " +
-                "inner join plane p on p.plane_id = op.plane_id where op.plane_id = ?;";
+                "inner join plane p on p.plane_id = op.plane_id where op.order_id = ?;";
 
         var orderPlanes = jdbcTemplate.query(sql, new OrderPlaneMapper(), order.getOrderId());
         order.setPlanes(orderPlanes);
