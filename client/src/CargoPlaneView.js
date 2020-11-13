@@ -5,37 +5,25 @@ import PlaneCard from "./PlaneCard";
 export default function CommercialPlane() {
     const [planes, setPlanes] = useState([]);
 
-    const getCommercialPlanes = () => {
-        fetch(`http://localhost:8080/api/cargo-planes`)
+    const getCargoPlanes = () => {
+        fetch(`http://localhost:8080/api/planes/cargo`)
             .then(response => response.json())
             .then(data => setPlanes(data));
     }
 
-    //Commented out until controller set up
-    //    useEffect(getCommercialPlanes(), []);
+     useEffect(getCargoPlanes, []);
 
-    return (
+    return ( 
         <>
+            {console.log(planes)}
             {planes.length > 0 && planes.map(plane => (
                 <div className="row justify-content-md-center my-5">
                     <PlaneCard
                         key={planes.planeId}
                         plane={plane}
-                        pathname="/cargo-planes/"
                     />
                 </div>
             ))}
-            <div>
-                <div className="row justify-content-md-center my-5">
-                <PlaneCard pathname="Cargo"/>
-                </div>
-                <div className="row justify-content-md-center my-5">
-                <PlaneCard pathname="Plane"/>
-                </div>
-                <div className="row justify-content-md-center my-5">
-                <PlaneCard pathname="Cards"/>
-                </div>
-            </div>
         </>
     )
 }
