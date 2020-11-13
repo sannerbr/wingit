@@ -2,6 +2,7 @@ package learn.wingit.data;
 
 import learn.wingit.data.mappers.OrderMapper;
 import learn.wingit.data.mappers.OrderPlaneMapper;
+import learn.wingit.data.mappers.PlaneMapper;
 import learn.wingit.models.Order;
 import learn.wingit.models.Plane;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -27,7 +28,11 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
     @Override
     public List<Order> findAll() {
         final String sql = "select order_id, user_id, order_date, total_cost from `order`;";
-        return jdbcTemplate.query(sql, new OrderMapper());
+        List<Order> orders = jdbcTemplate.query(sql, new OrderMapper());
+        for(Order o : orders) {
+            addPlanes(o);
+        }
+        return orders;
     }
 
     @Override
@@ -35,8 +40,11 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
         final String sql = "select o.order_id, o.user_id, o.order_date, o.total_cost from `order` o " +
                 "inner join `user` u on u.user_id = o.user_id" +
                 " where u.username = ?;";
-
-        return jdbcTemplate.query(sql, new OrderMapper(), username);
+        List<Order> orders = jdbcTemplate.query(sql, new OrderMapper(), username);;
+        for(Order o : orders) {
+            addPlanes(o);
+        }
+        return orders;
     }
 
     @Override
@@ -55,6 +63,7 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
 
 
     @Override
+    @Transactional
     public Order add(Order order) {
         final String sql = "insert into `order` (user_id, order_date, total_cost) values (?,?,?);";
 
@@ -70,9 +79,24 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
             return null;
         }
 
-        addPlanes(order);
+        //Not Need? order should be passed in with list of planes
+        //addPlanes(order);
 
         order.setOrderId(keyholder.getKey().intValue());
+
+        final String sql2 = "insert into order_plane (order_id, plane_id, number_ordered) values (?,?,?);";
+        for(Plane p : order.getPlanes()) {
+            rowsAffected = jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sql2);
+                ps.setInt(1, order.getOrderId());
+                ps.setInt(2, p.getPlane_id());
+                ps.setInt(3,p.getQuantity());
+                return ps;
+            });
+        }
+        if(rowsAffected <= 0) {
+            return null;
+        }
         return order;
     }
 
@@ -96,17 +120,29 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
     }
 
     private void addPlanes(Order order) {
-        final String sql = "select op.order_id, op.plane_id, op.number_ordered, p.plane_id, p.model_id, p.size_id, p.type_id, p.price, p.quantity, " +
-                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description`, o.order_id, o.user_id, o.order_date, o.total_cost, " +
-                "u.user_id, u.role_id, u.username, u.password_hash, u.`email`, u.`phone`, u.`address`, u.company from order_plane op " +
-                "inner join `order` o on o.order_id = op.order_id " +
-                "inner join `user` u on u.user_id = o.user_id " +
-                "inner join plane p on p.plane_id = op.plane_id where op.order_id = ?;";
+        final String sql =
+                "select p.plane_id, p.model_id, mo.`name` as model_name, ma.`name` as manufacturer_name, " +
+                "ma.manufacturer_id, p.size_id, p.type_id, " +
+                "p.price, op.number_ordered as quantity, p.seating_capacity, " +
+                "p.height, p.length, p.wingspan, p.hidden, " +
+                "p.`range`, p.`description` " +
+                "from order_plane op " +
+                "inner join plane p on op.plane_id = p.plane_id " +
+                "inner join model mo on p.model_id = mo.model_id " +
+                "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id " +
+                "where op.order_id = ?;";
 
-        var orderPlanes = jdbcTemplate.query(sql, new OrderPlaneMapper(), order.getOrderId());
-        order.setPlanes(orderPlanes);
+
+        var planes = jdbcTemplate.query(sql, new PlaneMapper(), order.getOrderId());
+        order.setPlanes(planes);
     }
 
-
-
+//"u.user_id, u.role_id, u.username, u.password_hash, u.`email`, u.`phone`, u.`address`, u.company
+// op.order_id, op.plane_id, op.number_ordered, , o.order_id, o.user_id, o.order_date, o.total_cost
+    // "inner join `order` o on o.order_id = op.order_id " +
+    // "inner join `user` u on u.user_id = o.user_id " +
+    //"inner join plane p on p.plane_id = op.plane_id ";
+    //"select p.plane_id, p.model_id, p.size_id, p.type_id, p.price, p.quantity, " +
+    //                "p.seating_capacity, p.height, p.length, p.wingspan, p.hidden, p.`range`, p.`description`, " +
+    //                " " +
 }

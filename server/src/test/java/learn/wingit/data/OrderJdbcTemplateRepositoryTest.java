@@ -36,13 +36,15 @@ class OrderJdbcTemplateRepositoryTest {
     @Test
     void shouldFindOrdersByUsername() {
         List<Order> result = repository.findOrdersByUsername("customer");
-        assertEquals(2, result.size());
+        assertNotNull(result);
+        assertTrue(result.size() >= 2);
     }
 
     @Test
     void shouldFindById() {
       Order order = repository.findById(2);
       assertNotNull(order);
+      assertEquals(1, order.getPlanes().size());
       assertEquals(2, order.getOrderId());
     }
 
@@ -52,6 +54,7 @@ class OrderJdbcTemplateRepositoryTest {
         Order result = repository.add(order);
         assertNotNull(result);
         assertEquals(1, order.getUserId());
+        assertEquals(4, order.getOrderId());
     }
 
     @Test
