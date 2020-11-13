@@ -11,7 +11,6 @@ export default function CommercialPlaneView() {
             .then(data => setPlanes(data));
     }
 
-    //Commented out until controller set up
     useEffect(getCommercialPlanes, []);
 
     return (
