@@ -1,8 +1,11 @@
 package learn.wingit.controllers;
 
 import learn.wingit.domain.PlaneService;
+import learn.wingit.domain.Result;
 import learn.wingit.models.Plane;
 import learn.wingit.models.Type;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -24,6 +27,11 @@ public class PlaneController {
         return service.findAll();
     }
 
+    @GetMapping("/user")
+    public List<Plane> findAllForUser() {
+        return service.findAllForUser();
+    }
+
     @GetMapping("/id/{planeId}")
     public Plane findById(@PathVariable int planeId) {
         return service.findById(planeId);
@@ -38,4 +46,37 @@ public class PlaneController {
 
         return service.findByType(type.getId());
     }
+
+
+    @PostMapping
+    public ResponseEntity<Object> add(@RequestBody(required = false) Plane plane) {
+        Result<Plane> result = service.add(plane);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        }
+        return ErrorResponse.build(result);
+    }
+
+    @PutMapping("/id/{planeId}")
+    public ResponseEntity<Object> update(@PathVariable int planeId, @RequestBody Plane plane) {
+        if (planeId != plane.getPlane_id()) {
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+
+        Result<Plane> result = service.update(plane);
+        if (result.isSuccess()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return ErrorResponse.build(result);
+    }
+
+    @DeleteMapping("/id/{planeId}")
+    public ResponseEntity<Object> delete(@PathVariable int planeId) {
+        if (service.delete(planeId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
