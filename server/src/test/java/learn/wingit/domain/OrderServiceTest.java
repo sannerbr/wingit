@@ -83,8 +83,35 @@ class OrderServiceTest {
     }
 
     @Test
-    void shouldNotUpdateOrder() {
+    void shouldNotUpdateOrderWithNullCost() {
+        Order order = makeOrder();
+        order.setOrderId(2);
+        order.setTotalCost(null);
+        Result<Order> result = service.update(order);
+        assertEquals(ResultType.INVALID, result.getType());
+    }
 
+    @Test
+    void shouldNotUpdateWithDateInFuture() {
+        Order order = makeOrder();
+        order.setOrderId(2);
+        order.setOrderDate(LocalDate.of(2022, 4, 4));
+        Result<Order> result = service.update(order);
+        assertEquals("[Order Date cannot be in the future]", result.getMessages().toString());
+    }
+
+    @Test
+    void shouldDelete() {
+        when(repository.deleteById(2)).thenReturn(true);
+        boolean result = repository.deleteById(2);
+        assertTrue(result);
+    }
+
+    @Test
+    void shouldNotDelete() {
+        when(repository.deleteById(59000)).thenReturn(false);
+        boolean result = repository.deleteById(59000);
+        assertFalse(result);
     }
 
     private Order makeOrder() {
