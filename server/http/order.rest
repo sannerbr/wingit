@@ -1,0 +1,66 @@
+  
+
+GET /api/orders HTTP/1.1
+Host: localhost:8080
+
+###
+
+// VALID ADD
+POST /api/orders HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "orderDate": "2019-09-11",
+  "totalCost": 2333,
+  "planes": []
+}
+###
+
+//INVALID ADD
+POST /api/orders HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "orderDate": "2036-09-11",
+  "totalCost": 2333,
+  "planes": []
+}
+
+###
+//INVALID ADD NEGATIVE PRICE
+POST /api/orders HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "orderDate": "2012-09-11",
+  "totalCost": -23,
+  "planes": []
+}
+
+###
+
+
+PUT /api/orders/2 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "orderId": 2,
+  "userId": 1,
+  "orderDate": "2019-09-11",
+  "totalCost": 2333,
+  "planes": []
+}
+
+###
+
+DELETE /api/orders/2 HTTP/1.1
+Host: localhost:8080
+
+###
