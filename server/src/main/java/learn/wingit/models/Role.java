@@ -1,33 +1,42 @@
 package learn.wingit.models;
 
-import javax.validation.constraints.NotBlank;
+public enum Role {
+    ADMIN(1, "Admin"),
+    USER(2, "User");
 
-public class Role {
     private int roleId;
-    @NotBlank(message = "Role is required.")
     private String role;
 
-    public Role() {
-    }
-
-    public Role(int roleId, String role) {
+    Role(int roleId, String role) {
         this.roleId = roleId;
         this.role = role;
+    }
+
+    public static Role getRoleById(int roleId) {
+        for(Role role : Role.values()) {
+            if(role.roleId == roleId) {
+                return role;
+            }
+        }
+        return null;
+    }
+
+    public static Role getRoleByName(String name) {
+        for(Role role : Role.values()) {
+            if(role.role.equalsIgnoreCase(name)) {
+                return role;
+            }
+        }
+        return null;
     }
 
     public int getRoleId() {
         return roleId;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
     public String getRole() {
         return role;
     }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
 }
+
+
