@@ -25,6 +25,7 @@ public class Order {
     @NotNull(message = "Total cost is required")
     private BigDecimal totalCost;
     private List<Plane> planes = new ArrayList<>();
+    private User user;
 
     public Order() {
     }
@@ -75,6 +76,10 @@ public class Order {
 
     public void setPlanes(List<Plane> planes) {
         this.planes = planes;
+    }
+
+    public User getUser() {
+        return user;
     }
 
     @Override
