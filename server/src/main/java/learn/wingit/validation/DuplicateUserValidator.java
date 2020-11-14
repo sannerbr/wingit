@@ -17,7 +17,7 @@ public class DuplicateUserValidator implements ConstraintValidator<NoDuplicateUs
 
     @Override
     public boolean isValid(User user, ConstraintValidatorContext constraintValidatorContext) {
-        if (user == null){
+        if (user == null) {
             return true;
         }
 

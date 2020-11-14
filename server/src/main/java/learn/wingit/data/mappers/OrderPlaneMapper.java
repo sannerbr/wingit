@@ -22,6 +22,6 @@ public class OrderPlaneMapper implements RowMapper<Order_Plane> {
 
         OrderMapper orderMapper = new OrderMapper();
         op.setOrder(orderMapper.mapRow(resultSet, i));
-        return null;
+        return op;
     }
 }
