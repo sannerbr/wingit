@@ -6,9 +6,12 @@ import learn.wingit.data.mappers.UserMapper;
 import learn.wingit.models.Order;
 import learn.wingit.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Repository
 public class UserJdbcTemplateRepository implements UserRepository {
     private final JdbcTemplate jdbcTemplate;
 
@@ -20,9 +23,13 @@ public class UserJdbcTemplateRepository implements UserRepository {
     public List<User> findAll() {
         final String sql = "select user_id, role_id, username, password_hash, `email`, `phone`, `address`, `company` from `user`;";
 
-        jdbcTemplate.query(sql, new UserMapper());
+        List<User> users = jdbcTemplate.query(sql, new UserMapper());
 
-        return null;
+        for (User user : users) {
+            addOrders(user);
+        }
+
+        return users;
     }
 
     @Override
@@ -51,12 +58,28 @@ public class UserJdbcTemplateRepository implements UserRepository {
 
     @Override
     public boolean updateUser(User user) {
-        return false;
+
+        final String sql = "update `user` set " +
+                "role_id = ?, " +
+                "username = ?, " +
+                "password_hash = ?, " +
+                "`email` = ?, " +
+                "`phone` = ?, " +
+                "`address` = ?, " +
+                "`company` = ? where user_id = ?;";
+
+        return jdbcTemplate.update(sql, user.getRole().getRoleId(), user.getUsername(), user.getPassword(), user.getEmail(), user.getPhone(), user.getAddress(),
+                 user.getCompany(), user.getUserId()) > 0;
     }
 
     @Override
     public boolean deleteUser(int userId) {
-        return false;
+        User user = findById(userId);
+        for(Order order : user.getOrders()) {
+            jdbcTemplate.update("delete from order_plane where order_id = ?;", order.getOrderId());
+        }
+        jdbcTemplate.update("delete from `order` where user_id = ?;", userId);
+        return jdbcTemplate.update("delete from `user` where user_id = ?;", userId) > 0;
     }
 
     private void addOrders(User user) {

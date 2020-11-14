@@ -110,8 +110,6 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
                 order.getOrderId()) > 0;
     }
 
-
-
     @Override
     @Transactional
     public boolean deleteById(int orderId) {
