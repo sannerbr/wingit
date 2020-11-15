@@ -9,7 +9,6 @@ export default function OrdersView() {
         fetch(`http://localhost:8080/api/orders`)
             .then(response => response.json())
             .then(data => setOrders(data));
-            console.log(orders)
     }
 
     // Commented out until controller built
