@@ -9,7 +9,7 @@ import java.util.List;
 public interface ManufacturerRepository {
     List<Manufacturer> findAll();
 
-    Manufacturer findById();
+    Manufacturer findById(int manufacturerId);
 
     Manufacturer add(Manufacturer manufacturer);
 
