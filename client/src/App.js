@@ -4,6 +4,7 @@ import CommercialPlaneView from './CommercialPlaneView';
 import CargoPlaneView from './CargoPlaneView';
 import PrivatePlaneView from './PrivatePlaneView';
 import AddPlane from './AddPlane';
+import OrdersView from './OrdersView';
 import {
   BrowserRouter as Router,
   Route,
@@ -21,20 +22,14 @@ function App() {
         <Route exact={true} path="/commercial-planes">
           <CommercialPlaneView />
         </Route>
-        <Route path="/commercial-planes/:id">
-          {/* Commercial plane componenet*/}
+        <Route path="/planes/:id">
+          {/*Plane page componenet*/}
         </Route>
         <Route exact={true} path="/cargo-planes">
           <CargoPlaneView />
         </Route>
-        <Route path="/cargo-planes/:id">
-          {/* Cargo plane componenet*/}
-        </Route>
         <Route exact={true} path="/private-planes">
           <PrivatePlaneView />
-        </Route>
-        <Route path="/private-planes/:id">
-          {/* Private plane componenet*/}  
         </Route>
         <Route exact={true} path="/add-plane">
           <AddPlane />
@@ -43,7 +38,7 @@ function App() {
           <p1>account</p1>
         </Route>
         <Route exact={true} path="/orders">
-          <p1>order</p1>
+          <OrdersView />
         </Route>
       </Router>
     </div>
