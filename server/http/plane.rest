@@ -26,8 +26,7 @@ Content-Type: application/json
       "name": "Douglas DC-3",
       "manufacturer": {
         "manufacturer_id": 2,
-        "name": "Airbus",
-        "models": []
+        "name": "Airbus"
       }
     },
     "size": "LARGE",
@@ -56,8 +55,7 @@ Content-Type: application/json
       "name": "Douglas DC-3",
       "manufacturer": {
         "manufacturer_id": 2,
-        "name": "Airbus",
-        "models": []
+        "name": "Airbus"
       }
     },
     "size": "LARGE",

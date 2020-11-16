@@ -1,0 +1,41 @@
+  
+
+GET /api/models HTTP/1.1
+Host: localhost:8080
+
+###
+
+
+GET /api/models/2 HTTP/1.1
+Host: localhost:8080
+
+###
+
+
+POST /api/models HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Test",
+  "manufacturer": {
+      "manufacturer_id": 2,
+      "name": "Airbus"
+    }
+}
+
+###
+
+
+PUT /api/models/7 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "model_id": 7,
+  "name": "Test Again",
+  "manufacturer": {
+      "manufacturer_id": 2,
+      "name": "Airbus"
+    }
+}
