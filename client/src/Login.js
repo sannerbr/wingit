@@ -55,20 +55,18 @@ export default function Login() {
         <form onSubmit={loginSubmitHandler}>
           <div className="row">
             <label htmlFor="username">Username</label>
-            <input id="username" type="text" value={username} onChange={handleUsernameChange} placeholder="username" />
+            <input className="form-control" id="username" type="text" value={username} onChange={handleUsernameChange} placeholder="username" />
           </div>
-          <div className="row">
+          <div className="row mt-3">
             <label htmlFor="password">Password</label>
-            <input id="password" type="password" value={password} onChange={handlePasswordChange} placeholder="password" />
+            <input className="form-control" id="password" type="password" value={password} onChange={handlePasswordChange} placeholder="password" />
           </div>
-          <div className="row">
-            <button className="btn btn-primary" type="submit">Login</button>
-            <button className="btn btn-secondary">Create account</button>
+          <div className="row my-4">
+            <button className="btn btn-primary mx-2" type="submit">Login</button>
+            <Link to="/create-account" className="btn btn-secondary mx-2">Create account</Link>
           </div>
         </form>
       </div>
     </>
   )
 }
-
-//Change create account button to link to register page
