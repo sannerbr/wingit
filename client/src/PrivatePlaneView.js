@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PlaneCard from "./PlaneCard";
 
 
-export default function CommercialPlane() {
+export default function PrivatePlaneView() {
   const [planes, setPlanes] = useState([]);
 
   const getPrivatePlanes = () => {
@@ -18,7 +18,7 @@ export default function CommercialPlane() {
       {planes.length > 0 && planes.map(plane => (
         <div className="row justify-content-md-center my-5">
           <PlaneCard
-            key={plane.planeId}
+            key={plane.plane_id}
             plane={plane}
           />
         </div>
