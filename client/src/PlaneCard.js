@@ -29,7 +29,7 @@ export default function PlaneCard({ plane, pathname }) {
           </div>
           <div className="col-md-3">
             <div className="row justify-content-center">
-              <Link to={planePathname} className="btn btn-secondary my-3 px-6">More Info</Link>
+              <Link to={`planes/${plane.plane_id}`} className="btn btn-secondary my-3 px-6">More Info</Link>
             </div>
             <div className="row justify-content-center">
               <button className="btn btn-primary mb-3 mx-6">Add to Order</button>
@@ -37,7 +37,7 @@ export default function PlaneCard({ plane, pathname }) {
             {
               auth.user &&
               <div className="row justify-content-center mb-3">
-                <Link to={planePathname} className="btn btn btn-warning  mr-2">Edit</Link>
+                <Link to={`edit/planes/${plane.plane_id}`} className="btn btn btn-warning mr-2">Edit</Link>
                 <button className="btn btn btn-danger ">Delete</button>
               </div>
             }
