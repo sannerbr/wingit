@@ -39,7 +39,6 @@ public class Plane {
     //HAS MANY IMAGES (List<Image>)
 
     public Plane() {
-
     }
 
     public int getPlane_id() {

@@ -58,7 +58,7 @@ Content-Type: application/json
 ###
 
 
-PUT /api/orders/2 HTTP/1.1
+PUT /api/orders/id/2 HTTP/1.1
 Host: localhost:8080
 Content-Type: application/json
 
@@ -74,7 +74,7 @@ Content-Type: application/json
 
 
 //DELETE 
-DELETE /api/orders/2 HTTP/1.1
+DELETE /api/orders/id/2 HTTP/1.1
 Host: localhost:8080
 
 ###

@@ -11,7 +11,6 @@ import java.util.HashSet;
 
 public class DuplicateUserValidator implements ConstraintValidator<NoDuplicateUser, User> {
 
-    //TODO need the userRepository to check for duplicates
     @Autowired
     UserService service;
 
@@ -25,11 +24,11 @@ public class DuplicateUserValidator implements ConstraintValidator<NoDuplicateUs
         if (user == null) {
             return true;
         }
-
-        boolean result = service.findAll().stream().anyMatch(user1 -> user1.getUsername().equalsIgnoreCase(user.getUsername()));
+        boolean result = service.findAll().stream().anyMatch(u -> (u.getUsername().equalsIgnoreCase(user.getUsername()) && u.getUserId() != user.getUserId()));
         if(result == true) {
             return false;
         }
+
         return true;
     }
 }

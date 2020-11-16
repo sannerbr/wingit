@@ -42,7 +42,7 @@ public class OrderController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping("/{orderId}")
+    @PutMapping("/id/{orderId}")
     public ResponseEntity<Object> update(@PathVariable int orderId, @RequestBody Order order) {
         if(orderId != order.getOrderId()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -54,7 +54,7 @@ public class OrderController {
         return ErrorResponse.build(result);
     }
 
-    @DeleteMapping("/{orderId}")
+    @DeleteMapping("/id/{orderId}")
     public ResponseEntity<Void> deleteById(@PathVariable int orderId) {
         if(service.deleteById(orderId)) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

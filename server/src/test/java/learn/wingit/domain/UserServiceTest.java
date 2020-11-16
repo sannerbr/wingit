@@ -9,6 +9,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -26,6 +29,26 @@ class UserServiceTest {
         Result<User> result = service.add(makeUser());
         assertTrue(result.isSuccess());
         assertEquals("chicken_password", result.getPayload().getPassword());
+    }
+
+    @Test
+    void shouldFindById() {
+        User user = makeUser();
+        user.setUserId(1);
+        when(service.findById(1)).thenReturn(user);
+        User result = service.findById(1);
+        assertNotNull(result);
+        assertEquals(1, result.getUserId());
+    }
+
+    @Test
+    void shouldFindByUsername() {
+        User user = makeUser();
+        user.setUserId(1);
+        when(service.findByUsername("chicken")).thenReturn(user);
+        User result = service.findByUsername("chicken");
+        assertNotNull(result);
+        assertEquals("chicken", result.getUsername());
     }
 
     @Test
@@ -56,23 +79,19 @@ class UserServiceTest {
 
     @Test
     void shouldNotAddDuplicateUser() {
+        when(repository.findAll()).thenReturn(listOfUsers());
         User user = makeUser();
-        when(repository.addUser(user)).thenReturn(user);
+        user.setUsername("rhino");
         Result<User> result = service.add(user);
-        User user2 = makeUser();
-        user2.setPassword("hcic");
-
-        Result<User> result2 = service.add(user2);
-        assertFalse(result2.isSuccess());
-        assertEquals("This username is already taken", result2.getMessages().get(0));
-
-        //TODO Add custom validation here
+        assertFalse(result.isSuccess());
+        assertEquals("This username is already taken", result.getMessages().get(0));
     }
 
     @Test
     void shouldUpdateUser() {
         User user = makeUser();
         user.setUserId(2);
+        when(repository.updateUser(user)).thenReturn(true);
         Result<User> result = service.update(user);
         assertTrue(result.isSuccess());
     }
@@ -101,6 +120,13 @@ class UserServiceTest {
         assertTrue(result);
     }
 
+    @Test
+    void shouldNotDeleteUser() {
+        when(repository.deleteUser(800)).thenReturn(false);
+        boolean result = service.delete(800);
+        assertFalse(result);
+    }
+
     private User makeUser() {
         User user = new User();
         user.setUsername("chicken");
@@ -112,6 +138,18 @@ class UserServiceTest {
         user.setOrders(null);
         user.setRole(Role.USER);
         return user;
+    }
+
+    private List<User> listOfUsers() {
+        User user = makeUser();
+        user.setUserId(1);
+        User user2 = makeUser();
+        user2.setUsername("rhino");
+        user2.setUserId(2);
+        List<User> list = new ArrayList<>();
+        list.add(user);
+        list.add(user2);
+        return list;
     }
 
 }

@@ -1,0 +1,136 @@
+  
+//FIND ALL
+GET /api/users HTTP/1.1
+Host: localhost:8080
+
+###
+
+//FIND USER BY ID
+GET /api/users/id/2 HTTP/1.1
+Host: localhost:8080
+
+###
+
+//FIND USER BY USERNAME
+GET /api/users/username/buyer HTTP/1.1
+Host: localhost:8080
+
+###
+
+// VALID ADD
+POST /api/users HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "username": "parrot",
+  "password": "password",
+  "email": "parrot@gmail.com",
+  "phone": "232-909-2323",
+  "address": "232 Parrot Ave.",
+  "company": "Parrot Inc.",
+  "role": "USER"
+}
+
+###
+//INVALID ADD (DUPLICATE)
+POST /api/users HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "username": "parrot",
+  "password": "password",
+  "email": "parrot@gmail.com",
+  "phone": "232-909-2323",
+  "address": "232 Parrot Ave.",
+  "company": "Parrot Inc.",
+  "role": "USER"
+}
+
+###
+//INVALID ADD SET User ID
+
+POST /api/users HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "username": "sfs",
+  "password": "password",
+  "email": "parrot@gmail.com",
+  "phone": "232-909-2323",
+  "address": "232 Parrot Ave.",
+  "company": "Parrot Inc.",
+  "role": "USER"
+}
+
+###
+//INVALID ADD Missing fields
+POST /api/users HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "company": "Parrot Inc."
+}
+
+### 
+//SHOULD UPDATE USER
+PUT /api/users/id/2 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "username": "updatedusername",
+  "password": "password",
+  "email": "parrot@gmail.com",
+  "phone": "232-909-2323",
+  "address": "232 Parrot Ave.",
+  "company": "Parrot Inc.",
+  "role": "USER"
+}
+
+###
+
+### 
+//SHOULD NOT UPDATE USER WITH DUPLICATE USERNAME
+PUT /api/users/id/2 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "username": "customer",
+  "password": "password",
+  "email": "parrot@gmail.com",
+  "phone": "232-909-2323",
+  "address": "232 Parrot Ave.",
+  "company": "Parrot Inc.",
+  "role": "USER"
+}
+
+###
+//SHOULD NOT UPDATE USER NULL FIELDS
+PUT /api/users/id/2 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "company": "Parrot Inc.",
+  "role": "USER"
+}
+
+###
+
+//DELETE USER
+DELETE /api/users/id/2 HTTP/1.1
+Host: localhost:8080
+
+###
+//SHOULD NOT DELTE
+DELETE /api/users/id/900 HTTP/1.1
+Host: localhost:8080
