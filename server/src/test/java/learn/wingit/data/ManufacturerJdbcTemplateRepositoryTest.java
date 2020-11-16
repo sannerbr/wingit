@@ -2,6 +2,7 @@ package learn.wingit.data;
 
 import learn.wingit.models.Manufacturer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,9 +29,7 @@ class ManufacturerJdbcTemplateRepositoryTest {
     void shouldFindAll(){
         List<Manufacturer> manufacturers = repository.findAll();
         assertNotNull(manufacturers);
-        assertEquals(2, manufacturers.size());
-        assertNotNull(manufacturers.get(0).getModels());
-        assertEquals(3, manufacturers.get(0).getModels().size());
+        assertEquals(3, manufacturers.size());
     }
 
     @Test
@@ -38,8 +37,6 @@ class ManufacturerJdbcTemplateRepositoryTest {
         Manufacturer manufacturer = repository.findById(2);
         assertNotNull(manufacturer);
         assertEquals("Airbus", manufacturer.getName());
-        assertNotNull(manufacturer.getModels());
-        assertEquals(3, manufacturer.getModels().size());
     }
 
     @Test
@@ -55,6 +52,7 @@ class ManufacturerJdbcTemplateRepositoryTest {
     void shouldUpdateManufacturer() {
         Manufacturer manufacturer = new Manufacturer();
         manufacturer.setName("Test");
+        manufacturer.setManufacturer_id(2);
         boolean actual = repository.update(manufacturer);
         assertTrue(actual);
         assertEquals(2, repository.findAll().size());

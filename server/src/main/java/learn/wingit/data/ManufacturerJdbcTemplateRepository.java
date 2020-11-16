@@ -26,34 +26,32 @@ public class ManufacturerJdbcTemplateRepository implements ManufacturerRepositor
     @Override
     public List<Manufacturer> findAll() {
         final String sql = "select manufacturer_id, `name` from manufacturer;";
-        List<Manufacturer> manufacturers = jdbcTemplate.query(sql, new ManufacturerMapper());
-        for (Manufacturer m : manufacturers) {
-            final String sql2 = "select model_id, `name`, manufacturer_id from model " +
-                    "where manufacturer_id = ?;";
-            List<PlaneModel> models = jdbcTemplate.query(sql2, new ModelMapper(), m.getManufacturer_id());
-            for (PlaneModel model : models) {
-                model.setManufacturer(m);
-            }
-            m.setModels(models);
-        }
-        return manufacturers;
+        //        for (Manufacturer m : manufacturers) {
+//            final String sql2 = "select model_id, `name` as model_name, manufacturer_id from model " +
+//                    "where manufacturer_id = ?;";
+//            List<PlaneModel> models = jdbcTemplate.query(sql2, new ModelMapper(), m.getManufacturer_id());
+//            for (PlaneModel model : models) {
+//                model.setManufacturer(m);
+//            }
+//            m.setModels(models);
+//        }
+        return jdbcTemplate.query(sql, new ManufacturerMapper());
     }
 
     @Override
     public Manufacturer findById(int manufacturerId) {
         final String sql = "select manufacturer_id, `name` from manufacturer where manufacturer_id = ?;";
-        Manufacturer manufacturer = jdbcTemplate.query(sql, new ManufacturerMapper(), manufacturerId).stream().findFirst().orElse(null);
-        if (manufacturer == null){
-            return null;
-        }
-        final String sql2 = "select model_id, `name`, manufacturer_id from model " +
-                "where manufacturer_id = ?;";
-        List<PlaneModel> models = jdbcTemplate.query(sql2, new ModelMapper(), manufacturerId);
-        for (PlaneModel model : models) {
-            model.setManufacturer(manufacturer);
-        }
-        manufacturer.setModels(models);
-        return manufacturer;
+        //        if (manufacturer == null){
+//            return null;
+//        }
+//        final String sql2 = "select model_id, `name` as model_name, manufacturer_id from model " +
+//                "where manufacturer_id = ?;";
+//        List<PlaneModel> models = jdbcTemplate.query(sql2, new ModelMapper(), manufacturerId);
+//        for (PlaneModel model : models) {
+//            model.setManufacturer(manufacturer);
+//        }
+//        manufacturer.setModels(models);
+        return jdbcTemplate.query(sql, new ManufacturerMapper(), manufacturerId).stream().findFirst().orElse(null);
     }
 
     @Override
@@ -75,8 +73,8 @@ public class ManufacturerJdbcTemplateRepository implements ManufacturerRepositor
 
     @Override
     public boolean update(Manufacturer manufacturer) {
-        final String sql = "update manufacturer set `name` = ?;";
-        return jdbcTemplate.update(sql, manufacturer.getName()) > 0;
+        final String sql = "update manufacturer set `name` = ? where manufacturer_id = ?;";
+        return jdbcTemplate.update(sql, manufacturer.getName(), manufacturer.getManufacturer_id()) > 0;
     }
 
     @Override

@@ -9,13 +9,6 @@ public class Manufacturer {
     private int manufacturer_id;
     @NotBlank(message = "Name must be provided")
     private String name;
-    List<PlaneModel> models = new ArrayList<>();
-
-    public Manufacturer(int manufacturer_id, @NotBlank(message = "Name must be provided") String name, List<PlaneModel> models) {
-        this.manufacturer_id = manufacturer_id;
-        this.name = name;
-        this.models = models;
-    }
 
     public Manufacturer() {
     }
@@ -36,11 +29,4 @@ public class Manufacturer {
         this.name = name;
     }
 
-    public List<PlaneModel> getModels() {
-        return models;
-    }
-
-    public void setModels(List<PlaneModel> models) {
-        this.models = models;
-    }
 }

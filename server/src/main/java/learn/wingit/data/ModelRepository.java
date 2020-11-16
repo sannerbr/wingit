@@ -9,7 +9,7 @@ public interface ModelRepository {
 
     List<PlaneModel> findAll();
 
-    PlaneModel findById();
+    PlaneModel findById(int modelId);
 
     PlaneModel add(PlaneModel model);
 

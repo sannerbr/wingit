@@ -1,0 +1,78 @@
+
+
+GET /api/planes HTTP/1.1
+Host: localhost:8080
+
+###
+
+GET /api/planes/user HTTP/1.1
+Host: localhost:8080
+
+###
+
+
+GET /api/planes/id/3 HTTP/1.1
+Host: localhost:8080
+
+###
+
+POST /api/planes HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "model": {
+      "model_id": 6,
+      "name": "Douglas DC-3",
+      "manufacturer": {
+        "manufacturer_id": 2,
+        "name": "Airbus",
+        "models": []
+      }
+    },
+    "size": "LARGE",
+    "type": "PRIVATE",
+    "price": 600,
+    "quantity": 5,
+    "seating_capacity": 400,
+    "height": 40,
+    "length": 40,
+    "wingspan": 40,
+    "range": 400,
+    "description": "Douglas DC-3 desc",
+    "hidden": false
+  }
+
+###
+
+PUT /api/planes/id/5 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+    "plane_id": 5,
+    "model": {
+      "model_id": 6,
+      "name": "Douglas DC-3",
+      "manufacturer": {
+        "manufacturer_id": 2,
+        "name": "Airbus",
+        "models": []
+      }
+    },
+    "size": "LARGE",
+    "type": "PRIVATE",
+    "price": 800,
+    "quantity": 5,
+    "seating_capacity": 400,
+    "height": 40,
+    "length": 40,
+    "wingspan": 40,
+    "range": 400,
+    "description": "Douglas DC-3 desc",
+    "hidden": false
+  }
+###
+
+DELETE /api/planes/id/5 HTTP/1.1
+Host: localhost:8080
