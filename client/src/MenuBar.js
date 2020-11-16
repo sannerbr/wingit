@@ -28,17 +28,25 @@ export default function MenuBar() {
               <Link to="/private-planes" className="dropdown-item">Private</Link>
             </div>
           </li>
-          <li className="nav-item mr-2">
-            <NavLink to="/add-plane" className="btn">Add</NavLink>
-          </li>
+          {
+            auth.user &&
+            <li className="nav-item mr-2">
+              <NavLink to="/add-plane" className="btn">Add</NavLink>
+            </li>
+          }
         </ul>
         <ul className="navbar-nav ml-auto">
 
           {
             !auth.user &&
-            <li className="nav-item mr-2">
-              <NavLink to="/login" className="btn">Login/Create Account</NavLink>
-            </li>
+            <>
+              <li className="nav-item mr-2">
+                <NavLink to="/login" className="btn">Login</NavLink>
+              </li>
+              <li className="nav-item mr-2">
+                <NavLink to="/create-account" className="btn">Create Account</NavLink>
+              </li>
+            </>
           }
 
           {
