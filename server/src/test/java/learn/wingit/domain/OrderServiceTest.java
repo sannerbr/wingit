@@ -3,12 +3,14 @@ package learn.wingit.domain;
 import learn.wingit.data.OrderRepository;
 import learn.wingit.models.Order;
 import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -31,6 +33,15 @@ class OrderServiceTest {
         Result<Order> result = service.add(order);
         assertNotNull(result);
         assertTrue(result.isSuccess());
+    }
+
+    @Test
+    void shouldFindById() {
+        Order order = new Order(1, 1, LocalDate.of(2020, 1, 1), BigDecimal.valueOf(200.00), null);
+        when(repository.findById(1)).thenReturn(order);
+        Order result = service.findById(1);
+        assertNotNull(result);
+        assertEquals(1, order.getUserId());
     }
 
     @Test

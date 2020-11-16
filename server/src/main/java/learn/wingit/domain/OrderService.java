@@ -37,8 +37,7 @@ public class OrderService {
     }
 
     public Order findById(int order_id) {
-        repository.findById(order_id);
-        return null;
+        return repository.findById(order_id);
     }
 
     public Result<Order> add(Order order) {

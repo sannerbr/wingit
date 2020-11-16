@@ -12,6 +12,8 @@ public interface UserRepository {
 
     User findByUsername(String username);
 
+    User addUser(User user);
+
     boolean updateUser(User user);
 
     boolean deleteUser(int userId);

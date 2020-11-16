@@ -1,14 +1,17 @@
 package learn.wingit.data;
 
 import learn.wingit.data.mappers.OrderMapper;
-import learn.wingit.data.mappers.PlaneMapper;
 import learn.wingit.data.mappers.UserMapper;
 import learn.wingit.models.Order;
 import learn.wingit.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -57,6 +60,33 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
+    public User addUser(User user) {
+        final String sql = "insert into `user` (role_id, username, password_hash, `email`, `phone`, `address`, company) " +
+                "values (?,?,?,?,?,?,?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setInt(1, user.getRole().getRoleId());
+            ps.setString(2, user.getUsername());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhone());
+            ps.setString(6, user.getAddress());
+            ps.setString(7, user.getCompany());
+            return ps;
+        }, keyHolder);
+
+        if(rowsAffected <= 0) {
+            return null;
+        }
+
+        user.setUserId(keyHolder.getKey().intValue());
+        return user;
+    }
+
+
+    @Override
     public boolean updateUser(User user) {
 
         final String sql = "update `user` set " +
@@ -73,10 +103,19 @@ public class UserJdbcTemplateRepository implements UserRepository {
     }
 
     @Override
+    @Transactional
     public boolean deleteUser(int userId) {
         User user = findById(userId);
-        for(Order order : user.getOrders()) {
-            jdbcTemplate.update("delete from order_plane where order_id = ?;", order.getOrderId());
+        if(user == null) {
+            return false;
+        }
+
+        List<Order> orders = user.getOrders();
+
+        if(!orders.isEmpty()) {
+            for (Order order : orders) {
+                jdbcTemplate.update("delete from order_plane where order_id = ?;", order.getOrderId());
+            }
         }
         jdbcTemplate.update("delete from `order` where user_id = ?;", userId);
         return jdbcTemplate.update("delete from `user` where user_id = ?;", userId) > 0;

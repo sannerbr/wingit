@@ -1,16 +1,18 @@
 package learn.wingit.models;
 
-import javax.validation.constraints.Min;
+import learn.wingit.validation.NoDuplicateUser;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@NoDuplicateUser(message = "This username is already taken")
 public class User {
     private int userId;
 
     @NotBlank(message = "Username is required.")
+
     private String username;
 
     @NotBlank(message = "Password is required.")
