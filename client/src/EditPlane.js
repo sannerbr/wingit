@@ -18,30 +18,21 @@ export default function EditPlane() {
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState([]);
 
-  const [plane, setPlane] = useState(null);
-
   const [types, setTypes] = useState([]); 
   const [sizes, setSizes] = useState([]);
 
   const history = useHistory();
 
-  const getPlaneInfo1 = async () => {
-    const response = await fetch(`http://localhost:8080/api/planes/id/${planeId}`);
-    const data = await response.json();
-    setPlane(data);
-    
-  }
   const getPlaneInfo = () => {
     fetch(`http://localhost:8080/api/planes/id/${planeId}`)
       .then(response => response.json())
-      .then(data => {setPlane(data)
-      console.log(data)})
+      .then(data => {setFormData(data)})
   }
 
-  useEffect(getPlaneInfo1, [planeId]);
+  useEffect(getPlaneInfo, [planeId]);
   
 
-  const setFormData = () => {
+  const setFormData = (plane) => {
     setManufacturer(plane.model.manufacturer);
     setModel(plane.model);
     setType(plane.type);
@@ -82,7 +73,7 @@ export default function EditPlane() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {
+      body: JSON.stringify({
         plane_id: planeId,
         model,
         type, 
@@ -95,12 +86,14 @@ export default function EditPlane() {
         wingspan,
         length,
         description
-      }
+      })
     }
+    
 
-    fetch(`http://localhost:8080/api/planes/${planeId}`, obj)
+    fetch(`http://localhost:8080/api/planes/id/${planeId}`, obj)
       .then(response => {
-        if(response.status === 200) {
+        console.log(response)
+        if(response.status === 204) {
           alert("Plane Updated")
           history.push("/")
         } else if (response.status === 400) {
@@ -256,7 +249,6 @@ export default function EditPlane() {
 
             <button className="btn btn-primary mr-1" type="submit">Submit</button>
             <button className="btn btn-secondary ml-1" type="button" onClick={handleCancel}>Cancel</button>
-            <button onClick={() => {setFormData()}}>log</button>
           </form>
         </div>
       </div>
