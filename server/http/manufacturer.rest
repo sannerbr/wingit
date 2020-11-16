@@ -1,0 +1,33 @@
+  
+
+GET /api/manufacturers HTTP/1.1
+Host: localhost:8080
+
+###
+
+
+GET /api/manufacturers/2 HTTP/1.1
+Host: localhost:8080
+
+###
+
+
+POST /api/manufacturers HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "name": "Test"
+}
+
+###
+
+
+PUT /api/manufacturers/3 HTTP/1.1
+Host: localhost:8080
+Content-Type: application/json
+
+{
+  "manufacturer_id": 3,
+  "name": "Test Again"
+}

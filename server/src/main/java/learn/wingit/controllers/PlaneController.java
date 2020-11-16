@@ -34,6 +34,7 @@ public class PlaneController {
 
     @GetMapping("/id/{planeId}")
     public Plane findById(@PathVariable int planeId) {
+
         return service.findById(planeId);
     }
 
