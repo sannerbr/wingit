@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
   NavLink,
@@ -6,7 +6,11 @@ import {
   Link
 } from 'react-router-dom';
 
+import AuthContext from './AuthContext';
+
 export default function MenuBar() {
+  const auth = useContext(AuthContext);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="collapse navbar-collapse">
@@ -29,12 +33,28 @@ export default function MenuBar() {
           </li>
         </ul>
         <ul className="navbar-nav ml-auto">
-          <li className="nav-item mr-2">
-            <NavLink to="/account" className="btn">Account</NavLink>
-          </li>
-          <li className="nav-item mr-2">
-            <NavLink to="/orders" className="btn">Orders</NavLink>
-          </li>
+
+          {
+            !auth.user &&
+            <li className="nav-item mr-2">
+              <NavLink to="/login" className="btn">Login/Create Account</NavLink>
+            </li>
+          }
+
+          {
+            auth.user &&
+            <>
+              <li className="nav-item mr-2">
+                <NavLink to="/account" className="btn">Account</NavLink>
+              </li>
+              <li className="nav-item mr-2">
+                <NavLink to="/orders" className="btn">Orders</NavLink>
+              </li>
+              <li className="nav-item mr-2">
+                <button className="btn" onClick={() => auth.logout()}>Logout</button>
+              </li>
+            </>
+          }
         </ul>
       </div>
     </nav>
