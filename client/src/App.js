@@ -14,7 +14,9 @@ import PrivatePlaneView from './PrivatePlaneView';
 import AddPlane from './AddPlane';
 import OrdersView from './OrdersView';
 import Login from "./Login";
-import CreateAccount from "./CreateAccount"
+import CreateAccount from "./CreateAccount";
+import PlanePage from "./PlanePage";
+import EditPlane from "./EditPlane";
 
 import './App.css';
 import AuthContext from './AuthContext';
@@ -64,8 +66,11 @@ function App() {
           <Route exact={true} path="/commercial-planes">
             <CommercialPlaneView />
           </Route>
-          <Route path="/planes/:id">
-            {/*Plane page componenet*/}
+          <Route exact={true} path="/planes/:planeId">
+            <PlanePage />
+          </Route>
+          <Route exact={true} path="/edit/planes/:planeId">
+            <EditPlane />
           </Route>
           <Route exact={true} path="/cargo-planes">
             <CargoPlaneView />
