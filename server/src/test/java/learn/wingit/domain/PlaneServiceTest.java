@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -111,6 +113,28 @@ class PlaneServiceTest {
         assertFalse(result.isSuccess());
     }
 
+    @Test
+    void shouldNotAddDuplicatePlane() {
+        when(repository.findAll()).thenReturn(listOfPlanes());
+        Plane plane = makePlane();
+        plane.getModel().setModel_id(7);
+        plane.getModel().setName("AC-130");
+        plane.setSize(Size.SMALL);
+        Result<Plane> result = service.add(plane);
+        assertFalse(result.isSuccess());
+        assertEquals("This plane already exists", result.getMessages().get(0));
+    }
+
+    @Test
+    void shouldNotUpdateToDuplicatePlane() {
+        when(repository.findAll()).thenReturn(listOfPlanes());
+        Plane plane = makePlane();
+        plane.setPlane_id(2);
+        Result<Plane> result = service.update(plane);
+        assertFalse(result.isSuccess());
+        assertEquals("This plane already exists", result.getMessages().get(0));
+    }
+
 
     private Plane makePlane(){
         Plane plane = new Plane();
@@ -142,5 +166,19 @@ class PlaneServiceTest {
         manufacturer.setManufacturer_id(2);
         manufacturer.setName("Airbus");
         return manufacturer;
+    }
+
+    private List<Plane> listOfPlanes() {
+        List<Plane> list = new ArrayList<>();
+        Plane plane1 = makePlane();
+        plane1.setPlane_id(1);
+        Plane plane2 = makePlane();
+        plane2.setPlane_id(2);
+        plane2.getModel().setModel_id(7);
+        plane2.getModel().setName("AC-130");
+        plane2.setSize(Size.SMALL);
+        list.add(plane1);
+        list.add(plane2);
+        return list;
     }
 }

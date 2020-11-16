@@ -1,12 +1,14 @@
 package learn.wingit.models;
 
+import learn.wingit.validation.NoDuplicatePlane;
+
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-
+@NoDuplicatePlane(message = "This plane already exists")
 public class Plane {
     private int plane_id;
     @NotNull(message = "Model is required")
