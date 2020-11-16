@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { GetAllManufacturers, GetTypes, GetSizes } from './FormDataFetch';
 import Errors from './Errors';
 
 export default function AddPlane() {
@@ -19,6 +18,7 @@ export default function AddPlane() {
   const [errors, setErrors] = useState([]);
 
   const [modelName, setModelName] = useState('');
+  const [manufacturerName, setManufacturerName] = useState('');
 
 
   const [allManufacturers, setAllManufacturers] = useState([]);
@@ -28,10 +28,9 @@ export default function AddPlane() {
   const history = useHistory();
 
 
-  //When Manufacturer Select value is changed the list of models is updated
-  // Set select menu value to 0 and if event.target.value === 0 then set models to [] 
   const handleManufacturerChange = (event) => {
-    setManufacturer(event.target.value);
+    setManufacturerName(event.target.value);
+    setManufacturer(manufacturerFromName(event.target.value));
   }
 
   const handleModelChange = (event) => {
@@ -81,33 +80,61 @@ export default function AddPlane() {
   const handleCancel = (event) => {
     history.push("/");
   }
-  // Commented out until controller built
-  // get all manufacturers, types, and sizes
-  // useEffect(setAllManufacturers(GetAllManufacturers()), []);
-  // useEffect(setTypes(GetTypes()), []);
-  // useEffect(setSizes(GetSizes()), []);
 
+  function manufacturerFromName (name) {
+    for(let i = 0; i < allManufacturers.length; i++) {
+      if(allManufacturers[i].name === name) {
+        return allManufacturers[i];
+      }
+    }
+    return null;
+  }
+
+
+  const getManufacturers = () => {
+    fetch('http://localhost:8080/api/manufacturers')
+    .then(response => response.json())
+    .then(data => setAllManufacturers(data));
+  }
+
+  const getSizes = () => {
+    fetch('http://localhost:8080/api/sizes')
+    .then(response => response.json())
+    .then(data => setSizes(data));
+  }
+
+  const getTypes = () => {
+    fetch('http://localhost:8080/api/types')
+    .then(response => response.json())
+    .then(data => setTypes(data));
+  }
+
+
+  useEffect( getTypes, []);
+  useEffect( getSizes, []);
+  useEffect( getManufacturers, []);
 
   const addSubmitHandler = (event) => {
     event.preventDefault()
-
     let modelObj = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {
-        name: modelName
-      }
+      body: JSON.stringify({
+        model_id: 0,
+        name: modelName,
+        manufacturer: manufacturer,
+      })
     }
 
-    fetch('http://localhost:8080/api/add-model', modelObj)
+    fetch('http://localhost:8080/api/models', modelObj)
       .then(response => {
         if (response.status === 201) {
           response.json()
             .then(data => {
               setModel(data);
-              addPlane();
+              addPlane(data);
             })
         } else if (response.status === 400) {
           response.json()
@@ -116,7 +143,7 @@ export default function AddPlane() {
       })
   }
 
-  const addPlane = () => {
+  const addPlane = (model) => {
     let obj = {
       method: 'POST',
       headers: {
@@ -128,7 +155,7 @@ export default function AddPlane() {
         size,
         price,
         quantity,
-        seatingCapacity,
+        seating_capacity: seatingCapacity,
         length,
         height,
         wingspan,
@@ -137,7 +164,7 @@ export default function AddPlane() {
       })
     }
 
-    fetch('http://localhost:8080/add-plane', obj)
+    fetch('http://localhost:8080/api/planes', obj)
       .then(response => {
         if (response.status === 201) {
           history.push('/');
@@ -150,28 +177,30 @@ export default function AddPlane() {
       })
   }
 
-  // className="form-control" add classname to all inputs and size
-
   return (
     <>
       <Errors errors={errors} />
       <div className="row justify-content-md-center">
         <div className="col-md-11">
-          <form class="form-group" onSubmit={addSubmitHandler}>
+          <form className="form-group" onSubmit={addSubmitHandler}>
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label for="manufacturer">Manufacturer</label>
-                  <select className="form-control" id="manufacturer" value={manufacturer} onChange={handleManufacturerChange}>
-                    <option selected>Select Manufacturer</option>
-                    {allManufacturers.map(m => (
-                      <option key={m.manufacturerId} value={m}>{`${m.name}`}</option>
-                    ))}
+                  <label htmlFor="manufacturer">Manufacturer</label>
+                  <select className="form-control" id="manufacturer" value={manufacturerName} onChange={handleManufacturerChange}>
+                    <option defaultValue>Select Manufacturer</option>
+                    {
+                      allManufacturers.map(m => (
+                        <>
+                        <option key={m.name} value={m.name}>{`${m.name}`}</option>
+                        </>
+                      ))
+                    }
                   </select>
                 </div>
 
                 <div className="col">
-                  <label for="model">Model Name</label>
+                  <label htmlFor="model">Model Name</label>
                   <input className="form-control" type="text" id="model" value={modelName} onChange={handleModelChange} />
                 </div>
               </div>
@@ -180,23 +209,23 @@ export default function AddPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label for="type">Plane Type</label>
+                  <label htmlFor="type">Plane Type</label>
                   <select className="form-control" id="type" value={type} onChange={handlePlaneTypeChange}>
-                    <option selected>Plane Type</option>
+                    <option defaultValue>Plane Type</option>
                     {
                       types.map(t => (
-                        <option key={t.typeId} value={t}>{`${t.name}`}</option>
+                        <option key={t} value={t}>{`${t}`}</option>
                       ))
                     }
                   </select>
                 </div>
                 <div className="col">
-                  <label for="size">Plane Size</label>
+                  <label htmlFor="size">Plane Size</label>
                   <select className="form-control" id="size" value={size} onChange={handlePlaneSizeChange}>
-                    <option selected>Plane Size</option>
+                    <option defaultValue>Plane Size</option>
                     {
                       sizes.map(s => (
-                        <option key={s.sizeId} value={s}>{`${s.size}`}</option>
+                        <option key={s} value={s}>{`${s}`}</option>
                       ))
                     }
                   </select>
@@ -207,11 +236,11 @@ export default function AddPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label for="price">Price</label>
+                  <label htmlFor="price">Price</label>
                   <input className="form-control" id="price" type="number" value={price} min="0" step='0.01' onChange={handlePriceChange} />
                 </div>
                 <div className="col">
-                  <label for="quantity">Quantity</label>
+                  <label htmlFor="quantity">Quantity</label>
                   <input className="form-control" id="quantity" type="number" value={quantity} min="1" onChange={handleQuantityChange} />
                 </div>
               </div>
@@ -220,17 +249,17 @@ export default function AddPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label for="wingspan">Wingspan (ft.)</label>
+                  <label htmlFor="wingspan">Wingspan (ft.)</label>
                   <input className="form-control" type="number" id="wingspan" value={wingspan} min="1" onChange={handleWingspanChange} />
                 </div>
 
                 <div className="col">
-                  <label for="length">Length (ft.)</label>
+                  <label htmlFor="length">Length (ft.)</label>
                   <input className="form-control" type="number" id="length" value={length} min="1" onChange={handleLengthChange} />
                 </div>
 
                 <div className="col">
-                  <label for="height">Height (ft.)</label>
+                  <label htmlFor="height">Height (ft.)</label>
                   <input className="form-control" type="number" id="height" value={height} min="1" onChange={handleHeightChange} />
                 </div>
               </div>
@@ -239,19 +268,19 @@ export default function AddPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label for="seatingCapacity">Seating Capacity</label>
+                  <label htmlFor="seatingCapacity">Seating Capacity</label>
                   <input className="form-control" type="number" id="seatingCapacity" value={seatingCapacity} min="0" onChange={handleSeatingCapacityChange} />
                 </div>
                 <div className="col">
-                  <label for="range">Range (miles)</label>
+                  <label htmlFor="range">Range (miles)</label>
                   <input className="form-control" type="number" id="range" value={range} min="1" onChange={handleRangeChange} />
                 </div>
               </div>
             </div>
 
             <div className="form-group">
-              <label for="description">Description</label>
-              <input className="form-control" type="text" id="description" value={description} min="1" onChange={handleDescriptionChange} />
+              <label htmlFor="description">Description</label>
+              <textarea className="form-control" type="text" id="description" value={description} min="1" onChange={handleDescriptionChange} />
             </div>
 
             <button className="btn btn-primary mr-1" type="submit">Submit</button>
