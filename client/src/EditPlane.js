@@ -92,7 +92,6 @@ export default function EditPlane() {
 
     fetch(`http://localhost:8080/api/planes/id/${planeId}`, obj)
       .then(response => {
-        console.log(response)
         if(response.status === 204) {
           alert("Plane Updated")
           history.push("/")

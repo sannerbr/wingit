@@ -167,6 +167,7 @@ export default function AddPlane() {
     fetch('http://localhost:8080/api/planes', obj)
       .then(response => {
         if (response.status === 201) {
+          alert("Plane Added");
           history.push('/');
         } else if (response.status === 400) {
           response.json()
