@@ -14,6 +14,7 @@ import PrivatePlaneView from './PrivatePlaneView';
 import AddPlane from './AddPlane';
 import OrdersView from './OrdersView';
 import Login from "./Login";
+import CreateAccount from "./CreateAccount"
 
 import './App.css';
 import AuthContext from './AuthContext';
@@ -83,6 +84,9 @@ function App() {
           </Route>
           <Route exact={true} path="/login">
             <Login />
+          </Route>
+          <Route exact={true} path="/create-account">
+            <CreateAccount />
           </Route>
         </Router>
       </div>
