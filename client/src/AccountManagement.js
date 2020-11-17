@@ -1,15 +1,17 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 
 import AuthContext from "./AuthContext";
+import Errors from './Errors';
 
 export default function AccountManagement() {
   const auth = useContext(AuthContext);
   const [userId, setUserId] = useState(auth.user.userId);
-  const [username, setUsername] = useState(auth.user.username);
-  const [email, setEmail] = useState(auth.user.email);
-  const [phone, setPhone] = useState(auth.user.phone);
-  const [address, setAddress] = useState(auth.user.address);
-  const [company, setCompany] = useState(auth.user.company);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+  const [company, setCompany] = useState('');
+  const [role, setRole] = useState(auth.user.roles[0].substring(5))
   const [editing, setEditing] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -23,6 +25,22 @@ export default function AccountManagement() {
     setEditing(false);
   }
 
+  const getUserInfo = () => {
+    fetch(`http://localhost:8080/api/users/id/${userId}`)
+      .then(response => response.json())
+      .then(data => setUserInfo(data))
+  }
+
+  const setUserInfo = (user) => {
+    setUsername(user.username);
+    setEmail(user.email);
+    setPhone(user.phone);
+    setAddress(user.address);
+    setCompany(user.company);
+  }
+
+  useEffect(getUserInfo, [userId]);
+
   const handleUserEditSubmit = (event) => {
     event.preventDefault();
 
@@ -31,20 +49,23 @@ export default function AccountManagement() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify(
+      body: JSON.stringify({
         userId,
         username,
         email,
         phone,
         address,
-        company
-      )
+        company,
+        role
+      })
     }
     fetch(`http://localhost:8080/api/users/id/${userId}`, obj)
       .then(response => {
         if(response.status === 204) {
           alert("User Updated")
-        } else if (response.status === 404) {
+          getUserInfo();
+          setEditing(false);
+        } else if (response.status === 400) {
           setErrors(response.json())
         } else {
           setErrors(['Unknown Error Occured'])
@@ -66,23 +87,23 @@ export default function AccountManagement() {
                 <form>
                   <div className="row form-group justify-content-center">
                     <label className="mx-3">Username</label>
-                    <input className="form-control" type="text" value={auth.user.username} readOnly />
+                    <input className="form-control" type="text" value={username} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
                     <label className="mx-3">Email</label>
-                    <input className="form-control" type="email" value={auth.user.email} readOnly />
+                    <input className="form-control" type="email" value={email} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
                     <label className="mx-3">Phone</label>
-                    <input className="form-control" type="text" value={auth.user.phone} readOnly />
+                    <input className="form-control" type="text" value={phone} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
                     <label className="mx-3">Address</label>
-                    <input className="form-control" type="text" value={auth.user.address} readOnly />
+                    <input className="form-control" type="text" value={address} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
                     <label className="mx-3">Company</label>
-                    <input className="form-control" type="text" value={auth.user.company} readOnly />
+                    <input className="form-control" type="text" value={company} readOnly />
                   </div>
                 </form>
               </div>
@@ -97,6 +118,7 @@ export default function AccountManagement() {
           auth.user && editing &&
           <div className="row justify-content-center">
             <div className="col">
+              <Errors errors={errors} />
               <div className="row justify-content-center">
                 <form onSubmit={handleUserEditSubmit}>
                   <input type="hidden" value={userId} />
