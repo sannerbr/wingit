@@ -22,14 +22,18 @@ function App() {
   const [user, setUser] = useState(null);
 
   const login = (token) => {
-    const { appUserId, sub: username, authorities } = jwt_decode(token);
+    const { userId, sub: username, authorities, email, phone, address, company } = jwt_decode(token);
 
 
     const roles = authorities.split(',');
-    
+
     const user = {
-      appUserId: parseInt(appUserId, 10),
+      userId: parseInt(userId, 10),
       username,
+      email,
+      phone,
+      address,
+      company,
       roles,
       token,
       hasRole(role) {
@@ -37,6 +41,7 @@ function App() {
       }
     };
 
+    console.log(user);
     setUser(user);
 
     return user;
