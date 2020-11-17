@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams , useHistory} from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -8,6 +8,8 @@ export default function PlanePage() {
   let { planeId } = useParams();
 
   const auth = useContext(AuthContext)
+
+  const history = useHistory();
 
   const [plane, setPlane] = useState(null);
 
@@ -37,6 +39,12 @@ export default function PlanePage() {
       })
   }
 
+  const handleEditPath = (event) => {
+    event.preventDefault();
+
+    history.push(`/edit/planes/${plane.plane_id}`)
+  }
+
   return (
     <>
       {
@@ -49,7 +57,7 @@ export default function PlanePage() {
           <strong>Description:</strong><p>{`${plane.description}`}</p>
           <strong>{`Price: $${plane.price}`}</strong>
           <br />
-          <div className="row justify-content-center">
+          <div className="row justify-content-center my-3">
             <div className="col-md-8">
               <table className="table table-striped table-hover">
                 <thead className="table-dark">
@@ -60,23 +68,23 @@ export default function PlanePage() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Size</td>
+                    <th className="table-secondary">Size</th>
                     <td>{`${plane.size}`}</td>
                   </tr>
                   <tr>
-                    <td>Wingspan</td>
+                    <th className="table-secondary">Wingspan (ft.)</th>
                     <td>{`${plane.wingspan}`}</td>
                   </tr>
                   <tr>
-                    <td>Height</td>
+                    <th className="table-secondary">Height (ft.)</th>
                     <td>{`${plane.height}`}</td>
                   </tr>
                   <tr>
-                    <td>Length</td>
+                    <th className="table-secondary">Length (ft.)</th>
                     <td>{`${plane.length}`}</td>
                   </tr>
                   <tr>
-                    <td>Seating Capacity</td>
+                    <th className="table-secondary">Seating Capacity</th>
                     <td>{`${plane.seating_capacity}`}</td>
                   </tr>
                 </tbody>
@@ -89,7 +97,7 @@ export default function PlanePage() {
           {
             auth.user && auth.user.hasRole("ROLE_ADMIN") &&
             <div>
-              <Link to={`edit/planes/${plane.plane_id}`} className="btn btn btn-warning mr-2">Edit</Link>
+              <button onClick={handleEditPath} className="btn btn btn-warning mr-2">Edit</button>
               <button className="btn btn btn-danger" onClick={handleDelete}>Delete</button>
             </div>
           }
