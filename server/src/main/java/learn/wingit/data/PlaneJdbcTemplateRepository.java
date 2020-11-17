@@ -1,6 +1,5 @@
 package learn.wingit.data;
 
-import learn.wingit.data.mappers.OrderPlaneMapper;
 import learn.wingit.data.mappers.PlaneMapper;
 import learn.wingit.models.Plane;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -66,7 +65,8 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
                 "from plane p " +
                 "inner join model mo on p.model_id = mo.model_id " +
                 "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id " +
-                "where type_id = ?;";
+                "where type_id = ? " +
+                "and p.hidden = false;";
         return jdbcTemplate.query(sql, new PlaneMapper(), type_id);
     }
 
@@ -150,7 +150,7 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
 
     @Override
     public boolean delete(int planeId) {
-        return jdbcTemplate.update("update plane set hidden = 1 where plane_id = ?;", planeId) > 0;
+        return jdbcTemplate.update("update plane set hidden = true where plane_id = ?;", planeId) > 0;
     }
 
 }
