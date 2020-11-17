@@ -63,7 +63,7 @@ export default function PlanePage() {
               </table>
             </div>
           </div>
-          <Link to="/purchase" className="btn btn-sm btn-primary">Purchase</Link>
+          <Link to={`/purchase/${plane.plane_id}`} className="btn btn-sm btn-primary">Purchase</Link>
           <br />
           <br />
           <button className="btn btn-sm btn-warning mr-2"> Edit </button>
