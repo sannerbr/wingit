@@ -31,6 +31,7 @@ export default function PlanePage() {
       .then(response => {
         if(response.status === 204) {
           alert("Plane deleted from visible catalog")
+          history.goBack().goBack();
         } else if(response.status === 404) {
           alert("Plane not found")
         } else {
