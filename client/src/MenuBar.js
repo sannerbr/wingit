@@ -25,9 +25,14 @@ export default function MenuBar() {
           </li>
           {
             auth.user && auth.user.hasRole("ROLE_ADMIN") &&
+            <>
             <li className="nav-item mr-2">
               <NavLink to="/add-plane" className="btn">Add</NavLink>
             </li>
+            <li className="nav-item mr-2">
+              <NavLink to="/hidden-planes" className="btn">Hidden Planes</NavLink>
+            </li>
+            </>
           }
         </ul>
         <ul className="navbar-nav ml-auto">
