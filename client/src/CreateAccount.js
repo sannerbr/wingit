@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import AuthContext from './AuthContext';
+import Errors from './Errors';
 
 export default function CreateAccount() {
   const [username, setUsername] = useState('');
@@ -10,17 +12,76 @@ export default function CreateAccount() {
   const [company, setCompany] = useState(null);
   const [orders, setOrders] = useState(null);
 
+  const [errors, setErrors] = useState([]);
+
+  const auth = useContext(AuthContext);
+
   const history = useHistory();
 
 
   const submitHandler = (event) => {
     event.preventDefault();
 
+    let obj = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password,
+        email,
+        phone,
+        address,
+        company
+      })
+    }
+
+    fetch('http://localhost:8080/api/create-account', obj)
+      .then(response => {
+        if(response.status === 201) {
+          alert("User Created");
+          login();
+        } else if(response.status === 400) {
+          setErrors(response.json())
+        } else {
+          setErrors(['Unknown Error'])
+        }
+
+      })
   }
+
+const login = async () => {
+  let obj = {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      username,
+      password
+    })
+  }
+
+  const response = await fetch('http://localhost:8080/api/authenticate', obj);
+
+  if (response.status === 200) {
+    const { jwt_token } = await response.json();
+    auth.login(jwt_token);
+    history.push("/");
+  } else if (response.status === 403) {
+    setErrors(['Login Failed']);
+  } else {
+    setErrors(['Unknown Error'])
+  }
+}
+
+  
 
   return (
     <div className="row justify-content-center">
       <div className="col-md-8">
+        <Errors errors={errors} />
         <form onSubmit={submitHandler}>
           <div className="row justify-content-center my-3">
             <label htmlFor="username">Username</label>
