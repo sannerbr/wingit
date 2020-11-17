@@ -70,7 +70,7 @@ create table user (
     user_id int primary key auto_increment,
     role_id int not null,
     username varchar(50) not null,
-    password_hash varchar(50) not null,
+    password_hash varchar(500) not null,
     email varchar(248) not null,
     phone varchar(20) not null,
     address varchar(200) not null,
