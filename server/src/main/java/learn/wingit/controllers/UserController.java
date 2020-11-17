@@ -29,10 +29,10 @@ public class UserController {
         return service.findById(userId);
     }
 
-    @GetMapping("/username/{userName}")
-    public User findByUsername(@PathVariable String userName) {
-        return service.findByUsername(userName);
-    }
+//    @GetMapping("/username/{userName}")
+//    public User findByUsername(@PathVariable String userName) {
+//        return service.findByUsername(userName);
+//    }
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody User user) {

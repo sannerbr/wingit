@@ -3,6 +3,12 @@ package learn.wingit.domain;
 import learn.wingit.data.UserRepository;
 import learn.wingit.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
@@ -11,11 +17,26 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User userModel = userRepository.findByUsername(username);
+
+        if (userModel == null) {
+            throw new UsernameNotFoundException(username + " not found.");
+        }
+
+        List<GrantedAuthority> authorities = List.of(new SimpleGrantedAuthority("ROLE_" + userModel.getRole().getRole()));
+
+        return new org.springframework.security.core.userdetails.User(username, userModel.getPassword(), authorities);
     }
 
     private enum ValidationMode {
@@ -33,13 +54,10 @@ public class UserService {
         return userRepository.findById(userId);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
     public Result<User> add(User user) {
         Result<User> result = validate(user, ValidationMode.ADD);
         if(result.isSuccess()) {
+            user.setPassword(encoder.encode(user.getPassword()));
             userRepository.addUser(user);
             result.setPayload(user);
         }

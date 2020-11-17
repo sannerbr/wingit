@@ -1,8 +1,8 @@
 package learn.wingit.models;
 
 public enum Role {
-    ADMIN(1, "Admin"),
-    USER(2, "User");
+    ADMIN(1, "ADMIN"),
+    USER(2, "USER");
 
     private int roleId;
     private String role;
