@@ -16,6 +16,7 @@ import PlanePage from './PlanePage';
 import EditPlane from './EditPlane';
 import PlanePurchase from './PlanePurchase';
 import AccountManagement from "./AccountManagement";
+import HiddenPlaneView from "./HiddenPlaneView";
 
 import './App.css';
 import AuthContext from './AuthContext';
@@ -69,6 +70,9 @@ function App() {
           </Route>
           <Route exact={true} path="/commercial-planes">
             <CommercialPlaneView />
+          </Route>
+          <Route exact={true} path="/hidden-planes">
+            <HiddenPlaneView />
           </Route>
           <Route exact={true} path="/planes/:planeId">
             <PlanePage />
