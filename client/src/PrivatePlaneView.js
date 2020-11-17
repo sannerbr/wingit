@@ -25,6 +25,7 @@ export default function PrivatePlaneView() {
           <PlaneCard
             key={plane.plane_id}
             plane={plane}
+            rerenderData={getPrivatePlanes}
           />
         </div>
       ))}

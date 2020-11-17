@@ -25,6 +25,7 @@ export default function CommercialPlaneView() {
                     <PlaneCard
                         key={plane.planeId}
                         plane={plane}
+                        rerenderData={getCommercialPlanes}
                     />
                 </div>
             ))}

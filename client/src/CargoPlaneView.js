@@ -30,6 +30,7 @@ export default function CargoPlaneView() {
                     <PlaneCard
                         key={plane.plane_id}
                         plane={plane}
+                        rerenderData={getCargoPlanes}
                     />
                 </div>
             ))}
