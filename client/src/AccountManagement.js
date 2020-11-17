@@ -11,6 +11,7 @@ export default function AccountManagement() {
   const [address, setAddress] = useState(auth.user.address);
   const [company, setCompany] = useState(auth.user.company);
   const [editing, setEditing] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const cancelEdit = (event) => {
     event.preventDefault();
@@ -43,6 +44,10 @@ export default function AccountManagement() {
       .then(response => {
         if(response.status === 204) {
           alert("User Updated")
+        } else if (response.status === 404) {
+          setErrors(response.json())
+        } else {
+          setErrors(['Unknown Error Occured'])
         }
       })
   }
