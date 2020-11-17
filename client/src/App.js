@@ -14,6 +14,7 @@ import Login from './Login';
 import CreateAccount from './CreateAccount';
 import PlanePage from './PlanePage';
 import EditPlane from './EditPlane';
+import PlanePurchase from './PlanePurchase';
 
 import './App.css';
 import AuthContext from './AuthContext';
@@ -94,6 +95,9 @@ function App() {
           </Route>
           <Route exact={true} path="/create-account">
             <CreateAccount />
+          </Route>
+          <Route exact={true} path="/purchase">
+            <PlanePurchase />
           </Route>
         </Router>
       </div>
