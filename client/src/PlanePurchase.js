@@ -61,7 +61,10 @@ export default function PlanePurchase() {
                 userId,
                 orderDate: date,
                 totalCost: quantity * price,
-                planes: [plane]
+                planes: [{
+                    plane_id: plane.plane_id,
+                    quantity
+                }]
             })
         }
 
