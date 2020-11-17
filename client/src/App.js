@@ -15,6 +15,7 @@ import CreateAccount from './CreateAccount';
 import PlanePage from './PlanePage';
 import EditPlane from './EditPlane';
 import PlanePurchase from './PlanePurchase';
+import AccountManagement from "./AccountManagement";
 
 import './App.css';
 import AuthContext from './AuthContext';
@@ -85,7 +86,7 @@ function App() {
             <AddPlane />
           </Route>
           <Route exact={true} path="/account">
-            <p1>account</p1>
+            <AccountManagement />
           </Route>
           <Route exact={true} path="/orders">
             <OrdersView />
