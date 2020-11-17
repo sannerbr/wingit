@@ -24,7 +24,7 @@ export default function MenuBar() {
             </div>
           </li>
           {
-            auth.user &&
+            auth.user && auth.user.hasRole("ROLE_ADMIN") &&
             <li className="nav-item mr-2">
               <NavLink to="/add-plane" className="btn">Add</NavLink>
             </li>
