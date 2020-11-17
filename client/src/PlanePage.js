@@ -1,9 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import {Link} from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
+
+import AuthContext from './AuthContext'
 
 export default function PlanePage() {
   let { planeId } = useParams();
+
+  const auth = useContext(AuthContext)
 
   const [plane, setPlane] = useState(null);
 
@@ -14,6 +18,24 @@ export default function PlanePage() {
   }
 
   useEffect(getPlaneInfo, [planeId]);
+
+  const handleDelete = (event) => {
+    event.preventDefault();
+
+    let obj = {
+      method: 'DELETE'
+    }
+    fetch(`http://localhost:8080/api/planes/id/${plane.plane_id}`, obj)
+      .then(response => {
+        if(response.status === 204) {
+          alert("Plane deleted from visible catalog")
+        } else if(response.status === 404) {
+          alert("Plane not found")
+        } else {
+          alert("Unknown Error Occured")
+        }
+      })
+  }
 
   return (
     <>
@@ -27,8 +49,6 @@ export default function PlanePage() {
           <strong>Description:</strong><p>{`${plane.description}`}</p>
           <strong>{`Price: $${plane.price}`}</strong>
           <br />
-          <br />
-          <p>{`${plane.description}`}</p>
           <div className="row justify-content-center">
             <div className="col-md-8">
               <table className="table table-striped table-hover">
@@ -63,12 +83,16 @@ export default function PlanePage() {
               </table>
             </div>
           </div>
-          <Link to={`/purchase/${plane.plane_id}`} className="btn btn-sm btn-primary">Purchase</Link>
+          <Link to={`/purchase/${plane.plane_id}`} className="btn btn-lg btn-primary">Purchase</Link>
           <br />
           <br />
-          <button className="btn btn-sm btn-warning mr-2"> Edit </button>
-          <button className="btn btn-sm btn-danger">Delete</button>
-          <p> conditionally render edit and delete buttons</p>
+          {
+            auth.user && auth.user.hasRole("ROLE_ADMIN") &&
+            <div>
+              <Link to={`edit/planes/${plane.plane_id}`} className="btn btn btn-warning mr-2">Edit</Link>
+              <button className="btn btn btn-danger" onClick={handleDelete}>Delete</button>
+            </div>
+          }
 
         </div>
       }
