@@ -60,7 +60,7 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
-    @PostMapping("/api/create_account")
+    @PostMapping("/api/create-account")
     public ResponseEntity<?> createAccount(@RequestBody learn.wingit.models.User appUser) {
         try {
             appUser.setRole(Role.USER);
