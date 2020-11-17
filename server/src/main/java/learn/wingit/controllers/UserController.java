@@ -48,6 +48,7 @@ public class UserController {
         if(user.getUserId() != userId) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
+        user.setPassword(service.findById(userId).getPassword());
         Result<User> result = service.update(user);
 
         if(result.isSuccess()) {
