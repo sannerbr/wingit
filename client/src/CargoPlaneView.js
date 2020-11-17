@@ -3,6 +3,10 @@ import PlaneCard from "./PlaneCard";
 
 
 export default function CargoPlaneView() {
+    useEffect(() => {
+        getCargoPlanes();
+    }, []);
+
     const [planes, setPlanes] = useState([]);
 
     const getCargoPlanes = () => {
@@ -11,7 +15,9 @@ export default function CargoPlaneView() {
             .then(data => setPlanes(data));
     }
 
-     useEffect(getCargoPlanes, []);
+     // useEffect(getCargoPlanes, []);
+
+     
 
     return ( 
         <>

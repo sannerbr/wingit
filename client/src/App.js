@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 
-import {
-  BrowserRouter as Router,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import MenuBar from './MenuBar';
 import Home from './Home';
@@ -13,10 +10,10 @@ import CargoPlaneView from './CargoPlaneView';
 import PrivatePlaneView from './PrivatePlaneView';
 import AddPlane from './AddPlane';
 import OrdersView from './OrdersView';
-import Login from "./Login";
-import CreateAccount from "./CreateAccount";
-import PlanePage from "./PlanePage";
-import EditPlane from "./EditPlane";
+import Login from './Login';
+import CreateAccount from './CreateAccount';
+import PlanePage from './PlanePage';
+import EditPlane from './EditPlane';
 
 import './App.css';
 import AuthContext from './AuthContext';

@@ -1,10 +1,5 @@
 import React, { useContext } from 'react';
-import {
-  BrowserRouter as Router,
-  NavLink,
-  Route,
-  Link
-} from 'react-router-dom';
+import { BrowserRouter as Router, NavLink, Route, Link } from 'react-router-dom';
 
 import AuthContext from './AuthContext';
 
