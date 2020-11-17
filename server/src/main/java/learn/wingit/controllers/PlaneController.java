@@ -27,9 +27,9 @@ public class PlaneController {
         return service.findAll();
     }
 
-    @GetMapping("/user")
-    public List<Plane> findAllForUser() {
-        return service.findAllForUser();
+    @GetMapping("/hidden/all")
+    public List<Plane> findAllHidden() {
+        return service.findAllHidden();
     }
 
     @GetMapping("/id/{planeId}")

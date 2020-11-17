@@ -8,7 +8,7 @@ public interface PlaneRepository {
 
     List<Plane> findAll();
 
-    List<Plane> findAllForUser();
+    List<Plane> findAllHiddenPlanes();
 
     List<Plane> findByType(int type_id);
 

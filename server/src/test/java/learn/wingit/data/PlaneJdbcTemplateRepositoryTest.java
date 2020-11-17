@@ -35,14 +35,6 @@ class PlaneJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindAllForUser() {
-        List<Plane> planes = repository.findAllForUser();
-        assertNotNull(planes);
-        assertEquals(BigDecimal.valueOf(100), planes.get(0).getPrice());
-        assertEquals(3, planes.size());
-    }
-
-    @Test
     void shouldFindById() {
         Plane plane = repository.findById(1);
         assertNotNull(plane);

@@ -31,8 +31,8 @@ public class PlaneService {
         return repository.findAll();
     }
 
-    public List<Plane> findAllForUser() {
-        return repository.findAllForUser();
+    public List<Plane> findAllHidden() {
+        return repository.findAllHiddenPlanes();
     }
 
     public List<Plane> findByType(int type_id) {

@@ -38,7 +38,7 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
     }
 
     @Override
-    public List<Plane> findAllForUser() {
+    public List<Plane> findAllHiddenPlanes() {
         final String sql = "select " +
                 "p.plane_id, p.model_id, mo.`name` as model_name, ma.`name` as manufacturer_name, " +
                 "ma.manufacturer_id, p.size_id, p.type_id, " +
@@ -48,7 +48,7 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
                 "from plane p " +
                 "inner join model mo on p.model_id = mo.model_id " +
                 "inner join manufacturer ma on mo.manufacturer_id = ma.manufacturer_id " +
-                "where hidden is false;";
+                "where hidden is true;";
 
 
         return jdbcTemplate.query(sql, new PlaneMapper());
