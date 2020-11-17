@@ -2,6 +2,9 @@ package learn.wingit.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import learn.wingit.data.UserJdbcTemplateRepository;
+import learn.wingit.data.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -20,12 +23,18 @@ public class JwtConverter {
     private final int EXPIRATION_MINUTES = 15;
     private final int EXPIRATION_MILLIS = EXPIRATION_MINUTES * 60 * 1000;
 
+    @Autowired
+    private UserJdbcTemplateRepository userRepository;
+
     public String getTokenFromUser(User user) {
+        learn.wingit.models.User userModel = userRepository.findByUsername(user.getUsername());
+
 
         String authorities = user.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
+        //Use userModel to add field to token
         return Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(user.getUsername())

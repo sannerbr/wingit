@@ -29,11 +29,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/api/authenticate").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/planes/* ").permitAll()
+                .antMatchers( "/api/planes/* ").permitAll()
                 .antMatchers("/api/manufacturers").permitAll()
                 .antMatchers("/api/types").permitAll()
                 .antMatchers("/api/sizes").permitAll()
                 .antMatchers("/api/planes").permitAll()
+                .antMatchers(("/api/planes/id/*")).permitAll()
                 .and()
                 .addFilter(new JwtRequestFilter(authenticationManager(), converter))
                 .sessionManagement()
@@ -64,7 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .withUser(adminBuilder);
     }
 
-    @Bean public PasswordEncoder getEncoder() {
+    @Bean
+    public PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
