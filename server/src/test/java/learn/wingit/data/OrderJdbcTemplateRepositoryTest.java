@@ -64,7 +64,7 @@ class OrderJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdateOrder() {
-        Order order = new Order(2, 1, LocalDate.of(2020, 2, 2), BigDecimal.valueOf(300.23), null);
+        Order order = new Order(2, 1, LocalDate.of(2020,2,2), BigDecimal.valueOf(300.23), null);
         boolean result = repository.update(order);
         assertTrue(result);
         assertEquals(BigDecimal.valueOf(300.23), repository.findById(2).getTotalCost());

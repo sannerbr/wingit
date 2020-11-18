@@ -4,6 +4,7 @@ package learn.wingit.controllers;
 import learn.wingit.domain.UserService;
 import learn.wingit.models.Role;
 import learn.wingit.security.JwtConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,11 @@ import java.util.Map;
 public class AuthController {
 
 
+    @Autowired
     private final AuthenticationManager authenticationManager;
+    @Autowired
     private final JwtConverter converter;
+    @Autowired
     private final UserService service;
 
     public AuthController(AuthenticationManager authenticationManager, JwtConverter converter, UserService service) {
