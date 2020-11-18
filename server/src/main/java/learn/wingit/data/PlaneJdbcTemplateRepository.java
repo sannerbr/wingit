@@ -153,4 +153,9 @@ public class PlaneJdbcTemplateRepository implements PlaneRepository {
         return jdbcTemplate.update("update plane set hidden = true where plane_id = ?;", planeId) > 0;
     }
 
+    @Override
+    public boolean makeVisible(int planeId) {
+        return jdbcTemplate.update("update plane set hidden = false where plane_id = ?;", planeId) > 0;
+    }
+
 }

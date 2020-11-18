@@ -27,8 +27,23 @@ export default function PlaneCard({ plane, rerenderData }) {
       })
   }
 
-  const makeVisible = () => {
+  const makeVisible = (event) => {
+      event.preventDefault();
 
+      let obj = {
+        method: 'PUT'
+      }
+      fetch(`http://localhost:8080/api/planes/visible/id/${plane.plane_id}`, obj)
+        .then(response => {
+          if(response.status === 204) {
+            alert("Plane has been made visible to users")
+            rerenderData();
+          } else if (response.status === 404) {
+            alert("Plane not found")
+          } else {
+            alert("Unknown Error Occured")
+          }
+        })
   }
 
   return (
@@ -59,7 +74,7 @@ export default function PlaneCard({ plane, rerenderData }) {
             {
               (!auth.user || (auth.user && auth.user.hasRole("ROLE_USER"))) &&
               <div className="row justify-content-center">
-                <Link to={`/purchase/${plane.plane_id}`} className="btn btn-lg btn-primary">Purchase</Link>
+                <Link to={`/purchase/${plane.plane_id}`} className="btn btn-primary">Purchase</Link>
               </div>
             }
 

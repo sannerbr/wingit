@@ -20,4 +20,6 @@ public interface PlaneRepository {
 
     boolean delete(int planeId);
 
+    boolean makeVisible(int planeId);
+
 }

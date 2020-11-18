@@ -72,6 +72,14 @@ public class PlaneController {
         return ErrorResponse.build(result);
     }
 
+    @PutMapping("/visible/id/{planeId}")
+    public ResponseEntity<Object> makeVisible(@PathVariable int planeId) {
+        if (service.makeVisible(planeId)) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @DeleteMapping("/id/{planeId}")
     public ResponseEntity<Object> delete(@PathVariable int planeId) {
         if (service.delete(planeId)) {

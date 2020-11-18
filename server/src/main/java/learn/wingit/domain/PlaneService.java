@@ -70,6 +70,10 @@ public class PlaneService {
         return repository.delete(planeId);
     }
 
+    public boolean makeVisible(int planeId) {
+        return repository.makeVisible(planeId);
+    }
+
     private Result<Plane> validate(Plane plane, ValidationMode mode) {
         Result<Plane> result = new Result<>();
         if (plane == null) {
