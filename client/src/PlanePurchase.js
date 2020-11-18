@@ -50,12 +50,14 @@ export default function PlanePurchase() {
 
         var today = new Date();
 
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
 
         let obj = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                token: 'Bearer ' + auth.user.token
+
             },
             body: JSON.stringify({
                 userId,

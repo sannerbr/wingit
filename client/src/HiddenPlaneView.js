@@ -1,17 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import PlaneCard from "./PlaneCard";
-
+import AuthContext from "./AuthContext"
 
 export default function HiddenPlaneView() {
   const [planes, setPlanes] = useState([]);
 
+  const auth = useContext(AuthContext);
+
   const getHiddenPlanes = () => {
-    fetch(`http://localhost:8080/api/planes/hidden/all`)
+    let obj = {
+        method: 'GET',
+        headers: {
+          token: 'Bearer ' + auth.user.token
+        }
+      }
+    fetch(`http://localhost:8080/api/planes/hidden/all`, obj)
       .then(response => response.json())
       .then(data => setPlanes(data));
   }
 
-  useEffect(getHiddenPlanes, []);
+  useEffect(getHiddenPlanes, [auth.user.token]);
 
   return (
     <>

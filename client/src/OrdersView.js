@@ -8,13 +8,25 @@ export default function OrdersView() {
     const auth = useContext(AuthContext);
 
     const getOrders = () => {
-        fetch(`http://localhost:8080/api/orders`)
+        let obj = {
+            method: 'GET',
+            headers: {
+              token: 'Bearer ' + auth.user.token
+            }
+          }
+        fetch(`http://localhost:8080/api/orders`, obj)
             .then(response => response.json())
             .then(data => setOrders(data));
     }
 
     const getOrdersForUser = () => {
-        fetch(`http://localhost:8080/api/orders/${auth.user.username}`)
+        let obj = {
+            method: 'GET',
+            headers: {
+              token: 'Bearer ' + auth.user.token
+            }
+          }
+        fetch(`http://localhost:8080/api/orders/${auth.user.username}`, obj)
         .then(response => response.json())
         .then(data => setOrders(data));
     }
@@ -29,7 +41,7 @@ export default function OrdersView() {
     }
 
     // Commented out until controller built
-    useEffect(getOrdersByRole, [])
+    useEffect(getOrdersByRole, [auth.user.token])
 
     return (
         <div>

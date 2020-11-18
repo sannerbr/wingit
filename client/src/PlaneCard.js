@@ -12,7 +12,10 @@ export default function PlaneCard({ plane, rerenderData }) {
     event.preventDefault();
 
     let obj = {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
     }
     fetch(`http://localhost:8080/api/planes/id/${plane.plane_id}`, obj)
       .then(response => {
@@ -31,7 +34,10 @@ export default function PlaneCard({ plane, rerenderData }) {
       event.preventDefault();
 
       let obj = {
-        method: 'PUT'
+        method: 'PUT',
+        headers: {
+          token: 'Bearer ' + auth.user.token
+        }
       }
       fetch(`http://localhost:8080/api/planes/visible/id/${plane.plane_id}`, obj)
         .then(response => {
@@ -49,7 +55,6 @@ export default function PlaneCard({ plane, rerenderData }) {
   return (
 
     <div className="col-sm-10">
-      {console.log(plane)}
       <div className="card mb-3">
         <div className="row">
           <div className="col-md-3">

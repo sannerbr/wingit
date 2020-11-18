@@ -25,13 +25,16 @@ export default function PlanePage() {
     event.preventDefault();
 
     let obj = {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
     }
     fetch(`http://localhost:8080/api/planes/id/${plane.plane_id}`, obj)
       .then(response => {
         if(response.status === 204) {
           alert("Plane deleted from visible catalog")
-          history.goBack().goBack();
+          history.goBack();
         } else if(response.status === 404) {
           alert("Plane not found")
         } else {

@@ -1,8 +1,11 @@
 import { useParams, useHistory } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Errors from "./Errors"
+import AuthContext from "./AuthContext";
 
 export default function EditPlane() {
+  const auth = useContext(AuthContext)
+
   let { planeId } = useParams();
   const [manufacturer, setManufacturer] = useState({});
   const [model, setModel] = useState({});
@@ -48,20 +51,32 @@ export default function EditPlane() {
   }
 
   const getSizes = () => {
-    fetch('http://localhost:8080/api/sizes')
+    let obj = {
+      method: 'GET',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
+    }
+    fetch('http://localhost:8080/api/sizes', obj)
     .then(response => response.json())
     .then(data => setSizes(data));
   }
 
   const getTypes = () => {
-    fetch('http://localhost:8080/api/types')
+    let obj = {
+      method: 'GET',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
+    }
+    fetch('http://localhost:8080/api/types', obj)
     .then(response => response.json())
     .then(data => setTypes(data));
   }
 
 
-  useEffect( getTypes, []);
-  useEffect( getSizes, []);
+  useEffect( getTypes, [auth.user.token]);
+  useEffect( getSizes, [auth.user.token]);
 
   
 
@@ -71,7 +86,8 @@ export default function EditPlane() {
     let obj = {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: 'Bearer ' + auth.user.token
       },
       body: JSON.stringify({
         plane_id: planeId,
