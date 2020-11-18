@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import jwt_decode from 'jwt-decode';
 
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 
 import MenuBar from './MenuBar';
 import Home from './Home';
@@ -44,7 +44,7 @@ function App() {
       }
     };
 
-    
+
     setUser(user);
 
     return user;
@@ -68,41 +68,89 @@ function App() {
           <Route exact={true} path="/">
             <Home />
           </Route>
+
           <Route exact={true} path="/commercial-planes">
             <CommercialPlaneView />
           </Route>
+
           <Route exact={true} path="/hidden-planes">
-            <HiddenPlaneView />
+            {
+              (user && user.hasRole("ROLE_ADMIN")) ? (
+                <HiddenPlaneView />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
           </Route>
+
           <Route exact={true} path="/planes/:planeId">
             <PlanePage />
           </Route>
+
           <Route exact={true} path="/edit/planes/:planeId">
-            <EditPlane />
+            {
+              (user && user.hasRole("ROLE_ADMIN")) ? (
+                <EditPlane />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
           </Route>
+
           <Route exact={true} path="/cargo-planes">
             <CargoPlaneView />
           </Route>
+
           <Route exact={true} path="/private-planes">
             <PrivatePlaneView />
           </Route>
+
           <Route exact={true} path="/add-plane">
-            <AddPlane />
+            {
+              (user && user.hasRole("ROLE_ADMIN")) ? (
+                <AddPlane />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
           </Route>
+
           <Route exact={true} path="/account">
-            <AccountManagement />
+            {
+              (user) ? (
+                <AccountManagement />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
           </Route>
+
           <Route exact={true} path="/orders">
-            <OrdersView />
+            {
+              (user) ? (
+                <OrdersView />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
           </Route>
+
           <Route exact={true} path="/login">
             <Login />
           </Route>
+
           <Route exact={true} path="/create-account">
             <CreateAccount />
           </Route>
+
           <Route exact={true} path="/purchase/:planeId">
-            <PlanePurchase />
+            {
+              (user) ? (
+                <PlanePurchase />
+              ) : (
+                  <Redirect to="/login" />
+                )
+            }
           </Route>
         </Router>
       </div>
