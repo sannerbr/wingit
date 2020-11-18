@@ -28,7 +28,7 @@ class UserServiceTest {
     void shouldAddUser() {
         Result<User> result = service.add(makeUser());
         assertTrue(result.isSuccess());
-        assertEquals("chicken_password", result.getPayload().getPassword());
+        assertEquals("chicken", result.getPayload().getUsername());
     }
 
     @Test
