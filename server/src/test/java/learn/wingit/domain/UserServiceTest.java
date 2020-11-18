@@ -1,6 +1,6 @@
 package learn.wingit.domain;
 
-import learn.wingit.data.UserRepository;
+import learn.wingit.data.UserJdbcTemplateRepository;
 import learn.wingit.models.Role;
 import learn.wingit.models.User;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ class UserServiceTest {
     UserService service;
 
     @MockBean
-    UserRepository repository;
+    UserJdbcTemplateRepository repository;
 
     @Test
     void shouldAddUser() {
