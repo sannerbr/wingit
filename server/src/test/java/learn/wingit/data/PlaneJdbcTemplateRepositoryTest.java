@@ -1,6 +1,7 @@
 package learn.wingit.data;
 
 import learn.wingit.models.*;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ class PlaneJdbcTemplateRepositoryTest {
     @Autowired
     KnownGoodState knownGoodState;
 
+    @BeforeAll
+    static void reset() {
+        KnownGoodState.reset();
+    }
     @BeforeEach
     void setup() {
         knownGoodState.set();
