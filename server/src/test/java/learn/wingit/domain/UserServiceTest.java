@@ -41,16 +41,6 @@ class UserServiceTest {
         assertEquals(1, result.getUserId());
     }
 
-//    @Test
-//    void shouldFindByUsername() {
-//        User user = makeUser();
-//        user.setUserId(1);
-//        when(service.findByUsername("chicken")).thenReturn(user);
-//        User result = service.findByUsername("chicken");
-//        assertNotNull(result);
-//        assertEquals("chicken", result.getUsername());
-//    }
-
     @Test
     void shouldNotAddUserWithNoUsername() {
         User user = makeUser();

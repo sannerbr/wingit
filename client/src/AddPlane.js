@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Errors from './Errors';
+import AuthContext from "./AuthContext";
 
 export default function AddPlane() {
+  const auth = useContext(AuthContext);
+
   const [manufacturer, setManufacturer] = useState({});
   const [model, setModel] = useState({});
   const [type, setType] = useState({});
@@ -81,9 +84,9 @@ export default function AddPlane() {
     history.push("/");
   }
 
-  function manufacturerFromName (name) {
-    for(let i = 0; i < allManufacturers.length; i++) {
-      if(allManufacturers[i].name === name) {
+  function manufacturerFromName(name) {
+    for (let i = 0; i < allManufacturers.length; i++) {
+      if (allManufacturers[i].name === name) {
         return allManufacturers[i];
       }
     }
@@ -92,34 +95,54 @@ export default function AddPlane() {
 
 
   const getManufacturers = () => {
-    fetch('http://localhost:8080/api/manufacturers')
-    .then(response => response.json())
-    .then(data => setAllManufacturers(data));
+    let obj = {
+      method: 'GET',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
+    }
+
+    fetch('http://localhost:8080/api/manufacturers', obj)
+      .then(response => response.json())
+      .then(data => setAllManufacturers(data));
   }
 
   const getSizes = () => {
-    fetch('http://localhost:8080/api/sizes')
-    .then(response => response.json())
-    .then(data => setSizes(data));
+    let obj = {
+      method: 'GET',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
+    }
+    fetch('http://localhost:8080/api/sizes', obj)
+      .then(response => response.json())
+      .then(data => setSizes(data));
   }
 
   const getTypes = () => {
-    fetch('http://localhost:8080/api/types')
-    .then(response => response.json())
-    .then(data => setTypes(data));
+    let obj = {
+      method: 'GET',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
+    }
+    fetch('http://localhost:8080/api/types', obj)
+      .then(response => response.json())
+      .then(data => setTypes(data));
   }
 
 
-  useEffect( getTypes, []);
-  useEffect( getSizes, []);
-  useEffect( getManufacturers, []);
+  useEffect(getTypes, [auth.user.token]);
+  useEffect(getSizes, [auth.user.token]);
+  useEffect(getManufacturers, [auth.user.token]);
 
   const addSubmitHandler = (event) => {
     event.preventDefault()
     let modelObj = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        token: 'Bearer ' + auth.user.token
       },
       body: JSON.stringify({
         model_id: 0,
@@ -193,7 +216,7 @@ export default function AddPlane() {
                     {
                       allManufacturers.map(m => (
                         <>
-                        <option key={m.name} value={m.name}>{`${m.name}`}</option>
+                          <option key={m.name} value={m.name}>{`${m.name}`}</option>
                         </>
                       ))
                     }
