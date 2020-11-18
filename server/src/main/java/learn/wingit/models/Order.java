@@ -1,5 +1,6 @@
 package learn.wingit.models;
 
+import learn.wingit.validation.QuantityOrderedIsAvailable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMin;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@QuantityOrderedIsAvailable
 public class Order {
     private int orderId;
     @NotNull(message = "Must provide a user ID")
