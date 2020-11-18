@@ -1,6 +1,6 @@
 package learn.wingit.data;
 
-import learn.wingit.models.Order;
+import learn.wingit.models.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class OrderJdbcTemplateRepositoryTest {
+
+    @Autowired
+    PlaneJdbcTemplateRepository planeRepository;
 
     @Autowired
     OrderJdbcTemplateRepository repository;
@@ -51,10 +54,12 @@ class OrderJdbcTemplateRepositoryTest {
     @Test
     void shouldAddOrderSuccessfully() {
         Order order = makeOrder();
+        order.setPlanes(List.of(makePlane()));
         Order result = repository.add(order);
         assertNotNull(result);
         assertEquals(1, order.getUserId());
         assertEquals(4, order.getOrderId());
+        assertEquals(1, planeRepository.findById(2).getQuantity());
     }
 
     @Test
@@ -87,5 +92,38 @@ class OrderJdbcTemplateRepositoryTest {
         order.setTotalCost(BigDecimal.valueOf(2323.50));
         order.setUserId(1);
         return order;
+    }
+
+    private Plane makePlane(){
+        Plane plane = new Plane();
+        plane.setPlane_id(2);
+        plane.setModel(makeModel());
+        plane.setSize(Size.MEDIUM);
+        plane.setType(Type.PRIVATE);
+        plane.setPrice(BigDecimal.valueOf(1000));
+        plane.setQuantity(1);
+        plane.setSeating_capacity(10);
+        plane.setHeight(10);
+        plane.setLength(10);
+        plane.setWingspan(10);
+        plane.setRange(10);
+        plane.setDescription("This is a box");
+        plane.setHidden(false);
+        return plane;
+    }
+
+    private PlaneModel makeModel() {
+        PlaneModel model = new PlaneModel();
+        model.setModel_id(6);
+        model.setName("Douglas DC-3");
+        model.setManufacturer(makeMan());
+        return model;
+    }
+
+    private Manufacturer makeMan() {
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setManufacturer_id(2);
+        manufacturer.setName("Airbus");
+        return manufacturer;
     }
 }

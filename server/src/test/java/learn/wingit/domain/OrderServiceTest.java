@@ -1,7 +1,7 @@
 package learn.wingit.domain;
 
 import learn.wingit.data.OrderRepository;
-import learn.wingit.models.Order;
+import learn.wingit.models.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Or;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,11 +125,52 @@ class OrderServiceTest {
         assertFalse(result);
     }
 
+    @Test
+    void shouldNotAddOrderForUnavailableQuantity() {
+        Order order = makeOrder();
+        order.setPlanes(List.of(makePlane()));
+        Result<Order> result = service.add(order);
+        assertFalse(result.isSuccess());
+    }
+
     private Order makeOrder() {
         Order order = new Order();
         order.setOrderDate(LocalDate.of(2018, 9, 23));
         order.setTotalCost(BigDecimal.valueOf(2323.52));
         order.setUserId(1);
         return order;
+    }
+
+    private Plane makePlane(){
+        Plane plane = new Plane();
+        plane.setPlane_id(2);
+        plane.setModel(makeModel());
+        plane.setSize(Size.MEDIUM);
+        plane.setType(Type.PRIVATE);
+        plane.setPrice(BigDecimal.valueOf(1000));
+        plane.setQuantity(10);
+        plane.setSeating_capacity(10);
+        plane.setHeight(10);
+        plane.setLength(10);
+        plane.setWingspan(10);
+        plane.setRange(10);
+        plane.setDescription("This is a box");
+        plane.setHidden(false);
+        return plane;
+    }
+
+    private PlaneModel makeModel() {
+        PlaneModel model = new PlaneModel();
+        model.setModel_id(6);
+        model.setName("Douglas DC-3");
+        model.setManufacturer(makeMan());
+        return model;
+    }
+
+    private Manufacturer makeMan() {
+        Manufacturer manufacturer = new Manufacturer();
+        manufacturer.setManufacturer_id(2);
+        manufacturer.setName("Airbus");
+        return manufacturer;
     }
 }

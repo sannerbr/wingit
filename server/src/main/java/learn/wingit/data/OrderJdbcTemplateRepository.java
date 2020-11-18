@@ -97,6 +97,17 @@ public class OrderJdbcTemplateRepository implements OrderRepository {
         if(rowsAffected <= 0) {
             return null;
         }
+
+        final String sql3 = "update plane set quantity = quantity - ? where plane_id = ?;";
+        for (Plane p : order.getPlanes()) {
+            rowsAffected = jdbcTemplate.update(connection -> {
+                PreparedStatement ps = connection.prepareStatement(sql3);
+                ps.setInt(1, p.getQuantity());
+                ps.setInt(2, p.getPlane_id());
+                return ps;
+            });
+        }
+
         return order;
     }
 

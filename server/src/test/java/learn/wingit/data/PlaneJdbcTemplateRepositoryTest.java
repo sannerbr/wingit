@@ -81,7 +81,18 @@ class PlaneJdbcTemplateRepositoryTest {
         assertTrue(repository.findById(1).isHidden());
     }
 
+    @Test
+    void shouldFindHidden() {
+        List<Plane> planes = repository.findAllHiddenPlanes();
+        assertNotNull(planes);
+        assertTrue(planes.size() >= 1);
+    }
 
+    @Test
+    void shouldMakeVisible() {
+        assertTrue(repository.makeVisible(3));
+        assertFalse(repository.findById(3).isHidden());
+    }
 
 
     private Plane makePlane(){

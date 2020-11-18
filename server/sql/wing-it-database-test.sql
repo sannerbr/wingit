@@ -130,10 +130,10 @@ insert into model(name, manufacturer_id)
 
 insert into plane(model_id, size_id, type_id, price, quantity, seating_capacity,
                     height, length, wingspan, hidden, `range`, `description`)
-    values (1, 1, 1, 100.00, 1, 100, 10, 10, 10, 0,  100, 'Boeing 747 desc'),
-            (2, 2, 2, 200.00, 2, 200, 20, 20, 20, 0, 200, 'Boeing 777 desc'),
-            (4, 3, 3, 600.00, 2, 400, 40, 40, 40, 1, 400, 'Boeing C-150 desc'),
-            (3, 3, 3, 300.00, 3, 300, 30, 30, 30, 0, 300, 'Airbus A220 desc');
+    values (1, 1, 1, 100.00, 1, 100, 10, 10, 10, false,  100, 'Boeing 747 desc'),
+            (2, 2, 2, 200.00, 2, 200, 20, 20, 20, false, 200, 'Boeing 777 desc'),
+            (4, 3, 3, 600.00, 2, 400, 40, 40, 40, true, 400, 'Boeing C-150 desc'),
+            (3, 3, 3, 300.00, 3, 300, 30, 30, 30, false, 300, 'Airbus A220 desc');
 
 insert into user(role_id, username, password_hash, email, phone, address)
     values(1, 'customer', 'cust-pw-hash', 'cust@cust.com', '111-111-1111', '111 1st St.'),
