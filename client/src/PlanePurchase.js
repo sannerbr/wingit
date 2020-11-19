@@ -41,7 +41,7 @@ export default function PlanePurchase() {
         setQuantity(event.target.value)
     }
 
-    const handleCancel = (event) => {
+    const handleCancel = () => {
         history.push("/");
     }
 
