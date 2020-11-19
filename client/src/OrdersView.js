@@ -31,7 +31,6 @@ export default function OrdersView() {
         .then(data => setOrders(data));
     }
 
-    //
 
     const getOrdersByRole = () => {
         if(auth.user.hasRole("ROLE_ADMIN")) {
