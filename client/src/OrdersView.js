@@ -14,7 +14,7 @@ export default function OrdersView() {
               token: 'Bearer ' + auth.user.token
             }
           }
-        fetch(`http://localhost:8080/api/orders`, obj)
+        fetch(`http://localhost:8080/api/orders/`, obj)
             .then(response => response.json())
             .then(data => setOrders(data));
     }
@@ -26,11 +26,12 @@ export default function OrdersView() {
               token: 'Bearer ' + auth.user.token
             }
           }
-        fetch(`http://localhost:8080/api/orders/${auth.user.username}`, obj)
+        fetch(`http://localhost:8080/api/orders/user/${auth.user.username}/`, obj)
         .then(response => response.json())
         .then(data => setOrders(data));
     }
 
+    //
 
     const getOrdersByRole = () => {
         if(auth.user.hasRole("ROLE_ADMIN")) {
@@ -40,7 +41,6 @@ export default function OrdersView() {
         }
     }
 
-    // Commented out until controller built
     useEffect(getOrdersByRole, [auth.user.token])
 
     return (
