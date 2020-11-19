@@ -20,9 +20,9 @@ export default function MenuBar() {
               Planes
               </button>
             <div className="dropdown-menu bg-secondary " aria-labelledby="navbarDropdown">
-              <Link to="/commercial-planes" className="dropdown-item text-white">Commercial</Link>
-              <Link to="/cargo-planes" className="dropdown-item text-white">Cargo</Link>
-              <Link to="/private-planes" className="dropdown-item text-white">Private</Link>
+              <Link to="/commercial-planes" id="item" className="dropdown-item text-white">Commercial</Link>
+              <Link to="/cargo-planes" id="item" className="dropdown-item text-white">Cargo</Link>
+              <Link to="/private-planes" id="item" className="dropdown-item text-white">Private</Link>
             </div>
           </li>
           {

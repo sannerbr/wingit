@@ -1,7 +1,9 @@
 import { Link, useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 
-import AuthContext from './AuthContext'
+import AuthContext from './AuthContext';
+
+import "./Home.css";
 
 export default function PlaneCard({ plane, rerenderData }) {
   const auth = useContext(AuthContext)
@@ -58,9 +60,18 @@ export default function PlaneCard({ plane, rerenderData }) {
       <div className="card bg-secondary border-dark mb-3 " >
         <div className="row">
           <div className="col-md-3">
-            <br />
-            <br />
-            <p>Image</p>
+            {
+              plane.type === "COMMERCIAL" &&
+              <img className="card" src="/commercialdelta.jpg"/>
+            }
+            {
+              plane.type === "CARGO" &&
+              <img className="card" src="/BelugaXL.jpg"/>
+            }
+            {
+              plane.type === "PRIVATE" &&
+              <img className="card" src="/private.jpg"/>
+            }
           </div>
           <div className="col-md-6">
             <div className="card-body">
@@ -77,9 +88,16 @@ export default function PlaneCard({ plane, rerenderData }) {
               <Link to={`planes/${plane.plane_id}`} className="btn btn-dark my-3 px-6 text-white">More Info</Link>
             </div>
             {
-              (!auth.user || (auth.user && auth.user.hasRole("ROLE_USER"))) &&
+              plane.quantity === 0 &&
+              <>
+              <button className="btn btn-info" disabled>Order</button>
+              <p className="text-danger">Out of Stock</p>
+              </>
+            }
+            {
+              (!auth.user || (auth.user && auth.user.hasRole("ROLE_USER"))) && plane.quantity > 0 &&
               <div className="row justify-content-center">
-                <Link to={`/purchase/${plane.plane_id}`} className="btn btn-info text-white">Purchase</Link>
+                <Link to={`/purchase/${plane.plane_id}`} className="btn btn-info text-white">Order</Link>
               </div>
             }
 
