@@ -1,8 +1,8 @@
 .App {
   text-align: center;
-  background-color: #398aa0;
   display: flex;
   flex-direction: column;
+ background-size: cover;
 }
 
 /* * {

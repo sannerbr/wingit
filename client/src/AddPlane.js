@@ -261,7 +261,7 @@ export default function AddPlane() {
               <div className="row">
                 <div className="col">
                   <label htmlFor="price">Price</label>
-                  <input className="form-control" id="price" type="number" value={price} min="0" step='0.01' onChange={handlePriceChange} />
+                  <input className="form-control" id="price" type="number" value={price} min="0" onChange={handlePriceChange} />
                 </div>
                 <div className="col">
                   <label htmlFor="quantity">Quantity</label>

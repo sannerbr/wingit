@@ -54,8 +54,8 @@ export default function PlaneCard({ plane, rerenderData }) {
 
   return (
 
-    <div className="col-sm-10" >
-      <div className="card bg-light border-secondary mb-3" >
+    <div className="col-sm-10 rounded-circle" >
+      <div className="card bg-secondary border-dark mb-3 " >
         <div className="row">
           <div className="col-md-3">
             <br />
@@ -64,22 +64,22 @@ export default function PlaneCard({ plane, rerenderData }) {
           </div>
           <div className="col-md-6">
             <div className="card-body">
-              <h4 className="card-title">{`${plane.model.manufacturer.name} ${plane.model.name}`}</h4>
+              <h4 className="card-title text-white">{`${plane.model.manufacturer.name} ${plane.model.name}`}</h4>
               <br />
               <div className="row justify-content-center">
-                <p className="card-text mx-4">{`Quantity Available: ${plane.quantity}`}</p>
-                <p className="card-text mx-4">{`Price: $${plane.price}`}</p>
+                <p className="card-text mx-4 text-white">{`Quantity Available: ${plane.quantity}`}</p>
+                <p className="card-text mx-4 text-white">{`Price: $${plane.price}`}</p>
               </div>
             </div>
           </div>
           <div className="col-md-3">
             <div className="row justify-content-center">
-              <Link to={`planes/${plane.plane_id}`} className="btn btn-secondary my-3 px-6">More Info</Link>
+              <Link to={`planes/${plane.plane_id}`} className="btn btn-dark my-3 px-6 text-white">More Info</Link>
             </div>
             {
               (!auth.user || (auth.user && auth.user.hasRole("ROLE_USER"))) &&
               <div className="row justify-content-center">
-                <Link to={`/purchase/${plane.plane_id}`} className="btn btn-primary">Purchase</Link>
+                <Link to={`/purchase/${plane.plane_id}`} className="btn btn-info text-white">Purchase</Link>
               </div>
             }
 

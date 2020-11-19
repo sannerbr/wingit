@@ -26,8 +26,8 @@ export default function Order({ order }) {
                                     <td>{`${p.model.manufacturer.name}`}</td>
                                     <td>{`${p.model.name}`}</td>
                                     <td>{`${p.quantity}`}</td>
-                                    <td>{`${p.price}`}</td>
-                                    <td>{p.price * p.quantity}</td>
+                                    <td>{`$${p.price}`}</td>
+                                    <td>{`$${p.price * p.quantity}`}</td>
                                 </tr>
                             ))}
                             <tr>
