@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { BrowserRouter as Router, NavLink, Route, Link } from 'react-router-dom';
 
-import './MenuBar.css';
 
 import AuthContext from './AuthContext';
 
