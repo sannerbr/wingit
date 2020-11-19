@@ -123,27 +123,27 @@ export default function AccountManagement() {
                 <form onSubmit={handleUserEditSubmit}>
                   <input type="hidden" value={userId} />
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Username</label>
+                    <label className="text-white mx-3">Username</label>
                     <input className="form-control" type="text" value={username} onChange={(event) => setUsername(event.target.value)} />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Email</label>
+                    <label className="text-white mx-3">Email</label>
                     <input className="form-control" type="email" value={email} onChange={(event) => setEmail(event.target.value)} />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Phone</label>
+                    <label className="text-white mx-3">Phone</label>
                     <input className="form-control" type="text" value={phone} onChange={(event) => setPhone(event.target.value)} />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Address</label>
+                    <label className="text-white mx-3">Address</label>
                     <input className="form-control" type="text" value={address} onChange={(event) => setAddress(event.target.value)} />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Company</label>
+                    <label className="text-white mx-3">Company</label>
                     <input className="form-control" type="text" value={company} onChange={(event) => setCompany(event.target.value)} />
                   </div>
                   <div className="row form-group justify-content-center my-3">
-                    <button className="btn btn-primary" type="submit">Submit</button>
+                    <button className="btn btn-info" type="submit">Submit</button>
                     <button className="btn btn-secondary mx-2" onClick={cancelEdit}>Cancel</button>
                   </div>
 
