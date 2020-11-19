@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <>
     <div id="photo">
-      <img className="resize" src="https://genesis10-my.sharepoint.com/personal/acoburn_dev-10_com/Documents/Microsoft Teams Chat Files/kisspng-fixed-wing-aircraft-airplane-icon-a5-air-travel-air-tickets-5ad7fee2a1e344.7417056715241049306631.png"/>
+      <img className="resize" src="/fixed-wing.png"/>
       <h1 className="display-1 text-white">WingIt</h1>
     </div>
 
@@ -16,7 +16,7 @@ export default function Home() {
           <div className="col-sm-4">
             <div className="card bg-secondary">
               <div className="card-body">
-                <p className="card-text text-white">We supply the most commercial planes to anyone. Period.</p>
+                <p className="card-text text-white">We're committed to providing the highest quality commercial aviation. Our superior design, efficiency, and flying experience lead us to provide only the best.</p>
                 <Link to="/commercial-planes" className="btn btn-info">Commercial Planes</Link>
               </div>
             </div>
@@ -24,7 +24,7 @@ export default function Home() {
           <div className="col-sm-4">
             <div className="card bg-secondary">
               <div className="card-body">
-                <p className="card-text text-white">Our cargo planes are top tier. Fully certifiably awesome</p>
+                <p className="card-text text-white">Whether you are looking to deliver oversized, hazardous or highly urgent goods, our cargo selection will be sure to fit your needs.</p>
                 <Link to="/cargo-planes" className="btn btn-info">Cargo Planes</Link>
               </div>
             </div>
@@ -32,8 +32,7 @@ export default function Home() {
           <div className="col-sm-4">
             <div className="card bg-secondary">
               <div className="card-body">
-                <p className="card-text text-white">The private jets we offer are the best on the market.
-                 Click here if you're rich</p>
+                <p className="card-text text-white">Take your flying experience to new heights with our selection of luxary private jets, and find the aircraft to fit your unique travel needs. Trust us, you won't be disappointed.</p>
                 <Link to="/private-planes" className="btn btn-info">Private Planes</Link>
               </div>
             </div>
