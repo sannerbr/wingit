@@ -77,7 +77,7 @@ export default function AccountManagement() {
     <div className="row justify-content-center">
       <div className="col-md-8">
         <div className="row justify-content-center my-4">
-          <h1>User Info</h1>
+          <h1 className="text-white">User Info</h1>
         </div>
         {
           auth.user && !editing &&
@@ -86,29 +86,29 @@ export default function AccountManagement() {
               <div className="row justify-content-center">
                 <form>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Username</label>
+                    <label className="text-white mx-3">Username</label>
                     <input className="form-control" type="text" value={username} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Email</label>
+                    <label className="text-white">Email</label>
                     <input className="form-control" type="email" value={email} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Phone</label>
+                    <label className="text-white">Phone</label>
                     <input className="form-control" type="text" value={phone} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Address</label>
+                    <label className="text-white">Address</label>
                     <input className="form-control" type="text" value={address} readOnly />
                   </div>
                   <div className="row form-group justify-content-center">
-                    <label className="mx-3">Company</label>
+                    <label className="text-white">Company</label>
                     <input className="form-control" type="text" value={company} readOnly />
                   </div>
                 </form>
               </div>
               <div className="row justify-content-center">
-                <button className="btn btn-primary my-3" onClick={() => { setEditing(true) }}>Edit</button>
+                <button className="btn btn-info my-3" onClick={() => { setEditing(true) }}>Edit</button>
               </div>
             </div>
           </div>

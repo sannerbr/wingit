@@ -17,7 +17,7 @@ export default function CommercialPlaneView() {
         <>
             {
                 planes.length === 0 && 
-                <h2>There are currently no available commercial planes for sale</h2>
+                <h2 className="text-white my-5">There are currently no available commercial planes for sale</h2>
             }
 
             {planes.length > 0 && planes.map(plane => (

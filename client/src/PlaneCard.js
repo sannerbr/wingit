@@ -54,7 +54,7 @@ export default function PlaneCard({ plane, rerenderData }) {
 
   return (
 
-    <div className="col-sm-10 rounded-circle" >
+    <div className="col-sm-10" >
       <div className="card bg-secondary border-dark mb-3 " >
         <div className="row">
           <div className="col-md-3">
@@ -87,7 +87,7 @@ export default function PlaneCard({ plane, rerenderData }) {
               auth.user && auth.user.hasRole("ROLE_ADMIN") &&
               <>
                 <div className="row justify-content-center mb-3">
-                  <Link to={`edit/planes/${plane.plane_id}`} className="btn btn btn-warning mr-2">Edit</Link>
+                  <Link to={`edit/planes/${plane.plane_id}`} className="btn btn-warning mr-2 text-white">Edit</Link>
                   {
                     !plane.hidden &&
                     <button className="btn btn btn-danger" onClick={handleDelete}>Delete</button>

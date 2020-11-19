@@ -2,18 +2,22 @@
 export default function Order({ order }) {
     return (
         <div className="row justify-content-md-center my-4">
-            <div className="card col-sm-8">
+            <div className="card col-sm-8 bg-secondary">
                 <div className="row card-header">
                     <div className="col">
-                    {`Order Id: ${order.orderId}`}
+                        <strong>
+                            {`Order Id: ${order.orderId}`}
+                        </strong>
                     </div>
                     <div className="col">
-                        {`Order Date: ${order.orderDate}`}
+                        <strong>
+                            {`Order Date: ${order.orderDate}`}
+                        </strong>
                     </div>
                 </div>
                 <div className="card-body">
                     <table className="table">
-                        <thead>
+                        <thead >
                             <th>Manufacturer</th>
                             <th>Model</th>
                             <th>Quantity</th>
@@ -22,7 +26,7 @@ export default function Order({ order }) {
                         </thead>
                         <tbody>
                             {order && order.planes.map(p => (
-                                <tr key={p.planeId}>
+                                <tr key={p.planeId} className="text-white">
                                     <td>{`${p.model.manufacturer.name}`}</td>
                                     <td>{`${p.model.name}`}</td>
                                     <td>{`${p.quantity}`}</td>
@@ -33,11 +37,11 @@ export default function Order({ order }) {
                             <tr>
                                 <td colSpan="3"></td>
                                 <th className="text-center" >Order Total</th>
-                                <td>{`${order.totalCost}`}</td>
+                                <td className="text-white">{`$${order.totalCost}`}</td>
                             </tr>
                         </tbody>
                     </table>
-                    
+
                 </div>
             </div>
         </div>

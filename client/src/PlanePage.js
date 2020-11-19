@@ -54,12 +54,12 @@ export default function PlanePage() {
       {
         plane &&
         <div>
-          <h1 className="py-4">{`${plane.model.manufacturer.name} ${plane.model.name}`}</h1>
+          <h1 className="py-4 text-white">{`${plane.model.manufacturer.name} ${plane.model.name}`}</h1>
 
           <img src="https://assets.newatlas.com/dims4/default/ff4c6b5/2147483647/strip/true/crop/798x532+1+0/resize/1200x800!/quality/90/?url=http%3A%2F%2Fnewatlas-brightspot.s3.amazonaws.com%2Farchive%2F747-8freighter.jpg" alt="Boeing 747"></img>
           <br />
-          <strong>Description:</strong><p>{`${plane.description}`}</p>
-          <strong>{`Price: $${plane.price}`}</strong>
+          <strong className="text-white">Description:</strong><p className="text-white">{`${plane.description}`}</p>
+          <strong className="text-white">{`Price: $${plane.price}`}</strong>
           <br />
           <div className="row justify-content-center my-3">
             <div className="col-md-8">
@@ -71,25 +71,25 @@ export default function PlanePage() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className="bg-secondary">
                     <th className="table-secondary">Size</th>
-                    <td>{`${plane.size}`}</td>
+                    <td className="text-white">{`${plane.size}`}</td>
                   </tr>
-                  <tr>
+                  <tr className="bg-secondary">
                     <th className="table-secondary">Wingspan (ft.)</th>
-                    <td>{`${plane.wingspan}`}</td>
+                    <td className="text-white">{`${plane.wingspan}`}</td>
                   </tr>
-                  <tr>
+                  <tr className="bg-secondary">
                     <th className="table-secondary">Height (ft.)</th>
-                    <td>{`${plane.height}`}</td>
+                    <td className="text-white">{`${plane.height}`}</td>
                   </tr>
-                  <tr>
+                  <tr className="bg-secondary">
                     <th className="table-secondary">Length (ft.)</th>
-                    <td>{`${plane.length}`}</td>
+                    <td className="text-white">{`${plane.length}`}</td>
                   </tr>
-                  <tr>
+                  <tr className="bg-secondary">
                     <th className="table-secondary">Seating Capacity</th>
-                    <td>{`${plane.seating_capacity}`}</td>
+                    <td className="text-white">{`${plane.seating_capacity}`}</td>
                   </tr>
                 </tbody>
               </table>
@@ -101,7 +101,7 @@ export default function PlanePage() {
           {
             auth.user && auth.user.hasRole("ROLE_ADMIN") &&
             <div>
-              <button onClick={handleEditPath} className="btn btn btn-warning mr-2">Edit</button>
+              <button onClick={handleEditPath} className="btn btn-warning mr-2 text-white">Edit</button>
               <button className="btn btn btn-danger" onClick={handleDelete}>Delete</button>
             </div>
           }

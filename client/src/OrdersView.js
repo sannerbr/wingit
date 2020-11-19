@@ -45,7 +45,7 @@ export default function OrdersView() {
 
     return (
         <div>
-            <h1 className="my-3">Orders</h1>
+            <h1 className="my-3 text-white">Orders</h1>
             <br/>
             {orders.map(o => (
                 <Order 

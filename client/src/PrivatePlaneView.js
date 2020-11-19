@@ -17,7 +17,7 @@ export default function PrivatePlaneView() {
     <>
       {
         planes.length === 0 &&
-        <h2>There are currently no available private planes for sale</h2>
+        <h2 className="text-white my-5">There are currently no available private planes for sale</h2>
       }
 
       {planes.length > 0 && planes.map(plane => (

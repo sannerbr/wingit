@@ -170,16 +170,16 @@ export default function EditPlane() {
     <>
       <Errors errors={errors} />
       <div className="row justify-content-md-center">
-        <div className="col-md-11">
+        <div className="col-md-11 mt-4">
           <form className="form-group" onSubmit={editSubmitHandler}>
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="manufacturer">Manufacturer</label>
+                  <label className="text-white" htmlFor="manufacturer">Manufacturer</label>
                   <input className="form-control" type="text" id="manufacturer" value={manufacturer.name} readOnly />
                 </div>
                 <div className="col">
-                  <label htmlFor="model">Model Name</label>
+                  <label className="text-white" htmlFor="model">Model Name</label>
                   <input className="form-control" type="text" id="model" value={model.name} readOnly/>
                 </div>
               </div>
@@ -188,7 +188,7 @@ export default function EditPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="type">Plane Type</label>
+                  <label className="text-white" htmlFor="type">Plane Type</label>
                   <select className="form-control" id="type" value={type} onChange={handlePlaneTypeChange}>
                     <option defaultValue>Plane Type</option>
                     {
@@ -199,7 +199,7 @@ export default function EditPlane() {
                   </select>
                 </div>
                 <div className="col">
-                  <label htmlFor="size">Plane Size</label>
+                  <label className="text-white" htmlFor="size">Plane Size</label>
                   <select className="form-control" id="size" value={size} onChange={handlePlaneSizeChange}>
                     <option defaultValue>Plane Size</option>
                     {
@@ -215,11 +215,11 @@ export default function EditPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="price">Price</label>
+                  <label className="text-white" htmlFor="price">Price</label>
                   <input className="form-control" id="price" type="number" value={price} min="0" step='0.01' onChange={handlePriceChange} />
                 </div>
                 <div className="col">
-                  <label htmlFor="quantity">Quantity</label>
+                  <label className="text-white" htmlFor="quantity">Quantity</label>
                   <input className="form-control" id="quantity" type="number" value={quantity} min="1" onChange={handleQuantityChange} />
                 </div>
               </div>
@@ -228,17 +228,17 @@ export default function EditPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="wingspan">Wingspan (ft.)</label>
+                  <label className="text-white" htmlFor="wingspan">Wingspan (ft.)</label>
                   <input className="form-control" type="number" id="wingspan" value={wingspan} min="1" onChange={handleWingspanChange} />
                 </div>
 
                 <div className="col">
-                  <label htmlFor="length">Length (ft.)</label>
+                  <label className="text-white" htmlFor="length">Length (ft.)</label>
                   <input className="form-control" type="number" id="length" value={length} min="1" onChange={handleLengthChange} />
                 </div>
 
                 <div className="col">
-                  <label htmlFor="height">Height (ft.)</label>
+                  <label className="text-white" htmlFor="height">Height (ft.)</label>
                   <input className="form-control" type="number" id="height" value={height} min="1" onChange={handleHeightChange} />
                 </div>
               </div>
@@ -247,22 +247,22 @@ export default function EditPlane() {
             <div className="form-group">
               <div className="row">
                 <div className="col">
-                  <label htmlFor="seatingCapacity">Seating Capacity</label>
+                  <label className="text-white" htmlFor="seatingCapacity">Seating Capacity</label>
                   <input className="form-control" type="number" id="seatingCapacity" value={seatingCapacity} min="0" onChange={handleSeatingCapacityChange} />
                 </div>
                 <div className="col">
-                  <label htmlFor="range">Range (miles)</label>
+                  <label className="text-white" htmlFor="range">Range (miles)</label>
                   <input className="form-control" type="number" id="range" value={range} min="1" onChange={handleRangeChange} />
                 </div>
               </div>
             </div>
 
             <div className="form-group">
-              <label htmlFor="description">Description</label>
+              <label className="text-white" htmlFor="description">Description</label>
               <textarea className="form-control" type="text" id="description" value={description} min="1" onChange={handleDescriptionChange} />
             </div>
 
-            <button className="btn btn-primary mr-1" type="submit">Submit</button>
+            <button className="btn btn-info mr-1" type="submit">Submit</button>
             <button className="btn btn-secondary ml-1" type="button" onClick={handleCancel}>Cancel</button>
           </form>
         </div>

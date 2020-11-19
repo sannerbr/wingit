@@ -19,10 +19,10 @@ export default function MenuBar() {
             <button className="btn dropdown-toggle text-white" type="button" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Planes
               </button>
-            <div className="dropdown-menu " aria-labelledby="navbarDropdown">
-              <Link to="/commercial-planes" className="dropdown-item">Commercial</Link>
-              <Link to="/cargo-planes" className="dropdown-item">Cargo</Link>
-              <Link to="/private-planes" className="dropdown-item">Private</Link>
+            <div className="dropdown-menu bg-secondary " aria-labelledby="navbarDropdown">
+              <Link to="/commercial-planes" className="dropdown-item text-white">Commercial</Link>
+              <Link to="/cargo-planes" className="dropdown-item text-white">Cargo</Link>
+              <Link to="/private-planes" className="dropdown-item text-white">Private</Link>
             </div>
           </li>
           {
@@ -32,7 +32,7 @@ export default function MenuBar() {
               <NavLink to="/add-plane" className="btn text-white">Add</NavLink>
             </li>
             <li className="nav-item mr-2">
-              <NavLink to="/hidden-planes" className="btn text-white">Hidden Planes</NavLink>
+              <NavLink to="/hidden-planes" className="btn text-white">Discontinued Planes</NavLink>
             </li>
             </>
           }

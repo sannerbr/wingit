@@ -53,16 +53,16 @@ export default function Login() {
       <Errors errors={errors} />
       <div className="row justify-content-center">
         <form onSubmit={loginSubmitHandler}>
-          <div className="row">
-            <label htmlFor="username">Username</label>
+          <div className="row mt-5">
+            <label className=" text-white" htmlFor="username">Username</label>
             <input className="form-control" id="username" type="text" value={username} onChange={handleUsernameChange} placeholder="username" />
           </div>
           <div className="row mt-3">
-            <label htmlFor="password">Password</label>
+            <label className=" text-white" htmlFor="password">Password</label>
             <input className="form-control" id="password" type="password" value={password} onChange={handlePasswordChange} placeholder="password" />
           </div>
           <div className="row my-4">
-            <button className="btn btn-primary mx-2" type="submit">Login</button>
+            <button className="btn btn-info mx-2" type="submit">Login</button>
             <Link to="/create-account" className="btn btn-secondary mx-2">Create account</Link>
           </div>
         </form>

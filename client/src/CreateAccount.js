@@ -84,30 +84,30 @@ const login = async () => {
         <Errors errors={errors} />
         <form onSubmit={submitHandler}>
           <div className="row justify-content-center my-3">
-            <label htmlFor="username">Username</label>
+            <label className=" text-white" htmlFor="username">Username</label>
             <input className="form-control" type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Username" required/>
           </div>
           <div className="row justify-content-center my-3">
-            <label htmlFor="password">Password</label>
+            <label className=" text-white" htmlFor="password">Password</label>
             <input className="form-control" type="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Password" required/>
           </div>
           <div className="row justify-content-center my-3">
-            <label htmlFor="email">Email</label>
+            <label className=" text-white" htmlFor="email">Email</label>
             <input className="form-control" type="email" id="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="Email" required/>
           </div>
           <div className="row justify-content-center my-3">
-            <label htmlFor="phone">Phone</label>
+            <label className=" text-white" htmlFor="phone">Phone</label>
             <input className="form-control" type="text" id="phone" value={phone} onChange={(event) => setPhone(event.target.value)} placeholder="Phone" required/>
           </div>
           <div className="row justify-content-center my-3">
-            <label htmlFor="address">Address</label>
+            <label className=" text-white" htmlFor="address">Address</label>
             <input className="form-control" type="text" id="address" value={address} onChange={(event) => setAddress(event.target.value)} placeholder="Address" required/>
           </div>
           <div className="row justify-content-center my-3">
-            <label htmlFor="company">Company</label>
+            <label className=" text-white" htmlFor="company">Company</label>
             <input className="form-control" type="text" id="company" value={company} onChange={(event) => setCompany(event.target.value)} placeholder="Company" />
           </div>
-          <button className="btn btn-primary mx-2" type="submit">Submit</button>
+          <button className="btn btn-info mx-2" type="submit">Submit</button>
           <button className="btn btn-secondary mx-2" onClick={() => history.push("/")}>Cancel</button>
         </form>
       </div>
