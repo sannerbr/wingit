@@ -54,8 +54,8 @@ export default function PlaneCard({ plane, rerenderData }) {
 
   return (
 
-    <div className="col-sm-10">
-      <div className="card mb-3">
+    <div className="col-sm-10" >
+      <div className="card bg-light border-secondary mb-3" >
         <div className="row">
           <div className="col-md-3">
             <br />
