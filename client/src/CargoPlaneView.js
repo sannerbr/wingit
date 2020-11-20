@@ -20,7 +20,7 @@ export default function CargoPlaneView() {
         <>
             {
                 planes.length === 0 &&
-                <h2 className="text-white my-5">There are currently no available cargo planes for sale</h2>
+                <h2 className="text-white my-5">There are currently no cargo planes for sale</h2>
             }
             {planes.length > 0 && planes.map(plane => (
                 <div className="row justify-content-md-center my-5">
