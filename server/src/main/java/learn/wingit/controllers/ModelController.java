@@ -20,6 +20,7 @@ public class ModelController {
     public ModelController(ModelService service) {
         this.service = service;
     }
+/*
 
     @GetMapping
     public List<PlaneModel> findAll() {return service.findAll();}
@@ -28,6 +29,7 @@ public class ModelController {
     public PlaneModel findById(@PathVariable int modelId) {
         return service.findById(modelId);
     }
+*/
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody(required = false) PlaneModel model) {
@@ -38,7 +40,7 @@ public class ModelController {
         return ErrorResponse.build(result);
     }
 
-    @PutMapping("/{modelId}")
+   /* @PutMapping("/{modelId}")
     public ResponseEntity<Object> update(@PathVariable int modelId, @RequestBody PlaneModel model) {
         if (model.getModel_id() != modelId) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -50,5 +52,5 @@ public class ModelController {
         }
 
         return ErrorResponse.build(result);
-    }
+    }*/
 }

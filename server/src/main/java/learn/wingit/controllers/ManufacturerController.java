@@ -24,6 +24,7 @@ public class ManufacturerController {
     @GetMapping
     public List<Manufacturer> findAll() {return service.findAll();}
 
+    /*
     @GetMapping("/{manufacturerId}")
     public Manufacturer findById(@PathVariable int manufacturerId) {
         return service.findById(manufacturerId);
@@ -50,5 +51,5 @@ public class ManufacturerController {
         }
 
         return ErrorResponse.build(result);
-    }
+    }*/
 }

@@ -34,7 +34,7 @@ public class JwtConverter {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        //Use userModel to add field to token
+
         return Jwts.builder()
                 .setIssuer(ISSUER)
                 .setSubject(user.getUsername())

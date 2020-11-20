@@ -55,8 +55,6 @@ public class ModelService {
         return result;
     }
 
-    //Alec and I decided to leave out deletion due to complications
-
     public Result<PlaneModel> validate(PlaneModel model, ValidationMode mode) {
         Result<PlaneModel> result = new Result<>();
 

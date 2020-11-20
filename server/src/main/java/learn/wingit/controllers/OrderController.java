@@ -25,10 +25,11 @@ public class OrderController {
     public List<Order> findAll() {
         return service.findAll();
     }
+    /*
     @GetMapping("/id/{orderId}")
     public Order findById(@PathVariable int orderId) {
         return service.findById(orderId);
-    }
+    }*/
 
     @GetMapping("/user/{username}")
     public List<Order> findByUsername(@PathVariable String username) {
@@ -43,7 +44,7 @@ public class OrderController {
         }
         return ErrorResponse.build(result);
     }
-
+/*
     @PutMapping("/id/{orderId}")
     public ResponseEntity<Object> update(@PathVariable int orderId, @RequestBody Order order) {
         if(orderId != order.getOrderId()) {
@@ -62,5 +63,5 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    }*/
 }

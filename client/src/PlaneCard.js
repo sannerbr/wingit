@@ -115,7 +115,7 @@ export default function PlaneCard({ plane, rerenderData }) {
                 <div className="row justify-content-center mb-3">
                   {
                     plane.hidden &&
-                    <button className="btn btn btn-danger" onClick={makeVisible}>Make Available</button>
+                    <button className="btn btn-success" onClick={makeVisible}>Make Available</button>
                   }
                 </div>
               </>

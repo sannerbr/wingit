@@ -18,21 +18,17 @@ public class UserController {
     public UserController(UserService service) {
         this.service = service;
     }
-
+/*
     @GetMapping
     public List<User> findAll() {
         return service.findAll();
     }
+*/
 
     @GetMapping("/id/{userId}")
     public User findById(@PathVariable int userId) {
         return service.findById(userId);
     }
-
-//    @GetMapping("/username/{userName}")
-//    public User findByUsername(@PathVariable String userName) {
-//        return service.findByUsername(userName);
-//    }
 
     @PostMapping
     public ResponseEntity<Object> add(@RequestBody User user) {
@@ -56,7 +52,7 @@ public class UserController {
         }
         return ErrorResponse.build(result);
     }
-
+/*
     @DeleteMapping("/id/{userId}")
     public ResponseEntity<Object> delete(@PathVariable int userId) {
         boolean result = service.delete(userId);
@@ -64,5 +60,5 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+    }*/
 }

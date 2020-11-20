@@ -22,9 +22,4 @@ public class EnumController {
     public Size[] getSizes() {
         return Size.values();
     }
-
-    @GetMapping("/roles")
-    public Role[] getRoles() {
-        return Role.values();
-    }
 }

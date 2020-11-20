@@ -16,17 +16,6 @@ create table model (
         references manufacturer(manufacturer_id)
 );
 
-create table `type` (
-    type_id int primary key auto_increment,
-    name varchar(20) not null
-);
-
-create table size (
-    size_id int primary key auto_increment,
-    size varchar(45) not null
-);
-
-
 create table plane (
     plane_id int primary key auto_increment,
     model_id int not null UNIQUE,
@@ -43,22 +32,7 @@ create table plane (
     `description` varchar(500) not null,
     constraint fk_plane_model_id
         foreign key (model_id)
-        references model(model_id),
-    constraint fk_plane_size_size_id
-        foreign key (size_id)
-        references size(size_id),
-    constraint fk_plane_type_type_id
-        foreign key (type_id)
-        references type(type_id)
-);
-
-create table image (
-    image_id int primary key auto_increment,
-    plane_id int not null,
-    image longblob not null,
-    constraint fk_image_plane_id
-        foreign key (plane_id)
-        references plane(plane_id)
+        references model(model_id)
 );
 
 create table role (
@@ -158,16 +132,5 @@ delimiter ;
 insert into role (role)
     values ('user'),
             ('admin');
-
-insert into size(size)
-    values ('small'),
-            ('medium'),
-            ('large');
-
-insert into `type`(name)
-    values ('commercial'),
-            ('cargo'),
-            ('private');
-            
 
             

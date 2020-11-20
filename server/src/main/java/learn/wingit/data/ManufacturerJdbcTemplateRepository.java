@@ -26,31 +26,12 @@ public class ManufacturerJdbcTemplateRepository implements ManufacturerRepositor
     @Override
     public List<Manufacturer> findAll() {
         final String sql = "select manufacturer_id, `name` from manufacturer;";
-        //        for (Manufacturer m : manufacturers) {
-//            final String sql2 = "select model_id, `name` as model_name, manufacturer_id from model " +
-//                    "where manufacturer_id = ?;";
-//            List<PlaneModel> models = jdbcTemplate.query(sql2, new ModelMapper(), m.getManufacturer_id());
-//            for (PlaneModel model : models) {
-//                model.setManufacturer(m);
-//            }
-//            m.setModels(models);
-//        }
         return jdbcTemplate.query(sql, new ManufacturerMapper());
     }
 
     @Override
     public Manufacturer findById(int manufacturerId) {
         final String sql = "select manufacturer_id, `name` from manufacturer where manufacturer_id = ?;";
-        //        if (manufacturer == null){
-//            return null;
-//        }
-//        final String sql2 = "select model_id, `name` as model_name, manufacturer_id from model " +
-//                "where manufacturer_id = ?;";
-//        List<PlaneModel> models = jdbcTemplate.query(sql2, new ModelMapper(), manufacturerId);
-//        for (PlaneModel model : models) {
-//            model.setManufacturer(manufacturer);
-//        }
-//        manufacturer.setModels(models);
         return jdbcTemplate.query(sql, new ManufacturerMapper(), manufacturerId).stream().findFirst().orElse(null);
     }
 

@@ -49,6 +49,28 @@ export default function PlanePage() {
     history.push(`/edit/planes/${plane.plane_id}`)
   }
 
+  const makeVisible = (event) => {
+    event.preventDefault();
+
+    let obj = {
+      method: 'PUT',
+      headers: {
+        token: 'Bearer ' + auth.user.token
+      }
+    }
+    fetch(`http://localhost:8080/api/planes/visible/id/${plane.plane_id}`, obj)
+      .then(response => {
+        if(response.status === 204) {
+          alert("Plane has been made visible to users")
+          history.goBack();
+        } else if (response.status === 404) {
+          alert("Plane not found")
+        } else {
+          alert("Unknown Error Occured")
+        }
+      })
+}
+
   return (
     <>
       {
@@ -59,15 +81,15 @@ export default function PlanePage() {
 
             {
               plane.type === "COMMERCIAL" &&
-              <img className="page" src="/commercialdelta.jpg"/>
+              <img className="page" src="/commercialdelta.jpg" />
             }
             {
               plane.type === "CARGO" &&
-              <img className="page" src="/BelugaXL.jpg"/>
+              <img className="page" src="/BelugaXL.jpg" />
             }
             {
               plane.type === "PRIVATE" &&
-              <img className="page" src="/private.jpg"/>
+              <img className="page" src="/private.jpg" />
             }
             <br />
             <strong className="text-white">Description:</strong><p className="text-white mt-2">{`${plane.description}`}</p>
@@ -110,8 +132,8 @@ export default function PlanePage() {
             {
               plane.quantity === 0 &&
               <>
-              <button className="btn btn-lg btn-info" disabled>Order</button>
-              <p className="text-danger">Out of Stock</p>
+                <button className="btn btn-lg btn-info" disabled>Order</button>
+                <p className="text-danger">Out of Stock</p>
               </>
             }
             {
@@ -122,8 +144,19 @@ export default function PlanePage() {
             {
               auth.user && auth.user.hasRole("ROLE_ADMIN") &&
               <div>
+
                 <button onClick={handleEditPath} className="btn btn-warning mr-2 text-white">Edit</button>
-                <button className="btn btn btn-danger" onClick={handleDelete}>Delete</button>
+
+                {
+                  plane.hidden &&
+                  <button className="btn btn-success" onClick={makeVisible}>Make Available</button>
+                }
+
+                {
+                  !plane.hidden &&
+                  <button className="btn btn btn-danger" onClick={handleDelete}>Delete</button>
+                }
+                
               </div>
             }
             <br />
