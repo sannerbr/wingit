@@ -56,9 +56,6 @@ public class ManufacturerService {
         return result;
     }
 
-    //Alec and I decided to leave out deletion due to complications
-
-
     public Result<Manufacturer> validate(Manufacturer manufacturer, ValidationMode mode) {
         Result<Manufacturer> result = new Result<>();
 

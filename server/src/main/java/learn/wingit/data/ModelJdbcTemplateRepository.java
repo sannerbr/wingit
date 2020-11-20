@@ -28,11 +28,6 @@ public class ModelJdbcTemplateRepository implements ModelRepository{
         final String sql = "select mo.model_id, mo.`name` as model_name, " +
                 "mo.manufacturer_id, ma.`name` as manufacturer_name " +
                 "from model mo inner join manufacturer ma on mo.manufacturer_id = ma. manufacturer_id;";
-        //        for (PlaneModel model : models) {
-//            final String sql2 = "select manufacturer_id, `name` from manufacturer where manufacturer_id = ?;";
-//            model.setManufacturer(jdbcTemplate.query(sql2, new ManufacturerMapper(),
-//                    model.getManufacturer().getManufacturer_id()).stream().findFirst().orElse(null));
-//        }
         return jdbcTemplate.query(sql, new ModelMapper());
     }
 
@@ -42,10 +37,6 @@ public class ModelJdbcTemplateRepository implements ModelRepository{
                 "mo.manufacturer_id, ma.`name` as manufacturer_name " +
                 "from model mo inner join manufacturer ma on mo.manufacturer_id = ma. manufacturer_id " +
                 "where model_id = ?;";
-        //        final String sql2 = "select manufacturer_id, `name` from manufacturer where manufacturer_id = ?;";
-//        Manufacturer manufacturer = jdbcTemplate.query(sql2, new ManufacturerMapper(),
-//                model.getManufacturer().getManufacturer_id()).stream().findFirst().orElse(null);
-//        model.setManufacturer(manufacturer);
         return jdbcTemplate.query(sql, new ModelMapper(), modelId).stream().findFirst().orElse(null);
     }
 

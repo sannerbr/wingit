@@ -16,17 +16,6 @@ create table model (
         references manufacturer(manufacturer_id)
 );
 
-create table `type` (
-    type_id int primary key auto_increment,
-    name varchar(20) not null
-);
-
-create table size (
-    size_id int primary key auto_increment,
-    size varchar(45) not null
-);
-
-
 create table plane (
     plane_id int primary key auto_increment,
     model_id int not null UNIQUE,
@@ -43,22 +32,7 @@ create table plane (
     `description` varchar(500) not null,
     constraint fk_plane_model_id
         foreign key (model_id)
-        references model(model_id),
-    constraint fk_plane_size_size_id
-        foreign key (size_id)
-        references size(size_id),
-    constraint fk_plane_type_type_id
-        foreign key (type_id)
-        references type(type_id)
-);
-
-create table image (
-    image_id int primary key auto_increment,
-    plane_id int not null,
-    image longblob not null,
-    constraint fk_image_plane_id
-        foreign key (plane_id)
-        references plane(plane_id)
+        references model(model_id)
 );
 
 create table role (
@@ -106,7 +80,8 @@ create table order_plane (
 
 insert into manufacturer(name)
     values ('Boeing'),
-            ('Airbus');
+            ('Airbus'),
+            ('Embraer');
 
 insert into model(name, manufacturer_id)
     values ('747', 1),
@@ -115,16 +90,6 @@ insert into model(name, manufacturer_id)
             ('C-150', 1),
             ('Learjet 23', 2),
             ('Douglas DC-3', 2);
-            
-insert into size(size)
-    values ('small'),
-            ('medium'),
-            ('large');
-
-insert into `type`(name)
-    values ('commercial'),
-            ('cargo'),
-            ('private');
 
 insert into plane(model_id, size_id, type_id, price, quantity, seating_capacity,
                     height, length, wingspan, hidden, `range`, `description`)
@@ -136,22 +101,6 @@ insert into plane(model_id, size_id, type_id, price, quantity, seating_capacity,
 insert into role (role)
     values ('user'),
             ('admin');
-            
-insert into user(role_id, username, password_hash, email, phone, address)
-    values(1, 'customer', 'cust-pw-hash', 'cust@cust.com', '111-111-1111', '111 1st St.'),
-            (1, 'buyer', 'buyer-pw-hash', 'buy@buy.com', '222-222-2222', '222 2nd St'),
-            (2, 'admin', 'admin-pw-hash', 'admin@admin.com', '333-333-3333', '333 3rd St');
 
-
-insert into `order`(user_id, order_date, total_cost)
-    values (1, '2020-01-01', 733000),
-            (1, '2020-02-02', 630000),
-            (2, '2020-03-03', 1950000);
-
-insert into order_plane (order_id, plane_id, number_ordered)
-    values(1, 1, 1),
-            (1, 2, 1),
-            (2, 2, 2),
-            (3, 3, 3);
 
 

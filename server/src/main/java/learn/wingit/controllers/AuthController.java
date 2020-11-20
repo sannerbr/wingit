@@ -70,14 +70,8 @@ public class AuthController {
             appUser.setRole(Role.USER);
             service.add(appUser);
         } catch (ValidationException ex) {
-//            ValidationErrorResult validationErrorResult = new ValidationErrorResult();
-//            validationErrorResult.addMessage(ex.getMessage());
-//            return new ResponseEntity<>(validationErrorResult, HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(List.of(ex.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (DuplicateKeyException ex) {
-//            ValidationErrorResult validationErrorResult = new ValidationErrorResult();
-//            validationErrorResult.addMessage("The provided username already exists");
-//            return new ResponseEntity<>(validationErrorResult, HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(List.of("The provided username already exists"), HttpStatus.BAD_REQUEST);
         }
 

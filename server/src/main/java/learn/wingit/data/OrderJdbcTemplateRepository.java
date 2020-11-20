@@ -1,7 +1,6 @@
 package learn.wingit.data;
 
 import learn.wingit.data.mappers.OrderMapper;
-import learn.wingit.data.mappers.OrderPlaneMapper;
 import learn.wingit.data.mappers.PlaneMapper;
 import learn.wingit.models.Order;
 import learn.wingit.models.Plane;
@@ -11,7 +10,6 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;

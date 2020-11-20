@@ -22,10 +22,12 @@ public class PlaneController {
         this.service = service;
     }
 
+/*
     @GetMapping
     public List<Plane> findAll() {
         return service.findAll();
     }
+*/
 
     @GetMapping("/hidden/all")
     public List<Plane> findAllHidden() {
